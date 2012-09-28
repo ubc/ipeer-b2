@@ -17,6 +17,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.web.client.RestOperations;
 
 import ca.ubc.ctlt.ipeerb2.domain.Course;
+import ca.ubc.ctlt.ipeerb2.domain.Group;
 import ca.ubc.ctlt.ipeerb2.domain.User;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -40,19 +41,31 @@ public class iPeerWebServiceTest {
 	
 	@Autowired
 	private List<User> userList;
+	
+	@Autowired
+	private Group group;
+	
+	@Autowired
+	private List<Group> groupList;
 
 	@Before
 	public void setUp() throws Exception {
+		// course mocking
 		when(restOperations.getForObject( Matchers.anyString(), Matchers.eq(Course.class), Matchers.anyString()) ).thenReturn(course);
-		Course[] cl = courseList.toArray(new Course[courseList.size()]);
-		when(restOperations.getForObject( Matchers.anyString(), Matchers.eq(Course[].class)) ).thenReturn(cl);
+		when(restOperations.getForObject( Matchers.anyString(), Matchers.eq(Course[].class)) ).thenReturn(courseList.toArray(new Course[courseList.size()]));
 		when(restOperations.postForObject( Matchers.anyString(), Matchers.any(Course.class), Matchers.eq(Course.class)) ).thenReturn(course);
 		
+		// user mocking
 		when(restOperations.getForObject( Matchers.anyString(), Matchers.eq(User.class), Matchers.anyString()) ).thenReturn(user);
-		User[] ul = userList.toArray(new User[userList.size()]);
-		when(restOperations.getForObject( Matchers.anyString(), Matchers.eq(User[].class)) ).thenReturn(ul);
+		when(restOperations.getForObject( Matchers.anyString(), Matchers.eq(User[].class)) ).thenReturn(userList.toArray(new User[userList.size()]));
 		when(restOperations.postForObject( Matchers.anyString(), Matchers.any(User.class), Matchers.eq(User.class)) ).thenReturn(user);
 		when(restOperations.postForObject( Matchers.anyString(), Matchers.any(User[].class), Matchers.eq(User[].class)) ).thenReturn(userList.toArray(new User[userList.size()]));
+		
+		// group mocking
+		when(restOperations.getForObject( Matchers.anyString(), Matchers.eq(Group.class), Matchers.anyInt(), Matchers.anyString()) ).thenReturn(group);
+		when(restOperations.getForObject( Matchers.anyString(), Matchers.eq(Group[].class), Matchers.anyInt()) ).thenReturn(groupList.toArray(new Group[groupList.size()]));
+		when(restOperations.postForObject( Matchers.anyString(), Matchers.any(Group.class), Matchers.eq(Group.class), Matchers.anyInt()) ).thenReturn(group);
+		when(restOperations.postForObject( Matchers.anyString(), Matchers.any(Group[].class), Matchers.eq(Group[].class), Matchers.anyInt()) ).thenReturn(groupList.toArray(new Group[groupList.size()]));
 	}
 
 	@Test
@@ -103,6 +116,7 @@ public class iPeerWebServiceTest {
 	}
 
 	/************* User API Test *************/
+	
 	@Test
 	public final void testGetUserList() {
 		List<User> ul = webService.getUserList();
@@ -161,5 +175,65 @@ public class iPeerWebServiceTest {
 		boolean result = webService.updateUser(user);
 		assertTrue(result);
 	}
-
+	
+	/************* Group API Test *************/
+	
+	@Test
+	public final void testGetGroupList() {
+		List<Group> ul = webService.getGroupList(1);
+		assertTrue(ul.size() == 3);
+		Group u = ul.get(0);
+		assertTrue(u.getId() == 1);
+		assertTrue("groupname1".equals(u.getName()));
+		
+		u = ul.get(1);
+		assertTrue(u.getId() == 2);
+		assertTrue("groupname2".equals(u.getName()));
+		
+		u = ul.get(2);
+		assertTrue(u.getId() == 3);
+		assertTrue("groupname3".equals(u.getName()));
+	}
+	
+	@Test
+	public final void testGetGroup() {
+		Group c = webService.getGroup(1);
+		assertTrue(c.getId() == 1);
+		assertTrue("groupname1".equals(c.getName()));
+	}
+	
+	@Test
+	public final void testCreateGroup() {
+		Group c = webService.createGroup(1, group);
+		assertTrue(c.getId() == 1);
+	}
+	
+	@Test
+	public final void testCreateGroups() {
+		List<Group> ul = webService.createGroups(1, groupList);
+		assertTrue(ul.size() == 3);
+		Group u = ul.get(0);
+		assertTrue(u.getId() == 1);
+		assertTrue("groupname1".equals(u.getName()));
+		
+		u = ul.get(1);
+		assertTrue(u.getId() == 2);
+		assertTrue("groupname2".equals(u.getName()));
+		
+		u = ul.get(2);
+		assertTrue(u.getId() == 3);
+		assertTrue("groupname3".equals(u.getName()));
+	}
+	
+	@Test
+	public final void testDeleteGroup() {
+		boolean result = webService.deleteGroup(1);
+		assertTrue(result);
+	}
+	
+	@Test
+	public final void testUpdateGroup() {
+		boolean result = webService.updateGroup(group);
+		assertTrue(result);
+	}
 }

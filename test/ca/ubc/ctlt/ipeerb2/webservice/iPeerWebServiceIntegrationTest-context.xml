@@ -111,6 +111,30 @@
         <property name="studentId" value="00000000" />
     </bean>
     
+    <!-- Group Fixtures -->
+ 	
+ 	<bean id="groupToCreate" class="ca.ubc.ctlt.ipeerb2.domain.Group">
+        <property name="name" value="groupname1" />
+        <property name="setName" value="Set1" />
+    </bean>
+    
+    <bean id="invalidGroupToCreate" class="ca.ubc.ctlt.ipeerb2.domain.Group">
+        <property name="name" value="invalid_groupname" />
+        <property name="setName" value="Set1" />
+    </bean>
+    
+    <bean id="groupToUpdate" class="ca.ubc.ctlt.ipeerb2.domain.Group">
+        <property name="id" value="1" />
+        <property name="name" value="groupname1" />
+        <property name="setName" value="Set1" />
+    </bean>
+    
+    <bean id="invalidGroupToUpdate" class="ca.ubc.ctlt.ipeerb2.domain.Group">
+        <property name="id" value="999" />
+        <property name="name" value="invalid_groupname" />
+        <property name="setName" value="Set1" />
+    </bean>
+    
     <bean id="restTemplate" class="org.springframework.web.client.RestTemplate">
         <property name="messageConverters">
             <list>

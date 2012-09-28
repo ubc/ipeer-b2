@@ -11,107 +11,149 @@
     <bean id="courseApiServlet" class="ca.ubc.ctlt.ipeerb2.webservice.ApiTestServlet">
         <property name="properties">
             <value>
-                test.1.uri=/[^/]*/courses
-                test.1.method=get
-                test.1.responsebody=[{"id":1,"course":"MATH101","title":"Test Course"}, {"id":2,"course":"MATH102","title":"Test Course 2"},{"id":3,"course":"MATH103","title":"Test Course 3"}]
-                test.1.responsestatus=200
+                test_course.1.uri=/[^/]*/courses
+                test_course.1.method=get
+                test_course.1.responsebody=[{"id":1,"course":"MATH101","title":"Test Course"}, {"id":2,"course":"MATH102","title":"Test Course 2"},{"id":3,"course":"MATH103","title":"Test Course 3"}]
+                test_course.1.responsestatus=200
            
-                test.2.uri=/[^/]*/courses/1
-                test.2.method=get
-                test.2.responsebody={"id":1,"course":"MATH101","title":"Test Course"}
-                test.2.responsestatus=200
+                test_course.2.uri=/[^/]*/courses/1
+                test_course.2.method=get
+                test_course.2.responsebody={"id":1,"course":"MATH101","title":"Test Course"}
+                test_course.2.responsestatus=200
                 
-                test.3.uri=/[^/]*/courses/999
-                test.3.method=get
-                test.3.responsebody={}
-                test.3.responsestatus=404
+                test_course.3.uri=/[^/]*/courses/999
+                test_course.3.method=get
+                test_course.3.responsebody={}
+                test_course.3.responsestatus=404
                 
-                test.4.uri=/[^/]*/courses
-                test.4.method=post
-                test.4.requestbody={"id":0,"course":"MATH101","title":"Test Course"}
-                test.4.responsebody={"id":1,"course":"MATH101","title":"Test Course"}
-                test.4.responsestatus=201
+                test_course.4.uri=/[^/]*/courses
+                test_course.4.method=post
+                test_course.4.requestbody={"id":0,"course":"MATH101","title":"Test Course"}
+                test_course.4.responsebody={"id":1,"course":"MATH101","title":"Test Course"}
+                test_course.4.responsestatus=201
                 
-                test.5.uri=/[^/]*/courses
-                test.5.method=post
-                test.5.requestbody={"id":0,"course":"MATH101","title":"Wrong Course"}
-                test.5.responsestatus=500
+                test_course.5.uri=/[^/]*/courses
+                test_course.5.method=post
+                test_course.5.requestbody={"id":0,"course":"MATH101","title":"Wrong Course"}
+                test_course.5.responsestatus=500
                 
-                test.6.uri=/[^/]*/courses/1
-                test.6.method=delete
-                test.6.responsestatus=204
+                test_course.6.uri=/[^/]*/courses/1
+                test_course.6.method=delete
+                test_course.6.responsestatus=204
                 
-                test.7.uri=/[^/]*/courses/999
-                test.7.method=delete
-                test.7.responsestatus=500
+                test_course.7.uri=/[^/]*/courses/999
+                test_course.7.method=delete
+                test_course.7.responsestatus=500
                 
-                test.8.uri=/[^/]*/courses/1
-                test.8.method=put
-                test.8.requestbody={"id":1,"course":"MATH101","title":"Test Course"}
-                test.8.responsestatus=200
+                test_course.8.uri=/[^/]*/courses/1
+                test_course.8.method=put
+                test_course.8.requestbody={"id":1,"course":"MATH101","title":"Test Course"}
+                test_course.8.responsestatus=200
                 
-                test.9.uri=/[^/]*/courses/999
-                test.9.method=put
-                test.9.requestbody={"id":999,"course":"MATH101","title":"Test Course"}
-                test.9.responsestatus=500
-            </value>
-        </property>
-        <property name="contentType" ref="jsonContentType" />
-    </bean>
-    
-    <!-- User API servlet -->
-   	<bean id="userApiServlet" class="ca.ubc.ctlt.ipeerb2.webservice.ApiTestServlet">
-        <property name="properties">
-            <value>
-                test.1.uri=/[^/]*/users
-                test.1.method=get
-                test.1.responsebody=[{"id":1,"role_id":1,"username":"username1","first_name":"Test","last_name":"User1","email":"username1@ubc.ca","student_id":"12345671"}, {"id":2,"role_id":1,"username":"username2","first_name":"Test","last_name":"User2","email":"username2@ubc.ca","student_id":"12345672"},{"id":3,"role_id":1,"username":"username3","first_name":"Test","last_name":"User3","email":"username3@ubc.ca","student_id":"12345673"}]
-                test.1.responsestatus=200
+                test_course.9.uri=/[^/]*/courses/999
+                test_course.9.method=put
+                test_course.9.requestbody={"id":999,"course":"MATH101","title":"Test Course"}
+                test_course.9.responsestatus=500
+                
+                test_user.1.uri=/[^/]*/users
+                test_user.1.method=get
+                test_user.1.responsebody=[{"id":1,"role_id":1,"username":"username1","first_name":"Test","last_name":"User1","email":"username1@ubc.ca","student_id":"12345671"}, {"id":2,"role_id":1,"username":"username2","first_name":"Test","last_name":"User2","email":"username2@ubc.ca","student_id":"12345672"},{"id":3,"role_id":1,"username":"username3","first_name":"Test","last_name":"User3","email":"username3@ubc.ca","student_id":"12345673"}]
+                test_user.1.responsestatus=200
            
-                test.2.uri=/[^/]*/users/1
-                test.2.method=get
-                test.2.responsebody={"id":1,"role_id":1,"username":"username1","first_name":"Test","last_name":"User1","email":"username1@ubc.ca","student_id":"12345671"}
-                test.2.responsestatus=200
+                test_user.2.uri=/[^/]*/users/1
+                test_user.2.method=get
+                test_user.2.responsebody={"id":1,"role_id":1,"username":"username1","first_name":"Test","last_name":"User1","email":"username1@ubc.ca","student_id":"12345671"}
+                test_user.2.responsestatus=200
                 
-                test.3.uri=/[^/]*/users/999
-                test.3.method=get
-                test.3.responsebody={}
-                test.3.responsestatus=404
+                test_user.3.uri=/[^/]*/users/999
+                test_user.3.method=get
+                test_user.3.responsebody={}
+                test_user.3.responsestatus=404
                 
-                test.4.uri=/[^/]*/users
-                test.4.method=post
-                test.4.requestbody={"id":0,"role_id":1,"username":"username1","password":"newpassword","first_name":"Test","last_name":"User1","email":"username1@ubc.ca","student_id":"12345671"}
-                test.4.responsebody={"id":1,"role_id":1,"username":"username1","first_name":"Test","last_name":"User1","email":"username1@ubc.ca","student_id":"12345671"}
-                test.4.responsestatus=201
+                test_user.4.uri=/[^/]*/users
+                test_user.4.method=post
+                test_user.4.requestbody={"id":0,"role_id":1,"username":"username1","password":"newpassword","first_name":"Test","last_name":"User1","email":"username1@ubc.ca","student_id":"12345671"}
+                test_user.4.responsebody={"id":1,"role_id":1,"username":"username1","first_name":"Test","last_name":"User1","email":"username1@ubc.ca","student_id":"12345671"}
+                test_user.4.responsestatus=201
                 
-                test.5.uri=/[^/]*/users
-                test.5.method=post
-                test.5.requestbody=[{"id":0,"role_id":1,"username":"username1","password":"newpassword","first_name":"Test","last_name":"User1","email":"username1@ubc.ca","student_id":"12345671"}, {"id":0,"role_id":1,"username":"username2","password":"newpassword","first_name":"Test","last_name":"User2","email":"username2@ubc.ca","student_id":"12345672"},{"id":0,"role_id":1,"username":"username3","password":"newpassword","first_name":"Test","last_name":"User3","email":"username3@ubc.ca","student_id":"12345673"}]
-                test.5.responsebody=[{"id":1,"role_id":1,"username":"username1","first_name":"Test","last_name":"User1","email":"username1@ubc.ca","student_id":"12345671"}, {"id":2,"role_id":1,"username":"username2","first_name":"Test","last_name":"User2","email":"username2@ubc.ca","student_id":"12345672"},{"id":3,"role_id":1,"username":"username3","first_name":"Test","last_name":"User3","email":"username3@ubc.ca","student_id":"12345673"}]
-                test.5.responsestatus=201
+                test_user.5.uri=/[^/]*/users
+                test_user.5.method=post
+                test_user.5.requestbody=[{"id":0,"role_id":1,"username":"username1","password":"newpassword","first_name":"Test","last_name":"User1","email":"username1@ubc.ca","student_id":"12345671"}, {"id":0,"role_id":1,"username":"username2","password":"newpassword","first_name":"Test","last_name":"User2","email":"username2@ubc.ca","student_id":"12345672"},{"id":0,"role_id":1,"username":"username3","password":"newpassword","first_name":"Test","last_name":"User3","email":"username3@ubc.ca","student_id":"12345673"}]
+                test_user.5.responsebody=[{"id":1,"role_id":1,"username":"username1","first_name":"Test","last_name":"User1","email":"username1@ubc.ca","student_id":"12345671"}, {"id":2,"role_id":1,"username":"username2","first_name":"Test","last_name":"User2","email":"username2@ubc.ca","student_id":"12345672"},{"id":3,"role_id":1,"username":"username3","first_name":"Test","last_name":"User3","email":"username3@ubc.ca","student_id":"12345673"}]
+                test_user.5.responsestatus=201
                 
-                test.6.uri=/[^/]*/users
-                test.6.method=post
-                test.6.requestbody={"id":0,"role_id":1,"username":"invalid_username","password":"newpassword","first_name":"Invalid","last_name":"User","email":"invalid_username@ubc.ca","student_id":"00000000"}
-                test.6.responsestatus=500
+                test_user.6.uri=/[^/]*/users
+                test_user.6.method=post
+                test_user.6.requestbody={"id":0,"role_id":1,"username":"invalid_username","password":"newpassword","first_name":"Invalid","last_name":"User","email":"invalid_username@ubc.ca","student_id":"00000000"}
+                test_user.6.responsestatus=500
                 
-                test.7.uri=/[^/]*/users/1
-                test.7.method=delete
-                test.7.responsestatus=204
+                test_user.7.uri=/[^/]*/users/1
+                test_user.7.method=delete
+                test_user.7.responsestatus=204
                 
-                test.8.uri=/[^/]*/users/999
-                test.8.method=delete
-                test.8.responsestatus=500
+                test_user.8.uri=/[^/]*/users/999
+                test_user.8.method=delete
+                test_user.8.responsestatus=500
                 
-                test.9.uri=/[^/]*/users/1
-                test.9.method=put
-                test.9.requestbody={"id":1,"role_id":1,"username":"username1","password":"newpassword","first_name":"Test","last_name":"User1","email":"username1@ubc.ca","student_id":"12345671"}
-                test.9.responsestatus=200
+                test_user.9.uri=/[^/]*/users/1
+                test_user.9.method=put
+                test_user.9.requestbody={"id":1,"role_id":1,"username":"username1","password":"newpassword","first_name":"Test","last_name":"User1","email":"username1@ubc.ca","student_id":"12345671"}
+                test_user.9.responsestatus=200
                 
-                test.10.uri=/[^/]*/users/999
-                test.10.method=put
-                test.10.requestbody={"id":999,"role_id":1,"username":"invalid_username","password":"newpassword","first_name":"Invalid","last_name":"User","email":"invalid_username@ubc.ca","student_id":"00000000"}
-                test.10.responsestatus=500
+                test_user.10.uri=/[^/]*/users/999
+                test_user.10.method=put
+                test_user.10.requestbody={"id":999,"role_id":1,"username":"invalid_username","password":"newpassword","first_name":"Invalid","last_name":"User","email":"invalid_username@ubc.ca","student_id":"00000000"}
+                test_user.10.responsestatus=500
+                
+                test_group.1.uri=/[^/]*/courses/\\d+/groups
+                test_group.1.method=get
+                test_group.1.responsebody=[{"id":1,"name":"groupname1","set_name":"Set1"}, {"id":2,"name":"groupname2","set_name":"Set1"},{"id":3,"name":"groupname3","set_name":"Set1"}]
+                test_group.1.responsestatus=200
+           
+                test_group.2.uri=/[^/]*/courses/\\d+/groups/1
+                test_group.2.method=get
+                test_group.2.responsebody={"id":1,"name":"groupname1","set_name":"Set1"}
+                test_group.2.responsestatus=200
+                
+                test_group.3.uri=/[^/]*/courses/\\d+/groups/999
+                test_group.3.method=get
+                test_group.3.responsebody={}
+                test_group.3.responsestatus=404
+                
+                test_group.4.uri=/[^/]*/courses/\\d+/groups
+                test_group.4.method=post
+                test_group.4.requestbody={"id":0,"name":"groupname1","set_name":"Set1"}
+                test_group.4.responsebody={"id":1,"name":"groupname1","set_name":"Set1"}
+                test_group.4.responsestatus=201
+                
+                test_group.5.uri=/[^/]*/courses/\\d+/groups
+                test_group.5.method=post
+                test_group.5.requestbody=[{"id":0,"name":"groupname1","set_name":"Set1"},{"id":0,"name":"groupname2","set_name":"Set1"},{"id":0,"name":"groupname3","set_name":"Set1"}]
+                test_group.5.responsebody=[{"id":1,"name":"groupname1","set_name":"Set1"},{"id":2,"name":"groupname2","set_name":"Set1"},{"id":3,"name":"groupname3","set_name":"Set1"}]
+                test_group.5.responsestatus=201
+                
+                test_group.6.uri=/[^/]*/courses/\\d+/groups
+                test_group.6.method=post
+                test_group.6.requestbody={"id":0,"name":"invalid_groupname","set_name":"Set1"}
+                test_group.6.responsestatus=500
+                
+                test_group.7.uri=/[^/]*/courses/\\d+/groups/1
+                test_group.7.method=delete
+                test_group.7.responsestatus=204
+                
+                test_group.8.uri=/[^/]*/courses/\\d+/groups/999
+                test_group.8.method=delete
+                test_group.8.responsestatus=500
+                
+                test_group.9.uri=/[^/]*/courses/\\d+/groups/1
+                test_group.9.method=put
+                test_group.9.requestbody={"id":1,"name":"groupname1","set_name":"Set1"}
+                test_group.9.responsestatus=200
+                
+                test_group.10.uri=/[^/]*/courses/\\d+/groups/999
+                test_group.10.method=put
+                test_group.10.requestbody={"id":999,"name":"invalid_groupname","set_name":"Set1"}
+                test_group.10.responsestatus=500
             </value>
         </property>
         <property name="contentType" ref="jsonContentType" />
@@ -122,12 +164,8 @@
         <constructor-arg value="json"/>
     </bean>
     
-    <bean id="courseServletHolder" class="org.eclipse.jetty.servlet.ServletHolder">
+    <bean id="servletHolder" class="org.eclipse.jetty.servlet.ServletHolder">
         <constructor-arg ref="courseApiServlet"/>
-    </bean>
-    
-    <bean id="userServletHolder" class="org.eclipse.jetty.servlet.ServletHolder">
-        <constructor-arg ref="userApiServlet"/>
     </bean>
     
     <bean id="servletHandler" class="org.eclipse.jetty.servlet.ServletContextHandler"/>
@@ -138,19 +176,9 @@
 		<property name="targetMethod" value="addServlet"/>
 		<property name="arguments">
 			<list>
-	    		<ref bean="courseServletHolder"/>
-	    		<value>#{ T(ca.ubc.ctlt.ipeerb2.webservice.iPeerWebService).API_COURSE }/*</value>
-	   		</list>
-	 	</property>
-	</bean>
-	
-	<bean class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
-		<property name="targetObject" ref="servletHandler"/>
-		<property name="targetMethod" value="addServlet"/>
-		<property name="arguments">
-			<list>
-	    		<ref bean="userServletHolder"/>
-	    		<value>#{ T(ca.ubc.ctlt.ipeerb2.webservice.iPeerWebService).API_USER }/*</value>
+	    		<ref bean="servletHolder"/>
+	    		<!-- <value>#{ T(ca.ubc.ctlt.ipeerb2.webservice.iPeerWebService).API_COURSE }/*</value> -->
+	    		<value>/*</value>
 	   		</list>
 	 	</property>
 	</bean>

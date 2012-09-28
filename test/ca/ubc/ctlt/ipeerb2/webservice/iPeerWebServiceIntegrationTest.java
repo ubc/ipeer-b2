@@ -14,6 +14,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import ca.ubc.ctlt.ipeerb2.domain.Course;
+import ca.ubc.ctlt.ipeerb2.domain.Group;
 import ca.ubc.ctlt.ipeerb2.domain.User;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -47,6 +48,18 @@ public class iPeerWebServiceIntegrationTest {
 	
 	@Autowired
 	private User invalidUserToUpdate;
+	
+	@Autowired
+	private Group groupToCreate;
+	
+	@Autowired
+	private Group invalidGroupToCreate;
+	
+	@Autowired
+	private Group groupToUpdate;
+	
+	@Autowired
+	private Group invalidGroupToUpdate;
 
 	/************* Course API Tests ****************/
 	
@@ -182,5 +195,73 @@ public class iPeerWebServiceIntegrationTest {
 	public final void testUpdateInvalidUser() {
 		webService.updateUser(invalidUserToUpdate);
 		fail("No exception when deleting an invalid user!");
+	}
+	
+	/************* Group API Tests ****************/
+	
+	@Test
+	public final void testGetGroupList() {
+		List<Group> cl = webService.getGroupList(1);
+		assertTrue(cl.size() == 3);
+		Group c = cl.get(0);
+		assertTrue(c.getId() == 1);
+		assertTrue("groupname1".equals(c.getName()));
+		
+		c = cl.get(1);
+		assertTrue(c.getId() == 2);
+		assertTrue("groupname2".equals(c.getName()));
+		
+		c = cl.get(2);
+		assertTrue(c.getId() == 3);
+		assertTrue("groupname3".equals(c.getName()));
+	}
+	
+	@Test
+	public final void testGetGroup() {
+		Group group = webService.getGroup(1);
+		assertNotNull(group);
+		assertTrue(group.getId() == 1);
+	}
+	
+	@Test(expected=RuntimeException.class)
+	public final void testGetInvalidGroup() {
+		webService.getGroup(999);
+		fail("No exception when requesting an invalid group!");
+	}
+	
+	@Test
+	public final void testCreateGroup() {
+		Group group = webService.createGroup(1, groupToCreate);
+		assertTrue(group.getId() == 1);
+	}
+	
+	@Test(expected=RuntimeException.class)
+	public final void testCreateInvalidGroup() {
+		webService.createGroup(1, invalidGroupToCreate);
+		fail("No exception when creating an invalid group!");
+	}
+	
+	@Test
+	public final void testDeleteGroup() {
+		boolean result = webService.deleteGroup(1);
+		assertTrue(result);
+	}
+	
+	@Test(expected=RuntimeException.class)
+	public final void testDeleteNonExistingGroup() {
+		webService.deleteGroup(999);
+		fail("No exception when deleting an invalid group!");
+	}
+	
+	@Test
+	public final void testUpdateGroup() {
+		boolean result = webService.updateGroup(groupToUpdate);
+		assertTrue(result);
+	}
+	
+	@Test(expected=RuntimeException.class)
+	public final void testUpdateInvalidGroup() {
+		webService.updateGroup(invalidGroupToUpdate);
+		fail("No exception when deleting an invalid group!");
 	}
 }

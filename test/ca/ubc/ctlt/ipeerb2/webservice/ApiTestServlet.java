@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.List;
 import java.util.Properties;
 
@@ -36,32 +37,42 @@ public class ApiTestServlet extends HttpServlet {
 	public void setProperties(Properties properties) {
 		this.properties = properties;
 		servletConfigs = new ArrayList<TestServletConfig>();
-		int i = 1;
-		while(properties.getProperty("test."+i+".uri") != null) {
+		List<String> added = new ArrayList<String>();
+
+		for (Enumeration<?> en = properties.propertyNames(); en.hasMoreElements();) {
+			String[] key = ((String) en.nextElement()).split("\\.");
+			String prefix = key[0] + "." + key[1];
 			
+			// already processed?
+			if (added.contains(prefix)) {
+				continue;
+			}
+
+			// creating a new configuration
 			TestServletConfig config = new TestServletConfig();
 			for(String prop : TestServletConfig.PROPERTIES) {
-				String value = properties.getProperty("test."+i+"."+prop.toLowerCase());
+				String value = properties.getProperty(prefix + "." + prop.toLowerCase());
 				if (value == null) {
 					continue;
 				}
+				// set the property value to configuration object
 				try {
 					Method method = config.getClass().getMethod("set"+prop, String.class);
 					method.invoke(config, value);
 				} catch (SecurityException e) {
-					e.printStackTrace();
+					throw new RuntimeException("Failed to load test properties!", e);
 				} catch (NoSuchMethodException e) {
-					e.printStackTrace();
+					throw new RuntimeException("No such a method set" +prop , e);
 				} catch (IllegalArgumentException e) {
-					e.printStackTrace();
+					throw new RuntimeException("Invalid argument value = "+value, e);
 				} catch (IllegalAccessException e) {
-					e.printStackTrace();
+					throw new RuntimeException("Failed to load test properties!", e);
 				} catch (InvocationTargetException e) {
-					e.printStackTrace();
+					throw new RuntimeException("Failed to load test properties!", e);
 				}
 			}
 			servletConfigs.add(config);
-			i++;
+			added.add(prefix);
 		}
 	}
 

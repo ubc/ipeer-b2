@@ -99,4 +99,32 @@
 	        </list>
 	    </constructor-arg>
 	</bean>
+	
+	<!-- Group fixtures -->
+	
+	<bean id="group" class="ca.ubc.ctlt.ipeerb2.domain.Group">
+        <property name="id" value="1" />
+        <property name="name" value="groupname1" />
+        <property name="setName" value="Set1" />
+    </bean>
+    <bean id="group2" class="ca.ubc.ctlt.ipeerb2.domain.Group">
+        <property name="id" value="2" />
+        <property name="name" value="groupname2" />
+        <property name="setName" value="Set1" />
+    </bean>
+    <bean id="group3" class="ca.ubc.ctlt.ipeerb2.domain.Group">
+        <property name="id" value="3" />
+        <property name="name" value="groupname3" />
+        <property name="setName" value="Set1" />
+    </bean>
+    
+    <bean id="groupList" class="java.util.ArrayList">
+	    <constructor-arg>
+	        <list>
+	            <ref bean="group" />
+	            <ref bean="group2" />   
+	            <ref bean="group3" />              
+	        </list>
+	    </constructor-arg>
+	</bean>
 </beans>
