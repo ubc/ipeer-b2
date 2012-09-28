@@ -1,0 +1,12 @@
+bin/
+dist/
+build/
+build.test/
+reports/
+lib/*.jar
+*.swp
+*.class
+
+# Package Files #
+*.war
+*.ear

@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:oxm="http://www.springframework.org/schema/oxm"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/oxm http://www.springframework.org/schema/oxm/spring-oxm-3.0.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd">
+    
+    <description>Primary web service integration test context file</description>
+    
+    <!-- Loading the property files -->
+    <!-- <util:properties id="configurations" location="classpath:webservice.properties"/> -->
+    <bean id="configurations" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+    	<property name="location" value="classpath:webservice.properties"/>
+	</bean>
+	
+	<bean id="messageSource"
+	    class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+	    <property name="basename" value="classpath:messages" />
+	    <property name="defaultEncoding" value="UTF-8"/>
+	</bean>
+	 
+	<bean id="localeChangeInterceptor"
+	    class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
+	    <property name="paramName" value="lang" />
+	</bean>
+	 
+	<bean id="localeResolver"
+	    class="org.springframework.web.servlet.i18n.CookieLocaleResolver">
+	    <property name="defaultLocale" value="en"/>
+	</bean>
+	 
+	<bean id="handlerMapping"
+	    class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping">
+	    <property name="interceptors">
+	        <ref bean="localeChangeInterceptor" />
+	    </property>
+	</bean>
+	
+    <!-- Loading a http server -->
+    <import resource="testHttpServer.xml"/>
+	
+    <bean id="webService" class="ca.ubc.ctlt.ipeerb2.webservice.iPeerWebService">
+        <constructor-arg ref="restTemplate"/>
+        <constructor-arg value="${webservice.server.name}:${webservice.server.port}"/>
+    </bean>
+    
+    <!-- Course Fixtures -->
+    
+    <bean id="courseToCreate" class="ca.ubc.ctlt.ipeerb2.domain.Course">
+        <property name="course" value="MATH101" />
+        <property name="title" value="Test Course" />
+    </bean>
+    
+    <bean id="invalidCourseToCreate" class="ca.ubc.ctlt.ipeerb2.domain.Course">
+        <property name="course" value="MATH101" />
+        <property name="title" value="Wrong Course" />
+    </bean>
+    
+    <bean id="courseToUpdate" class="ca.ubc.ctlt.ipeerb2.domain.Course">
+        <property name="id" value="1" />
+        <property name="course" value="MATH101" />
+        <property name="title" value="Test Course" />
+    </bean>
+    
+    <bean id="invalidCourseToUpdate" class="ca.ubc.ctlt.ipeerb2.domain.Course">
+        <property name="id" value="999" />
+        <property name="course" value="MATH101" />
+        <property name="title" value="Test Course" />
+    </bean>
+ 
+ 	<!-- User Fixtures -->
+ 	
+ 	<bean id="userToCreate" class="ca.ubc.ctlt.ipeerb2.domain.User">
+        <property name="username" value="username1" />
+        <property name="password" value="newpassword" />
+        <property name="roleId" value="1" />
+        <property name="firstName" value="Test" />
+        <property name="lastName" value="User1" />
+        <property name="email" value="username1@ubc.ca" />
+        <property name="studentId" value="12345671" />
+    </bean>
+    
+    <bean id="invalidUserToCreate" class="ca.ubc.ctlt.ipeerb2.domain.User">
+        <property name="username" value="invalid_username" />
+        <property name="password" value="newpassword" />
+        <property name="roleId" value="1" />
+        <property name="firstName" value="Invalid" />
+        <property name="lastName" value="User" />
+        <property name="email" value="invalid_username@ubc.ca" />
+        <property name="studentId" value="00000000" />
+    </bean>
+    
+    <bean id="userToUpdate" class="ca.ubc.ctlt.ipeerb2.domain.User">
+        <property name="id" value="1" />
+        <property name="username" value="username1" />
+        <property name="password" value="newpassword" />
+        <property name="roleId" value="1" />
+        <property name="firstName" value="Test" />
+        <property name="lastName" value="User1" />
+        <property name="email" value="username1@ubc.ca" />
+        <property name="studentId" value="12345671" />
+    </bean>
+    
+    <bean id="invalidUserToUpdate" class="ca.ubc.ctlt.ipeerb2.domain.User">
+        <property name="id" value="999" />
+        <property name="username" value="invalid_username" />
+        <property name="password" value="newpassword" />
+        <property name="roleId" value="1" />
+        <property name="firstName" value="Invalid" />
+        <property name="lastName" value="User" />
+        <property name="email" value="invalid_username@ubc.ca" />
+        <property name="studentId" value="00000000" />
+    </bean>
+    
+    <bean id="restTemplate" class="org.springframework.web.client.RestTemplate">
+        <property name="messageConverters">
+            <list>
+                <bean class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter">
+                    <property name="supportedMediaTypes" value="application/json" />
+                </bean>
+            </list>
+        </property>
+    </bean>
+</beans>

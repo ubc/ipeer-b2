@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:oxm="http://www.springframework.org/schema/oxm"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/oxm http://www.springframework.org/schema/oxm/spring-oxm-3.0.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd">
+    
+    <description>Initialize a HTTP server for testing</description>
+    
+    <!-- Setup HTTP request and response for the test server -->
+    <!-- Course API servlet -->
+    <bean id="courseApiServlet" class="ca.ubc.ctlt.ipeerb2.webservice.ApiTestServlet">
+        <property name="properties">
+            <value>
+                test.1.uri=/[^/]*/courses
+                test.1.method=get
+                test.1.responsebody=[{"id":1,"course":"MATH101","title":"Test Course"}, {"id":2,"course":"MATH102","title":"Test Course 2"},{"id":3,"course":"MATH103","title":"Test Course 3"}]
+                test.1.responsestatus=200
+           
+                test.2.uri=/[^/]*/courses/1
+                test.2.method=get
+                test.2.responsebody={"id":1,"course":"MATH101","title":"Test Course"}
+                test.2.responsestatus=200
+                
+                test.3.uri=/[^/]*/courses/999
+                test.3.method=get
+                test.3.responsebody={}
+                test.3.responsestatus=404
+                
+                test.4.uri=/[^/]*/courses
+                test.4.method=post
+                test.4.requestbody={"id":0,"course":"MATH101","title":"Test Course"}
+                test.4.responsebody={"id":1,"course":"MATH101","title":"Test Course"}
+                test.4.responsestatus=201
+                
+                test.5.uri=/[^/]*/courses
+                test.5.method=post
+                test.5.requestbody={"id":0,"course":"MATH101","title":"Wrong Course"}
+                test.5.responsestatus=500
+                
+                test.6.uri=/[^/]*/courses/1
+                test.6.method=delete
+                test.6.responsestatus=204
+                
+                test.7.uri=/[^/]*/courses/999
+                test.7.method=delete
+                test.7.responsestatus=500
+                
+                test.8.uri=/[^/]*/courses/1
+                test.8.method=put
+                test.8.requestbody={"id":1,"course":"MATH101","title":"Test Course"}
+                test.8.responsestatus=200
+                
+                test.9.uri=/[^/]*/courses/999
+                test.9.method=put
+                test.9.requestbody={"id":999,"course":"MATH101","title":"Test Course"}
+                test.9.responsestatus=500
+            </value>
+        </property>
+        <property name="contentType" ref="jsonContentType" />
+    </bean>
+    
+    <!-- User API servlet -->
+   	<bean id="userApiServlet" class="ca.ubc.ctlt.ipeerb2.webservice.ApiTestServlet">
+        <property name="properties">
+            <value>
+                test.1.uri=/[^/]*/users
+                test.1.method=get
+                test.1.responsebody=[{"id":1,"role_id":1,"username":"username1","first_name":"Test","last_name":"User1","email":"username1@ubc.ca","student_id":"12345671"}, {"id":2,"role_id":1,"username":"username2","first_name":"Test","last_name":"User2","email":"username2@ubc.ca","student_id":"12345672"},{"id":3,"role_id":1,"username":"username3","first_name":"Test","last_name":"User3","email":"username3@ubc.ca","student_id":"12345673"}]
+                test.1.responsestatus=200
+           
+                test.2.uri=/[^/]*/users/1
+                test.2.method=get
+                test.2.responsebody={"id":1,"role_id":1,"username":"username1","first_name":"Test","last_name":"User1","email":"username1@ubc.ca","student_id":"12345671"}
+                test.2.responsestatus=200
+                
+                test.3.uri=/[^/]*/users/999
+                test.3.method=get
+                test.3.responsebody={}
+                test.3.responsestatus=404
+                
+                test.4.uri=/[^/]*/users
+                test.4.method=post
+                test.4.requestbody={"id":0,"role_id":1,"username":"username1","password":"newpassword","first_name":"Test","last_name":"User1","email":"username1@ubc.ca","student_id":"12345671"}
+                test.4.responsebody={"id":1,"role_id":1,"username":"username1","first_name":"Test","last_name":"User1","email":"username1@ubc.ca","student_id":"12345671"}
+                test.4.responsestatus=201
+                
+                test.5.uri=/[^/]*/users
+                test.5.method=post
+                test.5.requestbody=[{"id":0,"role_id":1,"username":"username1","password":"newpassword","first_name":"Test","last_name":"User1","email":"username1@ubc.ca","student_id":"12345671"}, {"id":0,"role_id":1,"username":"username2","password":"newpassword","first_name":"Test","last_name":"User2","email":"username2@ubc.ca","student_id":"12345672"},{"id":0,"role_id":1,"username":"username3","password":"newpassword","first_name":"Test","last_name":"User3","email":"username3@ubc.ca","student_id":"12345673"}]
+                test.5.responsebody=[{"id":1,"role_id":1,"username":"username1","first_name":"Test","last_name":"User1","email":"username1@ubc.ca","student_id":"12345671"}, {"id":2,"role_id":1,"username":"username2","first_name":"Test","last_name":"User2","email":"username2@ubc.ca","student_id":"12345672"},{"id":3,"role_id":1,"username":"username3","first_name":"Test","last_name":"User3","email":"username3@ubc.ca","student_id":"12345673"}]
+                test.5.responsestatus=201
+                
+                test.6.uri=/[^/]*/users
+                test.6.method=post
+                test.6.requestbody={"id":0,"role_id":1,"username":"invalid_username","password":"newpassword","first_name":"Invalid","last_name":"User","email":"invalid_username@ubc.ca","student_id":"00000000"}
+                test.6.responsestatus=500
+                
+                test.7.uri=/[^/]*/users/1
+                test.7.method=delete
+                test.7.responsestatus=204
+                
+                test.8.uri=/[^/]*/users/999
+                test.8.method=delete
+                test.8.responsestatus=500
+                
+                test.9.uri=/[^/]*/users/1
+                test.9.method=put
+                test.9.requestbody={"id":1,"role_id":1,"username":"username1","password":"newpassword","first_name":"Test","last_name":"User1","email":"username1@ubc.ca","student_id":"12345671"}
+                test.9.responsestatus=200
+                
+                test.10.uri=/[^/]*/users/999
+                test.10.method=put
+                test.10.requestbody={"id":999,"role_id":1,"username":"invalid_username","password":"newpassword","first_name":"Invalid","last_name":"User","email":"invalid_username@ubc.ca","student_id":"00000000"}
+                test.10.responsestatus=500
+            </value>
+        </property>
+        <property name="contentType" ref="jsonContentType" />
+    </bean>
+    
+    <bean id="jsonContentType" class="org.springframework.http.MediaType">
+        <constructor-arg value="application"/>
+        <constructor-arg value="json"/>
+    </bean>
+    
+    <bean id="courseServletHolder" class="org.eclipse.jetty.servlet.ServletHolder">
+        <constructor-arg ref="courseApiServlet"/>
+    </bean>
+    
+    <bean id="userServletHolder" class="org.eclipse.jetty.servlet.ServletHolder">
+        <constructor-arg ref="userApiServlet"/>
+    </bean>
+    
+    <bean id="servletHandler" class="org.eclipse.jetty.servlet.ServletContextHandler"/>
+	
+	<!-- Adding the servlet holders to the handlers -->
+	<bean id="servletHandlerSetter" class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+		<property name="targetObject" ref="servletHandler"/>
+		<property name="targetMethod" value="addServlet"/>
+		<property name="arguments">
+			<list>
+	    		<ref bean="courseServletHolder"/>
+	    		<value>#{ T(ca.ubc.ctlt.ipeerb2.webservice.iPeerWebService).API_COURSE }/*</value>
+	   		</list>
+	 	</property>
+	</bean>
+	
+	<bean class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+		<property name="targetObject" ref="servletHandler"/>
+		<property name="targetMethod" value="addServlet"/>
+		<property name="arguments">
+			<list>
+	    		<ref bean="userServletHolder"/>
+	    		<value>#{ T(ca.ubc.ctlt.ipeerb2.webservice.iPeerWebService).API_USER }/*</value>
+	   		</list>
+	 	</property>
+	</bean>
+	
+	<bean id="httpTestServer" class="org.eclipse.jetty.server.Server" init-method="start" destroy-method="stop" depends-on="servletHandlerSetter">
+	    <property name="connectors">
+	        <list>
+	            <bean class="org.eclipse.jetty.server.bio.SocketConnector">
+	                <!-- <property name="host" value="localhost" /> -->
+	                <property name="port" value="${webservice.server.port}" />
+	            </bean>
+	        </list>
+	    </property>
+
+	    <property name="handler">
+	    	<ref bean="servletHandler" />
+	    </property>
+	</bean>
+</beans>
