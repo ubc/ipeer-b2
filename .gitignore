@@ -6,6 +6,13 @@ reports/
 lib/*.jar
 *.swp
 *.class
+lib/
+local.properties
+
+# Eclipse project file
+.classpath
+.project
+.settings
 
 # Package Files #
 *.war
