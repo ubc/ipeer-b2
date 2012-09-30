@@ -66,6 +66,10 @@ public class iPeerWebServiceTest {
 		when(restOperations.getForObject( Matchers.anyString(), Matchers.eq(Group[].class), Matchers.anyInt()) ).thenReturn(groupList.toArray(new Group[groupList.size()]));
 		when(restOperations.postForObject( Matchers.anyString(), Matchers.any(Group.class), Matchers.eq(Group.class), Matchers.anyInt()) ).thenReturn(group);
 		when(restOperations.postForObject( Matchers.anyString(), Matchers.any(Group[].class), Matchers.eq(Group[].class), Matchers.anyInt()) ).thenReturn(groupList.toArray(new Group[groupList.size()]));
+		
+		// course/user mocking
+		when(restOperations.getForObject( Matchers.anyString(), Matchers.eq(User[].class), Matchers.anyInt()) ).thenReturn(userList.toArray(new User[userList.size()]));
+		when(restOperations.postForObject( Matchers.anyString(), Matchers.any(User[].class), Matchers.eq(User[].class), Matchers.anyInt()) ).thenReturn(userList.toArray(new User[userList.size()]));
 	}
 
 	@Test
@@ -234,6 +238,90 @@ public class iPeerWebServiceTest {
 	@Test
 	public final void testUpdateGroup() {
 		boolean result = webService.updateGroup(group);
+		assertTrue(result);
+	}
+	
+	/************* Course/User API Test *************/
+	
+	@Test
+	public final void testGetUsersInCourse() {
+		List<User> ul = webService.getUsersInCourse(1);
+		assertTrue(ul.size() == 3);
+		User u = ul.get(0);
+		assertTrue(u.getId() == 1);
+		assertTrue("username1".equals(u.getUsername()));
+		
+		u = ul.get(1);
+		assertTrue(u.getId() == 2);
+		assertTrue("username2".equals(u.getUsername()));
+		
+		u = ul.get(2);
+		assertTrue(u.getId() == 3);
+		assertTrue("username3".equals(u.getUsername()));
+	}
+	
+	@Test
+	public final void testEnrolUsersInCourse() {
+		List<User> ul = webService.enrolUsersInCourse(1, userList);
+		assertTrue(ul.size() == 3);
+		User u = ul.get(0);
+		assertTrue(u.getId() == 1);
+		assertTrue("username1".equals(u.getUsername()));
+		
+		u = ul.get(1);
+		assertTrue(u.getId() == 2);
+		assertTrue("username2".equals(u.getUsername()));
+		
+		u = ul.get(2);
+		assertTrue(u.getId() == 3);
+		assertTrue("username3".equals(u.getUsername()));
+	}
+	
+	@Test
+	public final void testRemoveUsersFromCourse() {
+		boolean result = webService.removeUserFromCourse(1, user);
+		assertTrue(result);
+	}
+	
+	/************* Group/User API Test *************/
+	
+	@Test
+	public final void testGetUsersInGroup() {
+		List<User> ul = webService.getUsersInGroup(1);
+		assertTrue(ul.size() == 3);
+		User u = ul.get(0);
+		assertTrue(u.getId() == 1);
+		assertTrue("username1".equals(u.getUsername()));
+		
+		u = ul.get(1);
+		assertTrue(u.getId() == 2);
+		assertTrue("username2".equals(u.getUsername()));
+		
+		u = ul.get(2);
+		assertTrue(u.getId() == 3);
+		assertTrue("username3".equals(u.getUsername()));
+	}
+	
+	@Test
+	public final void testEnrolUsersInGroup() {
+		List<User> ul = webService.enrolUsersInGroup(1, userList);
+		assertTrue(ul.size() == 3);
+		User u = ul.get(0);
+		assertTrue(u.getId() == 1);
+		assertTrue("username1".equals(u.getUsername()));
+		
+		u = ul.get(1);
+		assertTrue(u.getId() == 2);
+		assertTrue("username2".equals(u.getUsername()));
+		
+		u = ul.get(2);
+		assertTrue(u.getId() == 3);
+		assertTrue("username3".equals(u.getUsername()));
+	}
+	
+	@Test
+	public final void testRemoveUsersFromGroup() {
+		boolean result = webService.removeUserFromGroup(1, user);
 		assertTrue(result);
 	}
 }

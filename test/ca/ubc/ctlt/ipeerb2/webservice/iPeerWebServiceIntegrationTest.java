@@ -4,7 +4,10 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import java.util.Arrays;
 import java.util.List;
+
+import javax.annotation.Resource;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -48,6 +51,9 @@ public class iPeerWebServiceIntegrationTest {
 	
 	@Autowired
 	private User invalidUserToUpdate;
+	
+	@Resource
+	private List<User> userList;
 	
 	@Autowired
 	private Group groupToCreate;
@@ -263,5 +269,103 @@ public class iPeerWebServiceIntegrationTest {
 	public final void testUpdateInvalidGroup() {
 		webService.updateGroup(invalidGroupToUpdate);
 		fail("No exception when deleting an invalid group!");
+	}
+	
+	/************* Course/User API Tests ****************/
+	
+	@Test
+	public final void testGetUsersInCourse() {
+		List<User> cl = webService.getUsersInCourse(1);
+		assertTrue(cl.size() == 3);
+		User c = cl.get(0);
+		assertTrue(c.getId() == 1);
+		assertTrue("username1".equals(c.getUsername()));
+		
+		c = cl.get(1);
+		assertTrue(c.getId() == 2);
+		assertTrue("username2".equals(c.getUsername()));
+		
+		c = cl.get(2);
+		assertTrue(c.getId() == 3);
+		assertTrue("username3".equals(c.getUsername()));
+	}
+	
+	@Test(expected=RuntimeException.class)
+	public final void testGetUsersInInvalidCourse() {
+		webService.getUsersInCourse(999);
+		fail("No exception when get users from invalid course!");
+	}
+	
+	@Test
+	public final void testEnrolUserInCourse() {
+		List<User> ul = webService.enrolUsersInCourse(1, userList);
+		assertTrue(ul.size() == userList.size());
+	}
+	
+	@Test(expected=RuntimeException.class)
+	public final void testEnrolInvalidUserInCourse() {
+		webService.enrolUsersInCourse(1, Arrays.asList(invalidUserToUpdate));
+		fail("No exception when enroling invalid users to course!");
+	}
+	
+	@Test
+	public final void testRemoveUsersFromCourse() {
+		boolean result = webService.removeUserFromCourse(1, userToUpdate);
+		assertTrue(result);
+	}
+	
+	@Test(expected=RuntimeException.class)
+	public final void testRemoveInvalidUsersFromCourse() {
+		webService.removeUserFromCourse(1, invalidUserToUpdate);
+		fail("No exception when removing invalid users to course!");
+	}
+	
+	/************* Group/User API Tests ****************/
+	
+	@Test
+	public final void testGetUsersInGroup() {
+		List<User> cl = webService.getUsersInGroup(1);
+		assertTrue(cl.size() == 3);
+		User c = cl.get(0);
+		assertTrue(c.getId() == 1);
+		assertTrue("username1".equals(c.getUsername()));
+		
+		c = cl.get(1);
+		assertTrue(c.getId() == 2);
+		assertTrue("username2".equals(c.getUsername()));
+		
+		c = cl.get(2);
+		assertTrue(c.getId() == 3);
+		assertTrue("username3".equals(c.getUsername()));
+	}
+	
+	@Test(expected=RuntimeException.class)
+	public final void testGetUsersInInvalidGroup() {
+		webService.getUsersInGroup(999);
+		fail("No exception when get users from invalid group!");
+	}
+	
+	@Test
+	public final void testEnrolUserInGroup() {
+		List<User> ul = webService.enrolUsersInGroup(1, userList);
+		assertTrue(ul.size() == userList.size());
+	}
+	
+	@Test(expected=RuntimeException.class)
+	public final void testEnrolInvalidUserInGroup() {
+		webService.enrolUsersInGroup(1, Arrays.asList(invalidUserToUpdate));
+		fail("No exception when enroling invalid users to group!");
+	}
+	
+	@Test
+	public final void testRemoveUsersFromGroup() {
+		boolean result = webService.removeUserFromGroup(1, userToUpdate);
+		assertTrue(result);
+	}
+	
+	@Test(expected=RuntimeException.class)
+	public final void testRemoveInvalidUsersFromGroup() {
+		webService.removeUserFromGroup(1, invalidUserToUpdate);
+		fail("No exception when removing invalid users to group!");
 	}
 }

@@ -111,6 +111,43 @@
         <property name="studentId" value="00000000" />
     </bean>
     
+    <bean id="user" class="ca.ubc.ctlt.ipeerb2.domain.User">
+        <property name="id" value="1" />
+        <property name="username" value="username1" />
+        <property name="roleId" value="1" />
+        <property name="firstName" value="Test" />
+        <property name="lastName" value="User1" />
+        <property name="email" value="username1@ubc.ca" />
+        <property name="studentId" value="12345671" />
+    </bean>
+    <bean id="user2" class="ca.ubc.ctlt.ipeerb2.domain.User">
+        <property name="id" value="2" />
+        <property name="username" value="username2" />
+        <property name="roleId" value="1" />
+        <property name="firstName" value="Test" />
+        <property name="lastName" value="User2" />
+        <property name="email" value="username2@ubc.ca" />
+        <property name="studentId" value="12345672" />
+    </bean>
+    <bean id="user3" class="ca.ubc.ctlt.ipeerb2.domain.User">
+        <property name="id" value="3" />
+        <property name="username" value="username3" />
+        <property name="roleId" value="1" />
+        <property name="firstName" value="Test" />
+        <property name="lastName" value="User3" />
+        <property name="email" value="username3@ubc.ca" />
+        <property name="studentId" value="12345673" />
+    </bean>
+    
+    <bean id="userList" class="java.util.ArrayList">
+	    <constructor-arg>
+	        <list>
+	            <ref bean="user" />
+	            <ref bean="user2" />   
+	            <ref bean="user3" />              
+	        </list>
+	    </constructor-arg>
+	</bean>
     <!-- Group Fixtures -->
  	
  	<bean id="groupToCreate" class="ca.ubc.ctlt.ipeerb2.domain.Group">

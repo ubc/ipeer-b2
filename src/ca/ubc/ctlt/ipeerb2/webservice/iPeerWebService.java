@@ -24,6 +24,8 @@ public class iPeerWebService {
 	public static final String API_COURSE = "/" + API_VERSION + "/courses";
 	public static final String API_USER = "/" + API_VERSION + "/users";
 	public static final String API_GROUP = "/" + API_VERSION + "/courses/{course_id}/groups";
+	public static final String API_COURSE_USER = "/" + API_VERSION + "/courses/{course_id}/users";
+	public static final String API_GROUP_USER = "/" + API_VERSION + "/groups/{group_id}/users";
 	private static final Logger logger = Logger.getLogger(iPeerWebService.class);
 	
 	public iPeerWebService(RestOperations restTemplate, String serverUrl) {
@@ -216,5 +218,75 @@ public class iPeerWebService {
 		}
 		
 		return true;
+	}
+	
+	/************** Course/User APIs ****************/
+	
+	public List<User> getUsersInCourse(int courseId) {
+		User[] users = restTemplate.getForObject(serverUrl + API_COURSE_USER, User[].class, courseId);
+		List<User> result = Arrays.asList(users);
+		return result;
+	}
+	
+	public List<User> enrolUsersInCourse(int courseId, List<User> users) {
+		User[] result = null;
+		try {
+			result = restTemplate.postForObject(serverUrl + API_COURSE_USER, users.toArray(), User[].class, courseId);
+		} catch (RestClientException e) {
+			logger.warn("User enrolment failed! Status code=" + e.getMessage());
+			throw new RuntimeException(messageSource.getMessage("message.failed_enrol_user", null, null), e);
+		}
+		
+		return Arrays.asList(result);
+	}
+	
+	public boolean removeUserFromCourse(int courseId, long userId) {
+		try {
+			restTemplate.delete(serverUrl + API_COURSE_USER + "/{user_id}", courseId, userId);
+		} catch (RestClientException e) {
+			logger.warn("User enrolment deletion failed! Status code=" + e.getMessage());
+			throw new RuntimeException(messageSource.getMessage("message.failed_delete_enrolment", null, null), e);
+		}
+		
+		return true;	
+	}
+	
+	public boolean removeUserFromCourse(int courseId, User user) {
+		return removeUserFromCourse(courseId, user.getId());
+	}
+	
+	/************** Group/User APIs ****************/
+	
+	public List<User> getUsersInGroup(int groupId) {
+		User[] users = restTemplate.getForObject(serverUrl + API_GROUP_USER, User[].class, groupId);
+		List<User> result = Arrays.asList(users);
+		return result;
+	}
+	
+	public List<User> enrolUsersInGroup(int groupId, List<User> users) {
+		User[] result = null;
+		try {
+			result = restTemplate.postForObject(serverUrl + API_GROUP_USER, users.toArray(), User[].class, groupId);
+		} catch (RestClientException e) {
+			logger.warn("User enrolment failed! Status code=" + e.getMessage());
+			throw new RuntimeException(messageSource.getMessage("message.failed_enrol_user", null, null), e);
+		}
+		
+		return Arrays.asList(result);
+	}
+	
+	public boolean removeUserFromGroup(int groupId, long userId) {
+		try {
+			restTemplate.delete(serverUrl + API_GROUP_USER + "/{user_id}", groupId, userId);
+		} catch (RestClientException e) {
+			logger.warn("User enrolment deletion failed! Status code=" + e.getMessage());
+			throw new RuntimeException(messageSource.getMessage("message.failed_delete_enrolment", null, null), e);
+		}
+		
+		return true;	
+	}
+	
+	public boolean removeUserFromGroup(int groupId, User user) {
+		return removeUserFromGroup(groupId, user.getId());
 	}
 }

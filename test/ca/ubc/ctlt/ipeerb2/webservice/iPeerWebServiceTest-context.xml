@@ -64,7 +64,7 @@
 	</bean>
 	
 	<!-- User fixtures -->
-	
+ 
 	<bean id="user" class="ca.ubc.ctlt.ipeerb2.domain.User">
         <property name="id" value="1" />
         <property name="username" value="username1" />
