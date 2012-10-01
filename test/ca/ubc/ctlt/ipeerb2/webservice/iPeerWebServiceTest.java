@@ -17,6 +17,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.web.client.RestOperations;
 
 import ca.ubc.ctlt.ipeerb2.domain.Course;
+import ca.ubc.ctlt.ipeerb2.domain.Event;
+import ca.ubc.ctlt.ipeerb2.domain.Grade;
 import ca.ubc.ctlt.ipeerb2.domain.Group;
 import ca.ubc.ctlt.ipeerb2.domain.User;
 
@@ -47,7 +49,19 @@ public class iPeerWebServiceTest {
 	
 	@Autowired
 	private List<Group> groupList;
+	
+	@Autowired
+	private Event event;
+	
+	@Autowired
+	private List<Event> eventList;
 
+	@Autowired
+	private Grade grade;
+	
+	@Autowired
+	private List<Grade> gradeList;
+	
 	@Before
 	public void setUp() throws Exception {
 		// course mocking
@@ -70,6 +84,15 @@ public class iPeerWebServiceTest {
 		// course/user mocking
 		when(restOperations.getForObject( Matchers.anyString(), Matchers.eq(User[].class), Matchers.anyInt()) ).thenReturn(userList.toArray(new User[userList.size()]));
 		when(restOperations.postForObject( Matchers.anyString(), Matchers.any(User[].class), Matchers.eq(User[].class), Matchers.anyInt()) ).thenReturn(userList.toArray(new User[userList.size()]));
+		
+		// event mocking
+		when(restOperations.getForObject( Matchers.matches("/[^/]*/courses/\\d+/events"), Matchers.eq(Event[].class), Matchers.anyInt()) ).thenReturn(eventList.toArray(new Event[eventList.size()]));
+		when(restOperations.getForObject( Matchers.anyString(), Matchers.eq(Event.class), Matchers.anyInt(), Matchers.anyInt()) ).thenReturn(event);
+		when(restOperations.getForObject( Matchers.anyString(), Matchers.eq(Event[].class), Matchers.anyInt()) ).thenReturn(eventList.toArray(new Event[eventList.size()]));
+		
+		// grade mocking
+		when(restOperations.getForObject( Matchers.anyString(), Matchers.eq(Grade[].class), Matchers.anyInt()) ).thenReturn(gradeList.toArray(new Grade[gradeList.size()]));
+		when(restOperations.getForObject( Matchers.anyString(), Matchers.eq(Grade.class), Matchers.anyInt(), Matchers.anyInt()) ).thenReturn(grade);
 	}
 
 	@Test
@@ -323,5 +346,75 @@ public class iPeerWebServiceTest {
 	public final void testRemoveUsersFromGroup() {
 		boolean result = webService.removeUserFromGroup(1, user);
 		assertTrue(result);
+	}
+	
+	/************* Event API Test *************/
+	
+	@Test
+	public final void testGetEventsInCourse() {
+		List<Event> el = webService.getEventsInCourse(1);
+		assertTrue(el.size() == 3);
+		Event u = el.get(0);
+		assertTrue(u.getId() == 1);
+		assertTrue("eventname1".equals(u.getTitle()));
+		
+		u = el.get(1);
+		assertTrue(u.getId() == 2);
+		assertTrue("eventname2".equals(u.getTitle()));
+		
+		u = el.get(2);
+		assertTrue(u.getId() == 3);
+		assertTrue("eventname3".equals(u.getTitle()));
+	}
+	
+	@Test
+	public final void testGetEvent() {
+		Event event = webService.getEvent(1);
+		assertTrue(1 == event.getId());
+		assertTrue("eventname1".equals(event.getTitle()));
+	}
+	
+	@Test
+	public final void testGetEventsForUser() {
+		List<Event> el = webService.getEventsForUser(1);
+		assertTrue(el.size() == 3);
+		Event u = el.get(0);
+		assertTrue(u.getId() == 1);
+		assertTrue("eventname1".equals(u.getTitle()));
+		
+		u = el.get(1);
+		assertTrue(u.getId() == 2);
+		assertTrue("eventname2".equals(u.getTitle()));
+		
+		u = el.get(2);
+		assertTrue(u.getId() == 3);
+		assertTrue("eventname3".equals(u.getTitle()));
+	}
+	
+	/************* Grade API Test *************/
+	
+	@Test
+	public final void testGetGradesInCourse() {
+		List<Grade> el = webService.getGradesInEvent(1);
+		assertTrue(el.size() == 3);
+		Grade u = el.get(0);
+		assertTrue(u.getId() == 1);
+		assertTrue(10.5 == u.getGrade());
+		
+		u = el.get(1);
+		assertTrue(u.getId() == 2);
+		assertTrue(10.6 == (u.getGrade()));
+		
+		u = el.get(2);
+		assertTrue(u.getId() == 3);
+		assertTrue(10.7 == u.getGrade());
+	}
+	
+	@Test
+	public final void testGetGradesForUser() {
+		Grade grade = webService.getGradesForUserInEvent(1,1);
+		
+		assertTrue(grade.getId() == 1);
+		assertTrue(10.5 == grade.getGrade());
 	}
 }

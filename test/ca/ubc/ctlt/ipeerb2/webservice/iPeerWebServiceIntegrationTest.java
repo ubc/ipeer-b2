@@ -17,6 +17,8 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import ca.ubc.ctlt.ipeerb2.domain.Course;
+import ca.ubc.ctlt.ipeerb2.domain.Event;
+import ca.ubc.ctlt.ipeerb2.domain.Grade;
 import ca.ubc.ctlt.ipeerb2.domain.Group;
 import ca.ubc.ctlt.ipeerb2.domain.User;
 
@@ -367,5 +369,110 @@ public class iPeerWebServiceIntegrationTest {
 	public final void testRemoveInvalidUsersFromGroup() {
 		webService.removeUserFromGroup(1, invalidUserToUpdate);
 		fail("No exception when removing invalid users to group!");
+	}
+	
+	/************* Event API Tests ****************/
+	
+	@Test
+	public final void testGetEventsInCourse() {
+		List<Event> el = webService.getEventsInCourse(1);
+		assertTrue(el.size() == 3);
+		Event c = el.get(0);
+		assertTrue(c.getId() == 1);
+		assertTrue("eventname1".equals(c.getTitle()));
+		
+		c = el.get(1);
+		assertTrue(c.getId() == 2);
+		assertTrue("eventname2".equals(c.getTitle()));
+		
+		c = el.get(2);
+		assertTrue(c.getId() == 3);
+		assertTrue("eventname3".equals(c.getTitle()));
+	}
+	
+	@Test(expected=RuntimeException.class)
+	public final void testGetEventsInInvalidCourse() {
+		webService.getEventsInCourse(999);
+		fail("No exception when get events from invalid group!");
+	}
+	
+	@Test
+	public final void testGetEvent() {
+		Event event = webService.getEvent(1);
+		assertTrue(1 == event.getId());
+		assertTrue("eventname1".equals(event.getTitle()));
+	}
+	
+	@Test(expected=RuntimeException.class)
+	public final void testGetInvalidEvent() {
+		webService.getEvent(999);
+		fail("No exception when getting invalid event!");
+	}
+	
+	@Test
+	public final void testGetEventsForUser() {
+		List<Event> el = webService.getEventsForUser(1);
+		assertTrue(el.size() == 3);
+		Event c = el.get(0);
+		assertTrue(c.getId() == 1);
+		assertTrue("eventname1".equals(c.getTitle()));
+		
+		c = el.get(1);
+		assertTrue(c.getId() == 2);
+		assertTrue("eventname2".equals(c.getTitle()));
+		
+		c = el.get(2);
+		assertTrue(c.getId() == 3);
+		assertTrue("eventname3".equals(c.getTitle()));
+	}
+	
+	@Test(expected=RuntimeException.class)
+	public final void testGetEventsForInvalidUser() {
+		webService.getEventsForUser(999);
+		fail("No exception when getting events for invalid user!");
+	}
+	
+	/************* Grade API Tests ****************/
+	
+	@Test
+	public final void testGetGradesInCourse() {
+		List<Grade> el = webService.getGradesInEvent(1);
+		assertTrue(el.size() == 3);
+		Grade u = el.get(0);
+		assertTrue(u.getId() == 1);
+		assertTrue(10.5 == u.getGrade());
+		
+		u = el.get(1);
+		assertTrue(u.getId() == 2);
+		assertTrue(10.6 == (u.getGrade()));
+		
+		u = el.get(2);
+		assertTrue(u.getId() == 3);
+		assertTrue(10.7 == u.getGrade());
+	}
+	
+	@Test(expected=RuntimeException.class)
+	public final void testGetGradesInInvalidEvent() {
+		webService.getGradesInEvent(999);
+		fail("No exception when get grades from invalid event!");
+	}
+	
+	@Test
+	public final void testGetGradeForUserInEvent() {
+		Grade grade = webService.getGradesForUserInEvent(1, 1);
+		assertTrue(1 == grade.getId());
+		assertTrue(10.5 == grade.getGrade());
+	}
+	
+	@Test(expected=RuntimeException.class)
+	public final void testGetGradesForInvalidUserInEvent() {
+		webService.getGradesForUserInEvent(999, 1);
+		fail("No exception when enroling invalid users to group!");
+	}
+	
+	@Test(expected=RuntimeException.class)
+	public final void testGetGradesForUserInInvalidEvent() {
+		webService.getGradesForUserInEvent(1, 999);
+		fail("No exception when enroling invalid users to group!");
 	}
 }

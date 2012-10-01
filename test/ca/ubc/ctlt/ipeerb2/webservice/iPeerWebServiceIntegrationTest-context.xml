@@ -148,6 +148,7 @@
 	        </list>
 	    </constructor-arg>
 	</bean>
+	
     <!-- Group Fixtures -->
  	
  	<bean id="groupToCreate" class="ca.ubc.ctlt.ipeerb2.domain.Group">

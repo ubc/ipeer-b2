@@ -71,6 +71,12 @@ public class ApiTestServlet extends HttpServlet {
 					throw new RuntimeException("Failed to load test properties!", e);
 				}
 			}
+
+			// maybe we can catch some configuration typo here
+			if (config.getUri() == null || config.getMethod() == null) {
+				throw new RuntimeException("Invalid configuration! " + prefix + ", " +config);
+			}
+			
 			servletConfigs.add(config);
 			added.add(prefix);
 		}
@@ -104,6 +110,7 @@ public class ApiTestServlet extends HttpServlet {
 
 		for(TestServletConfig config : servletConfigs) {
 			// check the uri patten, request method and body
+			//System.out.println(config.getUri() +": "+ config.getMethod());
 			if (request.getRequestURI().matches(config.getUri()) && 
 					request.getMethod().equals(config.getMethod().toUpperCase()) &&
 					(received == null || received.equals(config.getRequestBody()))

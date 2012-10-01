@@ -10,6 +10,8 @@ import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestOperations;
 
 import ca.ubc.ctlt.ipeerb2.domain.Course;
+import ca.ubc.ctlt.ipeerb2.domain.Event;
+import ca.ubc.ctlt.ipeerb2.domain.Grade;
 import ca.ubc.ctlt.ipeerb2.domain.Group;
 import ca.ubc.ctlt.ipeerb2.domain.User;
 
@@ -26,6 +28,8 @@ public class iPeerWebService {
 	public static final String API_GROUP = "/" + API_VERSION + "/courses/{course_id}/groups";
 	public static final String API_COURSE_USER = "/" + API_VERSION + "/courses/{course_id}/users";
 	public static final String API_GROUP_USER = "/" + API_VERSION + "/groups/{group_id}/users";
+	public static final String API_EVENT = "/" + API_VERSION + "/courses/{course_id}/events";
+	public static final String API_GRADE = "/" + API_VERSION + "/events/{event_id}/grades";
 	private static final Logger logger = Logger.getLogger(iPeerWebService.class);
 	
 	public iPeerWebService(RestOperations restTemplate, String serverUrl) {
@@ -289,4 +293,57 @@ public class iPeerWebService {
 	public boolean removeUserFromGroup(int groupId, User user) {
 		return removeUserFromGroup(groupId, user.getId());
 	}
+	
+	/************** Event APIs ****************/
+	
+	public List<Event> getEventsInCourse(int courseId) {
+		Event[] events = restTemplate.getForObject(serverUrl + API_EVENT, Event[].class, courseId);
+		List<Event> result = Arrays.asList(events);
+		return result;	
+	}
+	
+	public Event getEvent(int eventId) {
+		Event result = null;
+		try {
+			result = restTemplate.getForObject(serverUrl + API_EVENT + "/{id}", Event.class, 0, eventId);
+		} catch (RestClientException e) {
+			logger.warn("Event with id " + eventId + " not found! Status code=" + e.getMessage());
+			throw new RuntimeException(messageSource.getMessage("message.failed_get_event", new Object[]{eventId}, null), e);
+	    }
+		
+		return result;	
+	}
+	
+	public List<Event> getEventsForUser(int userId) {
+		Event[] result;
+		try {
+			result = restTemplate.getForObject(serverUrl + API_USER + "/{userId}/events", Event[].class, userId);
+		} catch (RestClientException e) {
+			logger.warn("Events for user with id " + userId + " not found! Status code=" + e.getMessage());
+			throw new RuntimeException(messageSource.getMessage("message.failed_get_events_for_user", new Object[]{userId}, null), e);
+	    }
+		
+		return Arrays.asList(result);	
+	}
+	
+	/************** Grade APIs ****************/
+	
+	public List<Grade> getGradesInEvent(int eventId) {
+		Grade[] grades = restTemplate.getForObject(serverUrl + API_GRADE, Grade[].class, eventId);
+		List<Grade> result = Arrays.asList(grades);
+		return result;	
+	}
+	
+	public Grade getGradesForUserInEvent(int userId, int eventId) {
+		Grade result;
+		try {
+			result = restTemplate.getForObject(serverUrl + API_GRADE + "/{user_id}", Grade.class, eventId, userId);
+		} catch (RestClientException e) {
+			logger.warn("Grade for user with id " + userId + " in event with id " + eventId + " not found! Status code=" + e.getMessage());
+			throw new RuntimeException(messageSource.getMessage("message.failed_get_grade_for_user", new Object[]{userId, eventId}, null), e);
+	    }
+		
+		return result;	
+	}
+	
 }

@@ -210,6 +210,55 @@
                 test_group_user.21.uri=/[^/]*/groups/1/users/999
                 test_group_user.21.method=delete
                 test_group_user.21.responsestatus=500
+                
+                test_event.1.uri=/[^/]*/courses/\\d+/events
+                test_event.1.method=get
+                test_event.1.responsebody=[{"id":1,"course_id":1,"title":"eventname1","description":"","self_eval":1,"due_date":"2012-10-30T16:43:12","release_date_begin":"2012-09-30T16:43:11","release_date_end":"2012-10-30T16:43:11"}, {"id":2,"course_id":1,"title":"eventname2","description":"","self_eval":1,"due_date":"2012-10-30T16:43:11","release_date_begin":"2012-09-30T16:43:11","release_date_end":"2012-10-30T16:43:11"}, {"id":3,"course_id":1,"title":"eventname3","description":"","self_eval":1,"due_date":"2012-10-30T16:43:11","release_date_begin":"2012-09-30T16:43:11","release_date_end":"2012-10-30T16:43:11"}]
+                test_event.1.responsestatus=200
+                
+                test_event.2.uri=/[^/]*/courses/999/events
+                test_event.2.method=get
+                test_event.2.responsestatus=500
+                
+                test_event.11.uri=/[^/]*/courses/\\d+/events/999
+                test_event.11.method=get
+                test_event.11.responsestatus=500
+                
+                test_event.10.uri=/[^/]*/courses/\\d+/events/1
+                test_event.10.method=get
+                test_event.10.responsebody={"id":1,"course_id":1,"title":"eventname1","description":"","self_eval":1,"due_date":"2012-10-30T16:43:12","release_date_begin":"2012-09-30T16:43:11","release_date_end":"2012-10-30T16:43:11"}
+                test_event.10.responsestatus=200
+                
+                test_event.20.uri=/[^/]*/users/1/events
+                test_event.20.method=get
+                test_event.20.responsebody=[{"id":1,"course_id":1,"title":"eventname1","description":"","self_eval":1,"due_date":"2012-10-30T16:43:12","release_date_begin":"2012-09-30T16:43:11","release_date_end":"2012-10-30T16:43:11"}, {"id":2,"course_id":1,"title":"eventname2","description":"","self_eval":1,"due_date":"2012-10-30T16:43:11","release_date_begin":"2012-09-30T16:43:11","release_date_end":"2012-10-30T16:43:11"}, {"id":3,"course_id":1,"title":"eventname3","description":"","self_eval":1,"due_date":"2012-10-30T16:43:11","release_date_begin":"2012-09-30T16:43:11","release_date_end":"2012-10-30T16:43:11"}]   
+                test_event.20.responsestatus=200
+                
+   				test_event.21.uri=/[^/]*/users/999/events
+                test_event.21.method=get
+                test_event.21.responsestatus=500
+                
+                test_grade.1.uri=/[^/]*/events/1/grades
+                test_grade.1.method=get
+                test_grade.1.responsebody=[{"id":1,"grade":10.5,"event_id":1,"event_title":"Test Event","user_id":1}, {"id":2,"grade":10.6,"event_id":1,"event_title":"Test Event","user_id":2},{"id":3,"grade":10.7,"event_id":1,"event_title":"Test Event","user_id":3}]
+                test_grade.1.responsestatus=200
+                
+                test_grade.2.uri=/[^/]*/events/999/grades
+                test_grade.2.method=get
+                test_grade.2.responsestatus=500
+                
+                test_grade.10.uri=/[^/]*/events/1/grades/1
+                test_grade.10.method=get
+                test_grade.10.responsebody={"id":1,"grade":10.5,"event_id":1,"event_title":"Test Event","user_id":1}
+                test_grade.10.responsestatus=200
+                
+                test_grade.11.uri=/[^/]*/events/1/grades/999
+                test_grade.11.method=get
+                test_grade.11.responsestatus=500
+                
+                test_grade.12.uri=/[^/]*/events/999/grades/1
+                test_grade.12.method=get
+                test_grade.12.responsestatus=500
             </value>
         </property>
         <property name="contentType" ref="jsonContentType" />

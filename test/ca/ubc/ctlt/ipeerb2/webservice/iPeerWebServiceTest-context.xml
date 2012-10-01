@@ -26,6 +26,27 @@
 	    </property>
 	</bean>
 	
+	<!-- For date type fixtures -->
+	<bean id="customEditorConfigurer"
+        class="org.springframework.beans.factory.config.CustomEditorConfigurer">
+	    <property name="customEditors">
+	      <map>
+	
+	        <entry key="java.util.Date">
+	          <bean class="org.springframework.beans.propertyeditors.CustomDateEditor">
+	            <constructor-arg index="0">
+	              <bean class="java.text.SimpleDateFormat">
+	                <constructor-arg><value>yyyy-MM-dd hh:mm:ss</value></constructor-arg>
+	              </bean>
+	            </constructor-arg>
+	            <constructor-arg index="1"><value>true</value></constructor-arg>
+	          </bean>
+	        </entry>
+	        
+	      </map>
+	    </property>
+	  </bean>
+	
     <bean id="iPeerWebService" class="ca.ubc.ctlt.ipeerb2.webservice.iPeerWebService">
         <constructor-arg ref="restTemplate"/>
         <constructor-arg value="https://localhost"/>
@@ -124,6 +145,83 @@
 	            <ref bean="group" />
 	            <ref bean="group2" />   
 	            <ref bean="group3" />              
+	        </list>
+	    </constructor-arg>
+	</bean>
+	
+	<!-- Event fixtures -->
+	
+	<bean id="event" class="ca.ubc.ctlt.ipeerb2.domain.Event">
+        <property name="id" value="1" />
+        <property name="title" value="eventname1" />
+        <property name="courseId" value="1" />
+        <property name="description" value="" />
+        <property name="selfEval" value="1" />
+        <property name="dueDate" value="2012-10-30 16:43:11" />
+        <property name="releaseDateBegin" value="2012-09-30 16:43:11"/>
+        <property name="releaseDateEnd" value="2012-10-30 16:43:11"/>
+    </bean>
+    <bean id="event2" class="ca.ubc.ctlt.ipeerb2.domain.Event">
+        <property name="id" value="2" />
+        <property name="title" value="eventname2" />
+        <property name="courseId" value="1" />
+        <property name="description" value="" />
+        <property name="selfEval" value="1" />
+        <property name="dueDate" value="2012-10-30 16:43:11" />
+        <property name="releaseDateBegin" value="2012-09-30 16:43:11"/>
+        <property name="releaseDateEnd" value="2012-10-30 16:43:11"/>
+    </bean>
+    <bean id="event3" class="ca.ubc.ctlt.ipeerb2.domain.Event">
+        <property name="id" value="3" />
+        <property name="title" value="eventname3" />
+        <property name="courseId" value="1" />
+        <property name="description" value="" />
+        <property name="selfEval" value="1" />
+        <property name="dueDate" value="2012-10-30 16:43:11" />
+        <property name="releaseDateBegin" value="2012-09-30 16:43:11"/>
+        <property name="releaseDateEnd" value="2012-10-30 16:43:11"/>
+    </bean>
+    
+    <bean id="eventList" class="java.util.ArrayList">
+	    <constructor-arg>
+	        <list>
+	            <ref bean="event" />
+	            <ref bean="event2" />   
+	            <ref bean="event3" />              
+	        </list>
+	    </constructor-arg>
+	</bean>
+	
+	<!-- Grade fixtures -->
+	
+	<bean id="grade" class="ca.ubc.ctlt.ipeerb2.domain.Grade">
+        <property name="id" value="1" />
+        <property name="grade" value="10.5" />
+        <property name="eventId" value="1" />
+        <property name="eventTitle" value="Test Event" />
+        <property name="userId" value="1" />
+    </bean>
+    <bean id="grade2" class="ca.ubc.ctlt.ipeerb2.domain.Grade">
+        <property name="id" value="2" />
+        <property name="grade" value="10.6" />
+        <property name="eventId" value="1" />
+        <property name="eventTitle" value="Test Event" />
+        <property name="userId" value="2" />
+    </bean>
+    <bean id="grade3" class="ca.ubc.ctlt.ipeerb2.domain.Grade">
+        <property name="id" value="3" />
+        <property name="grade" value="10.7" />
+        <property name="eventId" value="1" />
+        <property name="eventTitle" value="Test Event" />
+        <property name="userId" value="3" />
+    </bean>
+    
+    <bean id="gradeList" class="java.util.ArrayList">
+	    <constructor-arg>
+	        <list>
+	            <ref bean="grade" />
+	            <ref bean="grade2" />   
+	            <ref bean="grade3" />              
 	        </list>
 	    </constructor-arg>
 	</bean>

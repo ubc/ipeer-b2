@@ -5,6 +5,7 @@ import java.util.List;
 import ca.ubc.ctlt.ipeerb2.domain.Group;
 
 public interface GroupDao {
+	
 	public List<Group> getGroupList(int courseId);
 
 	public Group getGroup(int id);
