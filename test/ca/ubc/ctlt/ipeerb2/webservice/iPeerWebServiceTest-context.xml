@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:oxm="http://www.springframework.org/schema/oxm"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/oxm http://www.springframework.org/schema/oxm/spring-oxm-3.0.xsd">
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/oxm http://www.springframework.org/schema/oxm/spring-oxm-3.0.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd">
+    
+    <util:properties id="settings" location="classpath:webservice.properties" />  
     
     <bean id="messageSource"
 	    class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
@@ -47,10 +50,7 @@
 	    </property>
 	  </bean>
 	
-    <bean id="iPeerWebService" class="ca.ubc.ctlt.ipeerb2.webservice.iPeerWebService">
-        <constructor-arg ref="restTemplate"/>
-        <constructor-arg value="https://localhost"/>
-    </bean>
+    <bean id="iPeerWebService" class="ca.ubc.ctlt.ipeerb2.webservice.iPeerWebService"/>
  
     <bean id="restTemplate" class="org.mockito.Mockito" factory-method="mock"  >
 		<constructor-arg value="org.springframework.web.client.RestTemplate" />

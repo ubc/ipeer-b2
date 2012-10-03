@@ -1,8 +1,5 @@
 package ca.ubc.ctlt.ipeerb2.webservice;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -122,8 +119,13 @@ public class ApiTestServlet extends HttpServlet {
 				
 				if (config.getRequestBody() != null) {
 					// expecting something in request body
-					assertTrue("Invalid request content-length", request.getContentLength() > 0);
-					assertNotNull("No content-type", request.getContentType());
+					if (request.getContentLength() == 0) {
+						throw new ServletException("Invalid request content-length");
+					}
+					
+					if (null == request.getContentType()) {
+						throw new ServletException("No content-type");
+					}
 				}
 				
 				if (config.getResponseBody() != null) {
@@ -134,6 +136,7 @@ public class ApiTestServlet extends HttpServlet {
 							response.getOutputStream());
 				}
 				
+				System.out.println("Processed requeset "+config.getMethod()+" " + config.getUri());
 				return;
 			}
 		}

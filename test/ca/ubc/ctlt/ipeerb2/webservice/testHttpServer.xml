@@ -259,6 +259,12 @@
                 test_grade.12.uri=/[^/]*/events/999/grades/1
                 test_grade.12.method=get
                 test_grade.12.responsestatus=500
+                
+                test_intg_course.1.uri=/[^/]*/courses
+                test_intg_course.1.method=post
+                test_intg_course.1.requestbody={"id":0,"course":"test","title":"test"}
+                test_intg_course.1.responsebody={"id":1,"course":"testt","title":"test"}
+                test_intg_course.1.responsestatus=201
             </value>
         </property>
         <property name="contentType" ref="jsonContentType" />
@@ -293,7 +299,7 @@
 	        <list>
 	            <bean class="org.eclipse.jetty.server.bio.SocketConnector">
 	                <!-- <property name="host" value="localhost" /> -->
-	                <property name="port" value="${webservice.server.port}" />
+	                <property name="port" value="#{settings['webservice.server.port']}" />
 	            </bean>
 	        </list>
 	    </property>

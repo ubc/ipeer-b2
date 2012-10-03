@@ -3,11 +3,15 @@ package ca.ubc.ctlt.ipeerb2.webservice;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.annotation.Resource;
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.MessageSource;
+import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestClientException;
-import org.springframework.web.client.RestOperations;
+import org.springframework.web.client.RestTemplate;
 
 import ca.ubc.ctlt.ipeerb2.domain.Course;
 import ca.ubc.ctlt.ipeerb2.domain.Event;
@@ -15,12 +19,16 @@ import ca.ubc.ctlt.ipeerb2.domain.Grade;
 import ca.ubc.ctlt.ipeerb2.domain.Group;
 import ca.ubc.ctlt.ipeerb2.domain.User;
 
+@Component
 public class iPeerWebService {
 	@Autowired
     private MessageSource messageSource;
 	
-	private final RestOperations restTemplate;
-	private final String serverUrl;
+	@Resource(name="restTemplate")
+	private RestTemplate restTemplate;
+
+	@Value("#{settings['webservice.server.name']}"+":"+"#{settings['webservice.server.port']}")
+	private String serverUrl;
 
 	public static final String API_VERSION = "v1";
 	public static final String API_COURSE = "/" + API_VERSION + "/courses";
@@ -32,11 +40,6 @@ public class iPeerWebService {
 	public static final String API_GRADE = "/" + API_VERSION + "/events/{event_id}/grades";
 	private static final Logger logger = Logger.getLogger(iPeerWebService.class);
 	
-	public iPeerWebService(RestOperations restTemplate, String serverUrl) {
-		this.restTemplate = restTemplate;
-		this.serverUrl = serverUrl;
-	}
-
 	/************** Course APIs ****************/
 	
 	public List<Course> getCourseList() {
@@ -44,7 +47,7 @@ public class iPeerWebService {
 		List<Course> result = Arrays.asList(courses);
 		return result;
 	}
-	
+
 	public Course getCourse(int id) {
 		Course result = null;
 		try {

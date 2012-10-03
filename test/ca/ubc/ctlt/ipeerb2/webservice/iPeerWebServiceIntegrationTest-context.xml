@@ -7,10 +7,7 @@
     <description>Primary web service integration test context file</description>
     
     <!-- Loading the property files -->
-    <!-- <util:properties id="configurations" location="classpath:webservice.properties"/> -->
-    <bean id="configurations" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-    	<property name="location" value="classpath:webservice.properties"/>
-	</bean>
+   	<util:properties id="settings" location="classpath:webservice.properties" />  
 	
 	<bean id="messageSource"
 	    class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
@@ -38,11 +35,8 @@
     <!-- Loading a http server -->
     <import resource="testHttpServer.xml"/>
 	
-    <bean id="webService" class="ca.ubc.ctlt.ipeerb2.webservice.iPeerWebService">
-        <constructor-arg ref="restTemplate"/>
-        <constructor-arg value="${webservice.server.name}:${webservice.server.port}"/>
-    </bean>
-    
+    <bean id="webService" class="ca.ubc.ctlt.ipeerb2.webservice.iPeerWebService" />
+
     <!-- Course Fixtures -->
     
     <bean id="courseToCreate" class="ca.ubc.ctlt.ipeerb2.domain.Course">
