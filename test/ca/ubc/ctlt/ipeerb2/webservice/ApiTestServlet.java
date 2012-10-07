@@ -52,6 +52,9 @@ public class ApiTestServlet extends HttpServlet {
 				if (value == null) {
 					continue;
 				}
+				// some clean up
+				value = value.trim();
+				
 				// set the property value to configuration object
 				try {
 					Method method = config.getClass().getMethod("set"+prop, String.class);

@@ -81,4 +81,61 @@ public class InstructorController {
 		
 		return "redirect:/instructor/course";
 	}
+	
+	
+	@RequestMapping(value="/course/syncclass", method = RequestMethod.GET)
+	public String syncClass(HttpServletRequest webRequest, @RequestParam("course_id") String bbCourseId, Locale locale, ModelMap model) {
+		ReceiptOptions ro = new ReceiptOptions();
+		if (service.syncClass(bbCourseId)) {
+			ro.addSuccessMessage(messageSource.getMessage("message.sync_class_success", null, locale));
+		} else {
+			ro.addSuccessMessage(messageSource.getMessage("message.sync_class_failed", null, locale));
+		}
+		InlineReceiptUtil.addReceiptToRequest(webRequest, ro);
+		model.addAttribute("course_id", bbCourseId);
+		
+		return "redirect:/instructor/course";
+	}
+	
+	@RequestMapping(value="/course/pushgroups", method = RequestMethod.GET)
+	public String pushGroups(HttpServletRequest webRequest, @RequestParam("course_id") String bbCourseId, Locale locale, ModelMap model) {
+		ReceiptOptions ro = new ReceiptOptions();
+		if (service.pushGroups(bbCourseId)) {
+			ro.addSuccessMessage(messageSource.getMessage("message.sync_groups_success", null, locale));
+		} else {
+			ro.addSuccessMessage(messageSource.getMessage("message.sync_groups_failed", null, locale));
+		}
+		InlineReceiptUtil.addReceiptToRequest(webRequest, ro);
+		model.addAttribute("course_id", bbCourseId);
+		
+		return "redirect:/instructor/course";
+	}
+	
+	@RequestMapping(value="/course/pullgroups", method = RequestMethod.GET)
+	public String pullGroups(HttpServletRequest webRequest, @RequestParam("course_id") String bbCourseId, Locale locale, ModelMap model) {
+		ReceiptOptions ro = new ReceiptOptions();
+		if (service.pullGroups(bbCourseId)) {
+			ro.addSuccessMessage(messageSource.getMessage("message.sync_groups_success", null, locale));
+		} else {
+			ro.addSuccessMessage(messageSource.getMessage("message.sync_groups_failed", null, locale));
+		}
+		InlineReceiptUtil.addReceiptToRequest(webRequest, ro);
+		model.addAttribute("course_id", bbCourseId);
+		
+		return "redirect:/instructor/course";
+	}
+	
+	@RequestMapping(value="/course/syncgrades", method = RequestMethod.GET)
+	public String syncGrades(HttpServletRequest webRequest, @RequestParam("course_id") String bbCourseId, Locale locale, ModelMap model) {
+		ReceiptOptions ro = new ReceiptOptions();
+		if (service.syncGrades(bbCourseId)) {
+			ro.addSuccessMessage(messageSource.getMessage("message.sync_grades_success", null, locale));
+		} else {
+			ro.addSuccessMessage(messageSource.getMessage("message.sync_grades_failed", null, locale));
+		}
+		InlineReceiptUtil.addReceiptToRequest(webRequest, ro);
+		model.addAttribute("course_id", bbCourseId);
+		
+		return "redirect:/instructor/course";
+	}
 }

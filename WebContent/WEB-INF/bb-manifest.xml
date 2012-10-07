@@ -50,14 +50,15 @@
         <permissions>
             <!-- sample permissions -->
 			<permission type="java.lang.reflect.ReflectPermission" name="suppressAccessChecks" />
-            <permission type="attribute" name="user.authinfo" actions="get"/>
+            <permission type="attribute" name="user.authinfo" actions="get,set"/>
+
             <permission type="attribute" name="user.personalinfo" actions="get,set"/>
             <permission type="persist" name="Group" actions="persist"/>
             <permission type="persist" name="GroupMembership " actions="persist"/>
             <permission type="java.io.FilePermission" name="&amp;lt;&amp;lt;ALL FILES&amp;gt;&amp;gt;" actions="read,write,execute,delete"/>
             <permission type="java.net.SocketPermission" name="*" actions="connect,resolve" />
           <!--   <permission type="java.util.PropertyPermission" name="*" actions="read,write" />
-            <permission type="blackboard.data.AttributePermission" name="user.authinfo" actions="get" />
+            <permission type="blackboard.data.AttributePermission" name="user.authinfo" actions="get,set" />
             <permission type="java.security.SecurityPermission" name="*" />
             <permission type="java.lang.RuntimePermission" name="*" /> -->
         </permissions>

@@ -1,6 +1,11 @@
 package ca.ubc.ctlt.ipeerb2;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
+
+import ca.ubc.ctlt.ipeerb2.domain.Group;
+import ca.ubc.ctlt.ipeerb2.domain.User;
 
 import com.spvsoftwareproducts.blackboard.utils.B2Context;
 
@@ -39,5 +44,25 @@ public class iPeerB2Util {
 
 		// Saving it system wide. Course configuration doesn't work. Bugs in B2Context
 		b2Context.persistSettings();
+	}
+	
+	public static Group findGroupInList(Group group, List<Group> groupList) {
+		for(Group g : groupList) {
+			if (g.getName() != null && g.getName().equals(group.getName())) {
+				return g;
+			}
+		}
+		
+		return null;
+	}
+	
+	public static User findUserInList(User user, List<User> userList) {
+		for(User u : userList) {
+			if (u.getUsername() != null && u.getUsername().equals(user.getUsername())) {
+				return u;
+			}
+		}
+		
+		return null;
 	}
 }
