@@ -15,7 +15,9 @@
             <url value="http://www.ubc.ca/" />
             <description value="" />
         </vendor>
-
+		<http-actions>
+			<config value="settings/index" />
+		</http-actions>
 <!--    These two JSPs are displayed when the "remove" and "properties" buttons -->
 <!--	are pressed on the Building Blocks administration page. 				-->
 <!--    <http-actions>
@@ -51,10 +53,12 @@
             <!-- sample permissions -->
 			<permission type="java.lang.reflect.ReflectPermission" name="suppressAccessChecks" />
             <permission type="attribute" name="user.authinfo" actions="get,set"/>
-
             <permission type="attribute" name="user.personalinfo" actions="get,set"/>
             <permission type="persist" name="Group" actions="persist"/>
             <permission type="persist" name="GroupMembership " actions="persist"/>
+            <permission type="persist" name="OutcomeDefinition" actions="create,modify,delete"/>
+            <permission type="persist" name="Outcome" actions="create,modify"/>
+            <permission type="persist" name="OutcomeDefinitionCategory" actions="create"/>
             <permission type="java.io.FilePermission" name="&amp;lt;&amp;lt;ALL FILES&amp;gt;&amp;gt;" actions="read,write,execute,delete"/>
             <permission type="java.net.SocketPermission" name="*" actions="connect,resolve" />
           <!--   <permission type="java.util.PropertyPermission" name="*" actions="read,write" />

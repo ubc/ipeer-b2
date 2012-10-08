@@ -15,7 +15,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import blackboard.data.ReceiptOptions;
+import blackboard.data.user.User;
 import blackboard.platform.servlet.InlineReceiptUtil;
+import ca.ubc.ctlt.blackboardb2util.B2Util;
 import ca.ubc.ctlt.ipeerb2.iPeerB2Util;
 import ca.ubc.ctlt.ipeerb2.domain.Course;
 import ca.ubc.ctlt.ipeerb2.service.IPeerB2Service;
@@ -137,5 +139,14 @@ public class InstructorController {
 		model.addAttribute("course_id", bbCourseId);
 		
 		return "redirect:/instructor/course";
+	}
+	
+	@RequestMapping(value="/course/gotoipeer", method = RequestMethod.GET)
+	public String gotoIpeer(HttpServletRequest request, @RequestParam("course_id") String bbCourseId, Locale locale, ModelMap model) {
+		int ipeerCourseId = iPeerB2Util.getIpeerCourseId(request);
+		String url = iPeerB2Util.getIpeerUrl(request);
+		User user = B2Util.getCurrentUser(request);
+		
+		return "redirect:"+url+"/login?course_id="+ipeerCourseId+"&username="+user.getUserName();
 	}
 }

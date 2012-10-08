@@ -11,6 +11,7 @@
 <c:url var="pushgroups" value="/instructor/course/pushgroups?course_id=${course_id}"/>
 <c:url var="pullgroups" value="/instructor/course/pullgroups?course_id=${course_id}"/>
 <c:url var="syncgrades" value="/instructor/course/syncgrades?course_id=${course_id}"/>
+<c:url var="gotoipeer" value="/instructor/course/gotoipeer?course_id=${course_id}"/>
 <c:url var="disconnect" value="/instructor/course/disconnect?course_id=${course_id}"/>
 <c:url var="delete"     value="/instructor/course/delete?course_id=${course_id}"/>
 	
@@ -26,6 +27,7 @@
 		<li><a href="${pushgroups}">Push Groups</a></li>
 		<li><a href="${pullgroups}">Pull Groups</a></li>
 		<li><a href="${syncgrades}">Synchronize Grades</a></li>
+		<li><a href="${gotoipeer}" target="_blank">Manage Course in iPeer</a></li>
 		<li><a href="${disconnect}">Disconnect Course</a></li>
 		<li><a href="${delete}">Delete Course</a></li>
 	</ul>

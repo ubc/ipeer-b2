@@ -12,9 +12,11 @@ import org.springframework.stereotype.Service;
 import blackboard.data.ValidationException;
 import blackboard.data.course.CourseMembership;
 import blackboard.data.course.CourseMembership.Role;
+import blackboard.data.gradebook.Score;
 import blackboard.db.ConnectionNotAvailableException;
 import blackboard.persist.PersistenceException;
 import ca.ubc.ctlt.blackboardb2util.B2Util;
+import ca.ubc.ctlt.blackboardb2util.GradeAdapter;
 import ca.ubc.ctlt.blackboardb2util.GroupAdapter;
 import ca.ubc.ctlt.blackboardb2util.UserAdapter;
 import ca.ubc.ctlt.ipeerb2.iPeerB2Util;
@@ -30,7 +32,7 @@ import ca.ubc.ctlt.ipeerb2.domain.Group;
 import ca.ubc.ctlt.ipeerb2.domain.User;
 
 @Service
-public class IPeerB2ServiceImpl implements IPeerB2Service, UserAdapter<User>, GroupAdapter<Group> {
+public class IPeerB2ServiceImpl implements IPeerB2Service, UserAdapter<User>, GroupAdapter<Group>, GradeAdapter<Grade> {
 	@Autowired
 	private CourseDao courseDao;
 	
@@ -198,9 +200,18 @@ public class IPeerB2ServiceImpl implements IPeerB2Service, UserAdapter<User>, Gr
 	
 	@Override
 	public boolean syncGrades(String bbCourseId) {
-		return false;
+		List<Event> events = eventDao.getEventsInCourse(iPeerB2Util.getIpeerCourseId(request, bbCourseId));
+		
+		for(Event event : events) {
+			List<Grade> grades = gradeDao.getGradesInEvent(event.getId());
+			B2Util.setGradebook(bbCourseId, event.getTitle(), grades, this);
+		}
+		
+		return true;
 	}
 
+	/************* Adapter functions *****************/
+	
 	@Override
 	public User bbUserToUser(blackboard.data.user.User bbUser) {
 		User user = new User();
@@ -253,5 +264,19 @@ public class IPeerB2ServiceImpl implements IPeerB2Service, UserAdapter<User>, Gr
 		bbGroup.setTitle(group.getName());
 		
 		return bbGroup;
+	}
+
+	@Override
+	public Score gradeToBbScore(Grade grade, List<CourseMembership> memberships) {
+		Score score = new Score();
+		for (CourseMembership membership : memberships) {
+			if (membership.getUser().getUserName().equals(grade.getUsername())) {
+				score.setCourseMembershipId(membership.getId());
+			}
+		}
+		score.setDateAdded();
+		score.setGrade(Double.toString(grade.getGrade()));
+		
+		return score;
 	}
 }
