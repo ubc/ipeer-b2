@@ -411,7 +411,24 @@ public class iPeerWebServiceIntegrationTest {
 	
 	@Test
 	public final void testGetEventsForUser() {
-		List<Event> el = webService.getEventsForUser(1);
+		List<Event> el = webService.getEventsForUser("administrator");
+		assertTrue(el.size() == 3);
+		Event c = el.get(0);
+		assertTrue(c.getId() == 1);
+		assertTrue("eventname1".equals(c.getTitle()));
+		
+		c = el.get(1);
+		assertTrue(c.getId() == 2);
+		assertTrue("eventname2".equals(c.getTitle()));
+		
+		c = el.get(2);
+		assertTrue(c.getId() == 3);
+		assertTrue("eventname3".equals(c.getTitle()));
+	}
+	
+	@Test
+	public final void testGetEventsForUserInCourse() {
+		List<Event> el = webService.getEventsForUserInCourse("administrator",1);
 		assertTrue(el.size() == 3);
 		Event c = el.get(0);
 		assertTrue(c.getId() == 1);
@@ -428,7 +445,7 @@ public class iPeerWebServiceIntegrationTest {
 	
 	@Test(expected=RuntimeException.class)
 	public final void testGetEventsForInvalidUser() {
-		webService.getEventsForUser(999);
+		webService.getEventsForUser("invalidname");
 		fail("No exception when getting events for invalid user!");
 	}
 	

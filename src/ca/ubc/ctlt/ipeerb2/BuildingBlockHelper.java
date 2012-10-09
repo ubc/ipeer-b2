@@ -11,7 +11,6 @@ import java.util.Properties;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
-import blackboard.platform.context.ContextManagerFactory;
 import blackboard.platform.plugin.PlugIn;
 import blackboard.platform.plugin.PlugInException;
 import blackboard.platform.plugin.PlugInManager;
@@ -24,7 +23,6 @@ import blackboard.platform.plugin.PlugInUtil;
  *
  */
 public class BuildingBlockHelper {
-	
 	/** 
 	 * The vendor ID for the Building Block. This must match the vendor ID in the
 	 * bb-manifest.xml file.
@@ -36,7 +34,7 @@ public class BuildingBlockHelper {
 	 */
 	public static final String HANDLE = "ipeerb2";
 	/** The name of the building block settings file in the config directory */
-	public static final String SETTINGS_FILE_NAME = "settings.properties";
+	public static final String SETTINGS_FILE_NAME = VENDOR_ID+"-"+HANDLE+".properties";
 	
 	/** 
 	 * Returns the config directory for this Building Block 
@@ -52,6 +50,10 @@ public class BuildingBlockHelper {
 		return configDir;
 	}
 
+	public static String getConfigFilePath() throws PlugInException {
+		return getConfigDirectory().toString()+File.separator+SETTINGS_FILE_NAME;
+	}
+	
 	/** 
 	 * Loads the settings file for the Building block. 
 	 * 
@@ -75,14 +77,56 @@ public class BuildingBlockHelper {
 	 * @throws PlugInException
 	 * @throws IOException
 	 */
-	public static void saveBuildingBlockSettings(Properties props) throws PlugInException, IOException {
+	public static void saveBuildingBlockSettings(Properties settings) throws PlugInException, IOException {
 		File settingsFile = new File(getConfigDirectory(), SETTINGS_FILE_NAME);
 		if (!settingsFile.exists()) {
 			settingsFile.createNewFile();
 		}
-		props.store(new FileOutputStream(settingsFile), "Building Block Properties File");;
+		settings.store(new FileOutputStream(settingsFile), "Building Block Properties File");;
 	}
 	
+//	public static Properties getSettings() {
+//		Properties settings = null;
+//		try {
+//			settings = loadBuildingBlockSettings();
+//		} catch (PlugInException e) {
+//			throw new RuntimeException("There is an error loading the settings!", e);
+//		} catch (IOException e) {
+//			throw new RuntimeException("Could not read setting files!", e);
+//		}
+//		
+//		return settings;
+//	}
+//	
+//	public static String getSetting(String key) {		
+//		return getSettings().getProperty(key);
+//	}
+	
+//	public static void setSetting(String key, String value) {
+//		Properties settings = getSettings();
+//		settings.setProperty(key, value);
+//		
+//		try {
+//			saveBuildingBlockSettings(settings);
+//		} catch (PlugInException e) {
+//			throw new RuntimeException("There is an error loading the settings!", e);
+//		} catch (IOException e) {
+//			throw new RuntimeException("Could not write setting files!", e);
+//		}
+//	}
+//	
+//	public static void deleteSetting(String key) {
+//		Properties settings = getSettings();
+//		settings.remove(key);
+//		
+//		try {
+//			saveBuildingBlockSettings(settings);
+//		} catch (PlugInException e) {
+//			throw new RuntimeException("There is an error loading the settings!", e);
+//		} catch (IOException e) {
+//			throw new RuntimeException("Could not write setting files!", e);
+//		}
+//	}
 	
 	public static String displayErrorForWeb(Throwable t) {
 		StringWriter sw = new StringWriter();
@@ -112,5 +156,10 @@ public class BuildingBlockHelper {
 		PlugInManager manager = PlugInManagerFactory.getInstance();
 		PlugIn plugin = manager.getPlugIn(VENDOR_ID, HANDLE);
 		return plugin.getVersion().toString();
+	}
+	
+	public static String getServerUrl(HttpServletRequest request) {
+		String serverUrl = request.getRequestURL().toString();
+		return serverUrl.substring(0, serverUrl.indexOf('/', serverUrl.indexOf("://") + 3));
 	}
 }

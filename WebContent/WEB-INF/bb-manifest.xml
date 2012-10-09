@@ -1,72 +1,89 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <manifest>
-  <!-- core extension information -->
-    <plugin>
-        <name value="iPeer Building Block"/>
-        <handle value="ipeerb2"/>
-        <description value= ""/>
-        <version value= "1.0.0"/>
-        <requires>
-            <bbversion value="9.1"/>
-        </requires>
-        <vendor>
-            <id value="ubc"/>
-            <name value="University of British Columbia"/>
-            <url value="http://www.ubc.ca/" />
-            <description value="" />
-        </vendor>
+	<!-- core extension information -->
+	<plugin>
+		<name value="iPeer Building Block" />
+		<handle value="ipeerb2" />
+		<description value="" />
+		<version value="1.0.0" />
+		<requires>
+			<bbversion value="9.1" />
+		</requires>
+		<vendor>
+			<id value="ubc" />
+			<name value="University of British Columbia" />
+			<url value="http://www.ubc.ca/" />
+			<description value="" />
+		</vendor>
+
+		<!-- These two JSPs are displayed when the "remove" and "properties" buttons -->
+		<!-- are pressed on the Building Blocks administration page. -->
 		<http-actions>
 			<config value="settings/index" />
 		</http-actions>
-<!--    These two JSPs are displayed when the "remove" and "properties" buttons -->
-<!--	are pressed on the Building Blocks administration page. 				-->
-<!--    <http-actions>
-            <config value="admin/configure.jsp"/>
-            <remove value="admin/remove.jsp"/>
-        </http-actions>
- -->
 
-      <application-defs>
-            <application handle="ipeerb2" type="course" use-ssl="false"
-                name="iPeer" can-allow-guest="false">
-                <description lang="en_US"></description>
-                <links>
-                    <link>
-                        <type value="course_tool"/>
-                        <name value="iPeer"/>
-                        <url value="/instructor/course" />
-                        <description value="" />
-                    </link>
-                </links>
-            </application>
-        </application-defs>
+		<application-defs>
+			<application handle="ipeerb2" type="course" use-ssl="false"
+				name="iPeer" can-allow-guest="false">
+				<description lang="en_US"></description>
+				<links>
+					<link>
+						<type value="course_tool" />
+						<name value="iPeer" />
+						<url value="/instructor/course" />
+						<description value="" />
+					</link>
+				</links>
+			</application>
+		</application-defs>
 
-<!-- Portal Module Definitions -->
-        <module-defs>
-        </module-defs>
-<!--  Custom Content Types -->
-        <content-handlers>
-        </content-handlers>
+		<!-- Portal Module Definitions -->
+		<module-defs>
+			<module-type ext-ref="ipeerb2" title="iPeer B2" uicreatable="true">
+				<jsp-dir>module</jsp-dir>
+				<jsp>
+					<view>view</view>
+					<edit>edit</edit>
+					<admin>admin</admin>
+				</jsp>
+			</module-type>
+			<module type="ipeerb2" isadmin="true" useraddable="true"
+				isdeletable="true" title="iPeer Events">
+				<description>iPeer Events</description>
+				<module-groups>
+					<module-group id="Everyone" />
+				</module-groups>
+				<ExtraInfo>
+					<property key="body.text" type="String">
+					This module was installed aspart of the sample plugin. It uses the basic 'portal/includehtml' module
+						type.
+					</property>
+				</ExtraInfo>
+			</module>
+		</module-defs>
+		<!-- Custom Content Types -->
+		<content-handlers>
+		</content-handlers>
 
-<!-- code permissions required for proper operation -->
-        <permissions>
-            <!-- sample permissions -->
+		<!-- code permissions required for proper operation -->
+		<permissions>
+			<!-- sample permissions -->
 			<permission type="java.lang.reflect.ReflectPermission" name="suppressAccessChecks" />
-            <permission type="attribute" name="user.authinfo" actions="get,set"/>
-            <permission type="attribute" name="user.personalinfo" actions="get,set"/>
-            <permission type="persist" name="Group" actions="persist"/>
-            <permission type="persist" name="GroupMembership " actions="persist"/>
-            <permission type="persist" name="OutcomeDefinition" actions="create,modify,delete"/>
-            <permission type="persist" name="Outcome" actions="create,modify"/>
-            <permission type="persist" name="OutcomeDefinitionCategory" actions="create"/>
-            <permission type="java.io.FilePermission" name="&amp;lt;&amp;lt;ALL FILES&amp;gt;&amp;gt;" actions="read,write,execute,delete"/>
-            <permission type="java.net.SocketPermission" name="*" actions="connect,resolve" />
-          <!--   <permission type="java.util.PropertyPermission" name="*" actions="read,write" />
-            <permission type="blackboard.data.AttributePermission" name="user.authinfo" actions="get,set" />
-            <permission type="java.security.SecurityPermission" name="*" />
-            <permission type="java.lang.RuntimePermission" name="*" /> -->
-        </permissions>
+			<permission type="attribute" name="user.authinfo" actions="get,set" />
+			<permission type="attribute" name="user.personalinfo" actions="get,set" />
+			<permission type="persist" name="Group" actions="persist" />
+			<permission type="persist" name="GroupMembership" actions="persist" />
+			<permission type="persist" name="OutcomeDefinition"	actions="create,modify,delete" />
+			<permission type="persist" name="Outcome" actions="create,modify" />
+			<permission type="persist" name="OutcomeDefinitionCategory"	actions="create" />
+			<permission type="java.io.FilePermission" name="&amp;lt;&amp;lt;ALL FILES&amp;gt;&amp;gt;" actions="read,write,execute,delete" />
+			<permission type="java.net.SocketPermission" name="*" actions="connect,resolve" />
+			<!-- <permission type="java.util.PropertyPermission" name="*" actions="read,write" 
+				/> <permission type="blackboard.data.AttributePermission" name="user.authinfo" 
+				actions="get,set" /> <permission type="java.security.SecurityPermission" 
+				name="*" /> <permission type="java.lang.RuntimePermission" name="*" /> -->
+		</permissions>
 
-    </plugin>
+	</plugin>
 
 </manifest>

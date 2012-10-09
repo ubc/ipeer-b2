@@ -229,14 +229,19 @@
                 test_event.10.responsebody={"id":1,"course_id":1,"title":"eventname1","description":"","self_eval":1,"due_date":"2012-10-30T16:43:12","release_date_begin":"2012-09-30T16:43:11","release_date_end":"2012-10-30T16:43:11"}
                 test_event.10.responsestatus=200
                 
-                test_event.20.uri=/[^/]*/users/1/events
+                test_event.20.uri=/[^/]*/users/administrator/events
                 test_event.20.method=get
                 test_event.20.responsebody=[{"id":1,"course_id":1,"title":"eventname1","description":"","self_eval":1,"due_date":"2012-10-30T16:43:12","release_date_begin":"2012-09-30T16:43:11","release_date_end":"2012-10-30T16:43:11"}, {"id":2,"course_id":1,"title":"eventname2","description":"","self_eval":1,"due_date":"2012-10-30T16:43:11","release_date_begin":"2012-09-30T16:43:11","release_date_end":"2012-10-30T16:43:11"}, {"id":3,"course_id":1,"title":"eventname3","description":"","self_eval":1,"due_date":"2012-10-30T16:43:11","release_date_begin":"2012-09-30T16:43:11","release_date_end":"2012-10-30T16:43:11"}]   
                 test_event.20.responsestatus=200
                 
-   				test_event.21.uri=/[^/]*/users/999/events
+   				test_event.21.uri=/[^/]*/users/invalidname/events
                 test_event.21.method=get
                 test_event.21.responsestatus=500
+                
+                test_event.30.uri=/[^/]*/courses/1/users/administrator/events
+                test_event.30.method=get
+                test_event.30.responsebody=[{"id":1,"course_id":1,"title":"eventname1","description":"","self_eval":1,"due_date":"2012-10-30T16:43:12","release_date_begin":"2012-09-30T16:43:11","release_date_end":"2012-10-30T16:43:11"}, {"id":2,"course_id":1,"title":"eventname2","description":"","self_eval":1,"due_date":"2012-10-30T16:43:11","release_date_begin":"2012-09-30T16:43:11","release_date_end":"2012-10-30T16:43:11"}, {"id":3,"course_id":1,"title":"eventname3","description":"","self_eval":1,"due_date":"2012-10-30T16:43:11","release_date_begin":"2012-09-30T16:43:11","release_date_end":"2012-10-30T16:43:11"}]   
+                test_event.30.responsestatus=200
                 
                 test_grade.1.uri=/[^/]*/events/1/grades
                 test_grade.1.method=get

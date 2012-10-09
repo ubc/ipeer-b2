@@ -4,8 +4,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +17,7 @@ import ca.ubc.ctlt.blackboardb2util.B2Util;
 import ca.ubc.ctlt.blackboardb2util.GradeAdapter;
 import ca.ubc.ctlt.blackboardb2util.GroupAdapter;
 import ca.ubc.ctlt.blackboardb2util.UserAdapter;
+import ca.ubc.ctlt.ipeerb2.Configuration;
 import ca.ubc.ctlt.ipeerb2.iPeerB2Util;
 import ca.ubc.ctlt.ipeerb2.dao.CourseDao;
 import ca.ubc.ctlt.ipeerb2.dao.EventDao;
@@ -49,26 +48,26 @@ public class IPeerB2ServiceImpl implements IPeerB2Service, UserAdapter<User>, Gr
 	private EventDao eventDao;
 	
 	@Autowired
-	private  HttpServletRequest request;
+	private Configuration configuration;
 	
 	@Override
 	public boolean createCourse(Course course) {
 		Course result = courseDao.createCourse(course);
-		iPeerB2Util.setConnection(request, result.getId());
+		configuration.setConnection(course.getBbCourseId(), result.getId());
 		
 		return true;
 	}
 
 	@Override
 	public boolean disconnectCourse(String bbCourseId) {
-		iPeerB2Util.deleteConnection(request, bbCourseId);
+		configuration.deleteConnection(bbCourseId);
 		
 		return true;
 	}
 
 	@Override
 	public boolean deleteCourse(String bbCourseId) {
-		if (courseDao.deleteCourse(iPeerB2Util.getIpeerCourseId(request))) {
+		if (courseDao.deleteCourse(configuration.getIpeerCourseId(bbCourseId))) {
 			disconnectCourse(bbCourseId);
 			return true;
 		} 
@@ -79,7 +78,7 @@ public class IPeerB2ServiceImpl implements IPeerB2Service, UserAdapter<User>, Gr
 	@Override
 	public boolean syncClass(String bbCourseId) {
 		try {
-			userDao.enrolUsersInCourse(iPeerB2Util.getIpeerCourseId(request), B2Util.getUsersInCourse(bbCourseId, this));
+			userDao.enrolUsersInCourse(configuration.getIpeerCourseId(bbCourseId), B2Util.getUsersInCourse(bbCourseId, this));
 		} catch (PersistenceException e) {
 			throw new RuntimeException("Failed to load class list!", e);
 		}
@@ -89,7 +88,7 @@ public class IPeerB2ServiceImpl implements IPeerB2Service, UserAdapter<User>, Gr
 
 	@Override
 	public boolean pushGroups(String bbCourseId) {
-		int iPeerCourseId = iPeerB2Util.getIpeerCourseId(request);
+		int iPeerCourseId = configuration.getIpeerCourseId(bbCourseId);
 		// we need groups from both
 		List<Group> groupsInBb = null;
 		try {
@@ -149,7 +148,7 @@ public class IPeerB2ServiceImpl implements IPeerB2Service, UserAdapter<User>, Gr
 
 	@Override
 	public boolean pullGroups(String bbCourseId) {
-		int iPeerCourseId = iPeerB2Util.getIpeerCourseId(request);
+		int iPeerCourseId = configuration.getIpeerCourseId(bbCourseId);
 		// we need groups from both
 		List<Group> groupsInBb = null;
 		try {
@@ -200,7 +199,7 @@ public class IPeerB2ServiceImpl implements IPeerB2Service, UserAdapter<User>, Gr
 	
 	@Override
 	public boolean syncGrades(String bbCourseId) {
-		List<Event> events = eventDao.getEventsInCourse(iPeerB2Util.getIpeerCourseId(request, bbCourseId));
+		List<Event> events = eventDao.getEventsInCourse(configuration.getIpeerCourseId(bbCourseId));
 		
 		for(Event event : events) {
 			List<Grade> grades = gradeDao.getGradesInEvent(event.getId());
@@ -210,6 +209,12 @@ public class IPeerB2ServiceImpl implements IPeerB2Service, UserAdapter<User>, Gr
 		return true;
 	}
 
+
+	@Override
+	public List<Event> getEventsForUserInCourse(String username, String bbCourseId) {
+		return eventDao.getEventsForUserInCourse(username, configuration.getIpeerCourseId(bbCourseId));
+	}
+	
 	/************* Adapter functions *****************/
 	
 	@Override

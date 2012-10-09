@@ -28,8 +28,13 @@ public class EventDaoImpl implements EventDao {
 	}
 
 	@Override
-	public List<Event> getEventsForUser(int userId) {
-		return webService.getEventsForUser(userId);
+	public List<Event> getEventsForUser(String username) {
+		return webService.getEventsForUser(username);
+	}
+
+	@Override
+	public List<Event> getEventsForUserInCourse(String username, int courseId) {
+		return webService.getEventsForUserInCourse(username, courseId);
 	}
 
 }

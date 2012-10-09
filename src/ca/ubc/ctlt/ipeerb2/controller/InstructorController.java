@@ -18,7 +18,7 @@ import blackboard.data.ReceiptOptions;
 import blackboard.data.user.User;
 import blackboard.platform.servlet.InlineReceiptUtil;
 import ca.ubc.ctlt.blackboardb2util.B2Util;
-import ca.ubc.ctlt.ipeerb2.iPeerB2Util;
+import ca.ubc.ctlt.ipeerb2.Configuration;
 import ca.ubc.ctlt.ipeerb2.domain.Course;
 import ca.ubc.ctlt.ipeerb2.service.IPeerB2Service;
 
@@ -31,9 +31,12 @@ public class InstructorController {
 	@Autowired
     private MessageSource messageSource;
 	
+	@Autowired
+	private Configuration configuration;
+	
 	@RequestMapping(value="/course")
 	public String course(HttpServletRequest webRequest, @RequestParam("course_id") String bbCourseId, ModelMap model) {
-		if (iPeerB2Util.connectionExists(webRequest)) {
+		if (configuration.connectionExists(bbCourseId)) {
 			model.addAttribute("course_id", bbCourseId);
 			return "manage_course";
 		}
@@ -143,8 +146,8 @@ public class InstructorController {
 	
 	@RequestMapping(value="/course/gotoipeer", method = RequestMethod.GET)
 	public String gotoIpeer(HttpServletRequest request, @RequestParam("course_id") String bbCourseId, Locale locale, ModelMap model) {
-		int ipeerCourseId = iPeerB2Util.getIpeerCourseId(request);
-		String url = iPeerB2Util.getIpeerUrl(request);
+		int ipeerCourseId = configuration.getIpeerCourseId(bbCourseId);
+		String url = configuration.getIpeerUrl();
 		User user = B2Util.getCurrentUser(request);
 		
 		return "redirect:"+url+"/login?course_id="+ipeerCourseId+"&username="+user.getUserName();

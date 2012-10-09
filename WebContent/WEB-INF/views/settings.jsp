@@ -2,7 +2,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
    "http://www.w3.org/TR/html4/loose.dtd">
 <%@page import="com.spvsoftwareproducts.blackboard.utils.B2Context,
-	ca.ubc.ctlt.ipeerb2.iPeerB2Util"
+	ca.ubc.ctlt.ipeerb2.Configuration"
    errorPage="../error.jsp"%>
 <%@taglib prefix="bbNG" uri="/bbNG"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -18,7 +18,7 @@
   <bbNG:dataCollection markUnsavedChanges="true" showSubmitButtons="true">
     <bbNG:step hideNumber="false" id="stepOne" title="iPeer Server URL" instructions="">
       <bbNG:dataElement isRequired="true" label="iPeer Server URL">
-      	<bbNG:textElement name="<%=iPeerB2Util.IPEER_URL%>" value="${ipeerUrl}" isRequired="true" title="iPeer Server URL" size="50" helpText="e.g. https://ipeer.your.edu.ca"/>
+      	<bbNG:textElement name="<%=Configuration.IPEER_URL%>" value="${ipeerUrl}" isRequired="true" title="iPeer Server URL" size="50" helpText="e.g. https://ipeer.your.edu.ca"/>
       </bbNG:dataElement>
     </bbNG:step>
     <bbNG:stepSubmit hideNumber="false" showCancelButton="true" />

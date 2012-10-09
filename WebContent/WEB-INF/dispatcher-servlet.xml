@@ -45,6 +45,5 @@
 	    <property name="interceptors">
 	        <ref bean="localeChangeInterceptor" />
 	    </property>
-	</bean>
-	
+	</bean>	
 </beans>

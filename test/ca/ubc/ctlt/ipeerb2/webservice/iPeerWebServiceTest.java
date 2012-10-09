@@ -88,7 +88,8 @@ public class iPeerWebServiceTest {
 		// event mocking
 		when(restOperations.getForObject( Matchers.matches("/[^/]*/courses/\\d+/events"), Matchers.eq(Event[].class), Matchers.anyInt()) ).thenReturn(eventList.toArray(new Event[eventList.size()]));
 		when(restOperations.getForObject( Matchers.anyString(), Matchers.eq(Event.class), Matchers.anyInt(), Matchers.anyInt()) ).thenReturn(event);
-		when(restOperations.getForObject( Matchers.anyString(), Matchers.eq(Event[].class), Matchers.anyInt()) ).thenReturn(eventList.toArray(new Event[eventList.size()]));
+		when(restOperations.getForObject( Matchers.anyString(), Matchers.eq(Event[].class), Matchers.anyString()) ).thenReturn(eventList.toArray(new Event[eventList.size()]));
+		when(restOperations.getForObject( Matchers.anyString(), Matchers.eq(Event[].class), Matchers.anyString(), Matchers.anyInt()) ).thenReturn(eventList.toArray(new Event[eventList.size()]));
 		
 		// grade mocking
 		when(restOperations.getForObject( Matchers.anyString(), Matchers.eq(Grade[].class), Matchers.anyInt()) ).thenReturn(gradeList.toArray(new Grade[gradeList.size()]));
@@ -376,7 +377,24 @@ public class iPeerWebServiceTest {
 	
 	@Test
 	public final void testGetEventsForUser() {
-		List<Event> el = webService.getEventsForUser(1);
+		List<Event> el = webService.getEventsForUser("administrator");
+		assertTrue(el.size() == 3);
+		Event u = el.get(0);
+		assertTrue(u.getId() == 1);
+		assertTrue("eventname1".equals(u.getTitle()));
+		
+		u = el.get(1);
+		assertTrue(u.getId() == 2);
+		assertTrue("eventname2".equals(u.getTitle()));
+		
+		u = el.get(2);
+		assertTrue(u.getId() == 3);
+		assertTrue("eventname3".equals(u.getTitle()));
+	}
+	
+	@Test
+	public final void testGetEventsForUserInCourse() {
+		List<Event> el = webService.getEventsForUserInCourse("administrator",1);
 		assertTrue(el.size() == 3);
 		Event u = el.get(0);
 		assertTrue(u.getId() == 1);

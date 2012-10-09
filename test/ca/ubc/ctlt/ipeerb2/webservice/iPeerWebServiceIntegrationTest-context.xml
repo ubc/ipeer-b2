@@ -35,6 +35,18 @@
     <!-- Loading a http server -->
     <import resource="testHttpServer.xml"/>
 	
+	<!-- WebService Bean Setup -->
+	<bean id="servletContext" class="org.springframework.mock.web.MockServletContext"/>
+	<bean id="configuration" class="ca.ubc.ctlt.ipeerb2.Configuration">
+		<property name="inMemory" value="true"/>
+		<property name="servletContext" ref="servletContext"/>
+		<property name="settings">
+			<value>
+				ipeer.url=http://192.168.56.1:8899
+				mapping.course_id._1_1=1
+			</value>
+		</property>
+	</bean>
     <bean id="webService" class="ca.ubc.ctlt.ipeerb2.webservice.iPeerWebService" />
 
     <!-- Course Fixtures -->
