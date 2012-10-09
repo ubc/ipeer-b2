@@ -5,15 +5,15 @@ import java.util.Properties;
 
 import javax.servlet.ServletContext;
 
-import org.springframework.stereotype.Component;
 import org.springframework.web.context.ServletContextAware;
 
 import blackboard.platform.plugin.PlugInException;
 
-@Component
 public class Configuration implements ServletContextAware {
 	public static final String COURSE_ID = "mapping.course_id.";
 	public static final String IPEER_URL = "ipeer.url";
+	public static final String CONSUMER_KEY = "ipeer.consumer_key";
+	public static final String SHARED_SECRET = "ipeer.secret";
 	
 	private ServletContext servletContext;
 	private boolean inMemory = false;

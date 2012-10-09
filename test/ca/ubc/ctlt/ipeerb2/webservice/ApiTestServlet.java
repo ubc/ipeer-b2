@@ -140,6 +140,7 @@ public class ApiTestServlet extends HttpServlet {
 				}
 				
 				System.out.println("Processed requeset "+config.getMethod()+" " + config.getUri());
+				System.out.println("Header Authorization: "+request.getHeader("Authorization"));
 				return;
 			}
 		}

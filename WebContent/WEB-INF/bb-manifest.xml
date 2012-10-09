@@ -78,6 +78,7 @@
 			<permission type="persist" name="OutcomeDefinitionCategory"	actions="create" />
 			<permission type="java.io.FilePermission" name="&amp;lt;&amp;lt;ALL FILES&amp;gt;&amp;gt;" actions="read,write,execute,delete" />
 			<permission type="java.net.SocketPermission" name="*" actions="connect,resolve" />
+			<permission type="java.net.NetPermission" name="*" actions="getProxySelector" />
 			<!-- <permission type="java.util.PropertyPermission" name="*" actions="read,write" 
 				/> <permission type="blackboard.data.AttributePermission" name="user.authinfo" 
 				actions="get,set" /> <permission type="java.security.SecurityPermission" 

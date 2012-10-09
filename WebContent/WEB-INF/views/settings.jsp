@@ -14,6 +14,7 @@
     </bbNG:breadcrumbBar>
     <bbNG:pageTitleBar showTitleBar="true" title="iPeerB2 Settings"/>
   </bbNG:pageHeader>
+  
   <bbNG:form action="save" id="id_simpleForm" name="simpleForm" method="post" onsubmit="return validateForm();">
   <bbNG:dataCollection markUnsavedChanges="true" showSubmitButtons="true">
     <bbNG:step hideNumber="false" id="stepOne" title="iPeer Server URL" instructions="">
@@ -21,7 +22,21 @@
       	<bbNG:textElement name="<%=Configuration.IPEER_URL%>" value="${ipeerUrl}" isRequired="true" title="iPeer Server URL" size="50" helpText="e.g. https://ipeer.your.edu.ca"/>
       </bbNG:dataElement>
     </bbNG:step>
+    
+    <bbNG:step hideNumber="false" id="stepTwo" title="Authentication" instructions="Setup integration authentication">
+      
+      <bbNG:dataElement isRequired="true" label="Consumer Key">
+      	<bbNG:textElement name="<%=Configuration.CONSUMER_KEY%>" value="${consumerKey}" isRequired="true" title="Consumer Key" size="50" helpText="The key used to identify the secret. This value must match the one set in iPeer"/>
+      </bbNG:dataElement>
+      
+      <bbNG:dataElement isRequired="true" label="Shared Secret">
+      	<bbNG:textElement name="<%=Configuration.SHARED_SECRET%>" value="${secret}" isRequired="true" title="Shared Secret" size="50" helpText="The secret used to sign the message. This value must match the one set in iPeer"/>
+      </bbNG:dataElement>
+      
+    </bbNG:step>
+    
     <bbNG:stepSubmit hideNumber="false" showCancelButton="true" />
   </bbNG:dataCollection>
   </bbNG:form>
+  
 </bbNG:genericPage>

@@ -4,12 +4,48 @@
        xmlns:oxm="http://www.springframework.org/schema/oxm"
        xmlns:context="http://www.springframework.org/schema/context"
        xmlns:util="http://www.springframework.org/schema/util"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/oxm http://www.springframework.org/schema/oxm/spring-oxm-3.1.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.1.xsd">
+       xmlns:oauth="http://www.springframework.org/schema/security/oauth"
+       xmlns:security="http://www.springframework.org/schema/security"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd 
+       http://www.springframework.org/schema/oxm http://www.springframework.org/schema/oxm/spring-oxm-3.1.xsd 
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd 
+       http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.1.xsd
+       http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.1.xsd
+       http://www.springframework.org/schema/security/oauth http://www.springframework.org/schema/security/spring-security-oauth-1.0.xsd">
 	
 	<!-- <util:properties id="settings" location="classpath:webservice.properties" />  --> 
-    <util:properties id="settings" location="file:/usr/local/blackboard/content/vi/BBLEARN/plugins/ubc-ipeerb2/config/ubc-ipeerb2.properties" />  
-  
-    <bean id="restTemplate" class="org.springframework.web.client.RestTemplate">
+    <util:properties id="settings" location="file:/usr/local/blackboard/content/vi/BBLEARN/plugins/ubc-ipeerb2/config/ubc-ipeerb2.properties" />
+	
+	<!-- Configure security -->
+ 	<security:http auto-config='true' access-denied-page="/login.jsp">
+	    <security:intercept-url pattern="/**" access="IS_AUTHENTICATED_ANONYMOUSLY" />
+	
+	    <security:form-login authentication-failure-url="/login.jsp" default-target-url="/index.jsp" login-page="/login.jsp" login-processing-url="/login.do"/>
+	    <security:logout logout-success-url="/index.jsp" logout-url="/logout.do"/>
+	</security:http>
+
+	<security:authentication-manager>
+	</security:authentication-manager>
+
+	<bean id="configuration" class="ca.ubc.ctlt.ipeerb2.Configuration"/>
+	
+	<bean id="tokenService" class="ca.ubc.ctlt.ipeerb2.iPeerB2OAuthTokenService"/>
+	
+	<bean id="ipeerResourceDetails" class="ca.ubc.ctlt.ipeerb2.iPeerB2ProtectedResourceDetails">
+		<property name="configuration" ref="configuration"/>
+	</bean>
+	
+	<bean id="resourceDetails" class="ca.ubc.ctlt.ipeerb2.iPeerB2ProtectedResourceDetailsService">
+		<property name="protectedResourceDetails" ref="ipeerResourceDetails"/>
+	</bean>
+	
+	<oauth:consumer resource-details-service-ref="resourceDetails" oauth-failure-page="/oauth_error.jsp" token-services-ref="tokenService">
+		<oauth:url pattern="/instructor/course/pullgroups" resources="ipeerResourceDetails" />
+		<oauth:url pattern="/login/**" resources="none" />
+	</oauth:consumer>
+
+    <bean id="restTemplate" class="org.springframework.security.oauth.consumer.client.OAuthRestTemplate">
+        <constructor-arg ref="ipeerResourceDetails" />
         <property name="messageConverters">
             <list>
                 <bean class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter">

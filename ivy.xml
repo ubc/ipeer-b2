@@ -46,5 +46,10 @@
         <dependency org="org.springframework" name="spring-web" rev="3.1.1.RELEASE" transitive="false"/>
         <dependency org="org.springframework" name="spring-expression" rev="3.1.1.RELEASE" transitive="false"/>
         <dependency org="org.springframework" name="spring-asm" rev="3.1.1.RELEASE" transitive="false"/>
+        <dependency org="org.springframework" name="spring-aop" rev="3.1.1.RELEASE" transitive="false"/>
+        <dependency org="org.springframework.security" name="spring-security-core" rev="3.1.1.RELEASE"/>
+        <dependency org="org.springframework.security" name="spring-security-web" rev="3.1.1.RELEASE"/>
+        <dependency org="org.springframework.security" name="spring-security-config" rev="3.1.1.RELEASE"/>
+        <dependency org="org.springframework.security" name="spring-security-taglibs" rev="3.1.1.RELEASE"/>
     </dependencies>
 </ivy-module>

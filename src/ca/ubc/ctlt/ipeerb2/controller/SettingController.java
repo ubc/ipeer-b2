@@ -27,13 +27,17 @@ public class SettingController {
 	@RequestMapping(value = "/index", method = RequestMethod.GET)
 	public String index(HttpServletRequest request, ModelMap model) {
 		model.addAttribute("ipeerUrl", configuration.getSetting(Configuration.IPEER_URL));
-
+		model.addAttribute("consumerKey", configuration.getSetting(Configuration.CONSUMER_KEY));
+		model.addAttribute("secret", configuration.getSetting(Configuration.SHARED_SECRET));
+		
 		return "settings";
 	}
 	
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
-	public String save(HttpServletRequest request, @RequestParam(value=Configuration.IPEER_URL) String ipeerUrl) {		
+	public String save(HttpServletRequest request, @RequestParam(value=Configuration.IPEER_URL) String ipeerUrl, @RequestParam(Configuration.CONSUMER_KEY) String consumerKey, @RequestParam(Configuration.SHARED_SECRET) String secret) {		
 		configuration.setSetting(Configuration.IPEER_URL, ipeerUrl);
+		configuration.setSetting(Configuration.CONSUMER_KEY, consumerKey);
+		configuration.setSetting(Configuration.SHARED_SECRET, secret);
 		
 		return "redirect:"+InlineReceiptUtil.addSuccessReceiptToUrl(
 				BuildingBlockHelper.getServerUrl(request)+PlugInUtil.getPlugInManagerURL(), 
