@@ -5,6 +5,8 @@ import org.springframework.security.oauth.consumer.ProtectedResourceDetailsServi
 
 public class iPeerB2ProtectedResourceDetailsService implements
 		ProtectedResourceDetailsService {
+	public static final String IPEERB2_DETAILS_ID = "ipeerResourceDetails";
+	
 	private ProtectedResourceDetails protectedResourceDetails;
 	
 	public ProtectedResourceDetails getProtectedResourceDetails() {

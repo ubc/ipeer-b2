@@ -13,7 +13,9 @@ public class Configuration implements ServletContextAware {
 	public static final String COURSE_ID = "mapping.course_id.";
 	public static final String IPEER_URL = "ipeer.url";
 	public static final String CONSUMER_KEY = "ipeer.consumer_key";
-	public static final String SHARED_SECRET = "ipeer.secret";
+	public static final String SHARED_SECRET = "ipeer.consumer_secret";
+	public static final String TOKEN_KEY = "ipeer.token_key";
+	public static final String TOKEN_SECRET = "ipeer.token_secret";
 	
 	private ServletContext servletContext;
 	private boolean inMemory = false;

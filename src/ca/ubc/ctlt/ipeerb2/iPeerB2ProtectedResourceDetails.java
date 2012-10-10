@@ -16,7 +16,9 @@ public class iPeerB2ProtectedResourceDetails extends BaseProtectedResourceDetail
 	}
 	
 	public iPeerB2ProtectedResourceDetails() {
-		setId("ipeer");
+		setId(iPeerB2ProtectedResourceDetailsService.IPEERB2_DETAILS_ID);
+		// don't use authorization header as cakephp doens't support it
+		setAcceptsAuthorizationHeader(false);
 	}
 
 	@Override

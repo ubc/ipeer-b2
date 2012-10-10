@@ -29,8 +29,11 @@
 
 	<bean id="configuration" class="ca.ubc.ctlt.ipeerb2.Configuration"/>
 	
-	<bean id="tokenService" class="ca.ubc.ctlt.ipeerb2.iPeerB2OAuthTokenService"/>
+	<bean id="tokenService" class="ca.ubc.ctlt.ipeerb2.iPeerB2OAuthTokenService">
+		<property name="configuration" ref="configuration"/>
+	</bean>
 	
+	<!-- if the details ID need to change, change the iPeerB2ProtectedResourceDetailsService.IPEERB2_DETAILS_ID as well -->
 	<bean id="ipeerResourceDetails" class="ca.ubc.ctlt.ipeerb2.iPeerB2ProtectedResourceDetails">
 		<property name="configuration" ref="configuration"/>
 	</bean>
@@ -40,8 +43,8 @@
 	</bean>
 	
 	<oauth:consumer resource-details-service-ref="resourceDetails" oauth-failure-page="/oauth_error.jsp" token-services-ref="tokenService">
-		<oauth:url pattern="/instructor/course/pullgroups" resources="ipeerResourceDetails" />
-		<oauth:url pattern="/login/**" resources="none" />
+ 		<oauth:url pattern="/instructor/course/create" resources="ipeerResourceDetails" />
+		<oauth:url pattern="/module/**" resources="ipeerResourceDetails" />
 	</oauth:consumer>
 
     <bean id="restTemplate" class="org.springframework.security.oauth.consumer.client.OAuthRestTemplate">

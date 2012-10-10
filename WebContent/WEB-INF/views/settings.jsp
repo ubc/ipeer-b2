@@ -33,6 +33,14 @@
       	<bbNG:textElement name="<%=Configuration.SHARED_SECRET%>" value="${secret}" isRequired="true" title="Shared Secret" size="50" helpText="The secret used to sign the message. This value must match the one set in iPeer"/>
       </bbNG:dataElement>
       
+      <bbNG:dataElement isRequired="true" label="Token Key">
+      	<bbNG:textElement name="<%=Configuration.TOKEN_KEY%>" value="${tokenKey}" isRequired="true" title="Token Key" size="50" helpText="The key used to identify the token secret. This value must match the one set in iPeer"/>
+      </bbNG:dataElement>
+      
+      <bbNG:dataElement isRequired="true" label="Token Secret">
+      	<bbNG:textElement name="<%=Configuration.TOKEN_SECRET%>" value="${tokenSecret}" isRequired="true" title="Token Secret" size="50" helpText="The secret used to sign the message. This value must match the one set in iPeer"/>
+      </bbNG:dataElement>
+      
     </bbNG:step>
     
     <bbNG:stepSubmit hideNumber="false" showCancelButton="true" />

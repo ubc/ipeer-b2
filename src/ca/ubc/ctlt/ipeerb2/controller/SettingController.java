@@ -29,15 +29,25 @@ public class SettingController {
 		model.addAttribute("ipeerUrl", configuration.getSetting(Configuration.IPEER_URL));
 		model.addAttribute("consumerKey", configuration.getSetting(Configuration.CONSUMER_KEY));
 		model.addAttribute("secret", configuration.getSetting(Configuration.SHARED_SECRET));
+		model.addAttribute("tokenKey", configuration.getSetting(Configuration.TOKEN_KEY));
+		model.addAttribute("tokenSecret", configuration.getSetting(Configuration.TOKEN_SECRET));
 		
 		return "settings";
 	}
 	
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
-	public String save(HttpServletRequest request, @RequestParam(value=Configuration.IPEER_URL) String ipeerUrl, @RequestParam(Configuration.CONSUMER_KEY) String consumerKey, @RequestParam(Configuration.SHARED_SECRET) String secret) {		
+	public String save(HttpServletRequest request, 
+			@RequestParam(value=Configuration.IPEER_URL) String ipeerUrl, 
+			@RequestParam(Configuration.CONSUMER_KEY) String consumerKey, 
+			@RequestParam(Configuration.SHARED_SECRET) String secret,
+			@RequestParam(Configuration.TOKEN_KEY) String tokenKey, 
+			@RequestParam(Configuration.TOKEN_SECRET) String tokenSecret
+			) {		
 		configuration.setSetting(Configuration.IPEER_URL, ipeerUrl);
 		configuration.setSetting(Configuration.CONSUMER_KEY, consumerKey);
 		configuration.setSetting(Configuration.SHARED_SECRET, secret);
+		configuration.setSetting(Configuration.TOKEN_KEY, tokenKey);
+		configuration.setSetting(Configuration.TOKEN_SECRET, tokenSecret);
 		
 		return "redirect:"+InlineReceiptUtil.addSuccessReceiptToUrl(
 				BuildingBlockHelper.getServerUrl(request)+PlugInUtil.getPlugInManagerURL(), 

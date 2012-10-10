@@ -12,6 +12,16 @@ import org.springframework.security.oauth.consumer.token.OAuthConsumerTokenServi
  *
  */
 public class iPeerB2OAuthTokenService implements OAuthConsumerTokenServices {
+	private Configuration configuration;
+
+	public Configuration getConfiguration() {
+		return configuration;
+	}
+
+	public void setConfiguration(Configuration configuration) {
+		this.configuration = configuration;
+	}
+	
 	@Override
 	public void storeToken(String resourceId, OAuthConsumerToken token) {
 	}
@@ -23,8 +33,18 @@ public class iPeerB2OAuthTokenService implements OAuthConsumerTokenServices {
 	@Override
 	public OAuthConsumerToken getToken(String resourceId)
 			throws AuthenticationException {
+		System.out.println("************ Get token for " + resourceId);
+		String key = configuration.getSetting(Configuration.TOKEN_KEY);
+		String secret = configuration.getSetting(Configuration.TOKEN_SECRET);
+		if (null == key || key.isEmpty() || null == secret || secret.isEmpty()) {
+			throw new RuntimeException("Token key or secret is empty. Did you forget to set up the building block?");
+		}
+		
 		OAuthConsumerToken token = new OAuthConsumerToken();
 		token.setAccessToken(true);
+		token.setSecret(secret);
+		token.setValue(key);
+		
 		return token;
 	}
 
