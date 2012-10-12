@@ -17,6 +17,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import ca.ubc.ctlt.ipeerb2.domain.Course;
+import ca.ubc.ctlt.ipeerb2.domain.Department;
 import ca.ubc.ctlt.ipeerb2.domain.Event;
 import ca.ubc.ctlt.ipeerb2.domain.Grade;
 import ca.ubc.ctlt.ipeerb2.domain.Group;
@@ -491,5 +492,40 @@ public class iPeerWebServiceIntegrationTest {
 	public final void testGetGradesForUserInInvalidEvent() {
 		webService.getGradesForUserInEvent(1, 999);
 		fail("No exception when enroling invalid users to group!");
+	}
+	
+	/************** Department API Tests *******************/
+	@Test
+	public final void testGetDepartmentList() {
+		List<Department> dl = webService.getDepartmentList();
+		assertTrue(dl.size() == 3);
+		Department u = dl.get(0);
+		assertTrue(u.getId() == 1);
+		assertTrue("department1".equals(u.getName()));
+		
+		u = dl.get(1);
+		assertTrue(u.getId() == 2);
+		assertTrue("department2".equals(u.getName()));
+		
+		u = dl.get(2);
+		assertTrue(u.getId() == 3);
+		assertTrue("department3".equals(u.getName()));
+	}
+	
+	@Test
+	public final void testAssignCourseToDepartment() {
+		assertTrue(webService.assignCourseToDepartment(1,1));
+	}
+	
+	@Test(expected=RuntimeException.class)
+	public final void testNonExistingCourseDepartmentAssociation() {
+		webService.assignCourseToDepartment(999,1);
+		fail("No exception when associating a non-exist course to department!");
+	}
+	
+	@Test(expected=RuntimeException.class)
+	public final void testNonExistingDepartmentWithCourseAssociation() {
+		webService.assignCourseToDepartment(1,999);
+		fail("No exception when associating a course to a non-exist department!");
 	}
 }

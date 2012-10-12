@@ -275,6 +275,26 @@
                 test_grade.12.method=get
                 test_grade.12.responsestatus=500
                 
+                test_department.1.uri=/[^/]*/departments
+                test_department.1.method=get
+                test_department.1.responsebody=[{"id":1,"name":"department1"},{"id":2,"name":"department2"},{"id":3,"name":"department3"}]
+                test_department.1.responsestatus=200
+                
+                test_department.10.uri=/[^/]*/courses/1/departments/1
+                test_department.10.method=post
+                test_department.10.requestbody=""
+                test_department.10.responsestatus=201
+                
+                test_department.11.uri=/[^/]*/courses/1/departments/999
+                test_department.11.method=post
+                test_department.11.requestbody=""
+                test_department.11.responsestatus=500
+                
+                test_department.12.uri=/[^/]*/courses/999/departments/1
+                test_department.12.method=post
+                test_department.12.requestbody=""
+                test_department.12.responsestatus=500
+                
                 test_intg_course.1.uri=/[^/]*/courses
                 test_intg_course.1.method=post
                 test_intg_course.1.requestbody={"id":0,"course":"test","title":"test"}

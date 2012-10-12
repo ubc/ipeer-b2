@@ -1,3 +1,4 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
@@ -15,12 +16,14 @@
 <c:url var="disconnect" value="/instructor/course/disconnect?course_id=${course_id}"/>
 <c:url var="delete"     value="/instructor/course/delete?course_id=${course_id}"/>
 	
-<bbNG:learningSystemPage title="Manage Course" ctxId="ctx">
+<spring:message var="page_title" code="page.course_manage.title"/>
+	
+<bbNG:learningSystemPage title="${page_title}" ctxId="ctx">
 	<bbNG:pageHeader instructions="">
 		<bbNG:breadcrumbBar>
-			<bbNG:breadcrumb>Manage Course</bbNG:breadcrumb>
+			<bbNG:breadcrumb>${page_title}</bbNG:breadcrumb>
 		</bbNG:breadcrumbBar>
-		<bbNG:pageTitleBar>Manage Course</bbNG:pageTitleBar>
+		<bbNG:pageTitleBar>${page_title}</bbNG:pageTitleBar>
 	</bbNG:pageHeader>
 	<ul>
 		<li><a href="${syncclass}">Synchronize Class List</a></li>

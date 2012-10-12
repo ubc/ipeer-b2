@@ -1,5 +1,7 @@
 package ca.ubc.ctlt.ipeerb2.domain;
 
+import java.util.List;
+
 import org.codehaus.jackson.annotate.JsonIgnore;
 
 public class Course {
@@ -10,6 +12,9 @@ public class Course {
 	@JsonIgnore
 	private String bbCourseId;
 
+	@JsonIgnore
+	private List<Department> departments;
+	
 	public int getId() {
 		return id;
 	}
@@ -40,5 +45,13 @@ public class Course {
 
 	public void setBbCourseId(String bbCourseId) {
 		this.bbCourseId = bbCourseId;
+	}
+
+	public List<Department> getDepartments() {
+		return departments;
+	}
+
+	public void setDepartments(List<Department> departments) {
+		this.departments = departments;
 	}
 }

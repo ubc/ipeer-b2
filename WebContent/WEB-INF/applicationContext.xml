@@ -43,7 +43,7 @@
 	</bean>
 	
 	<oauth:consumer resource-details-service-ref="resourceDetails" oauth-failure-page="/oauth_error.jsp" token-services-ref="tokenService">
- 		<oauth:url pattern="/instructor/course/create" resources="ipeerResourceDetails" />
+ 		<oauth:url pattern="/instructor/**" resources="ipeerResourceDetails" />
 		<oauth:url pattern="/module/**" resources="ipeerResourceDetails" />
 	</oauth:consumer>
 

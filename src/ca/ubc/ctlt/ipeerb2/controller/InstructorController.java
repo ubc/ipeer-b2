@@ -1,5 +1,6 @@
 package ca.ubc.ctlt.ipeerb2.controller;
 
+import java.util.List;
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
@@ -9,6 +10,8 @@ import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.ServletRequestDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -20,7 +23,10 @@ import blackboard.platform.servlet.InlineReceiptUtil;
 import ca.ubc.ctlt.blackboardb2util.B2Util;
 import ca.ubc.ctlt.ipeerb2.Configuration;
 import ca.ubc.ctlt.ipeerb2.domain.Course;
+import ca.ubc.ctlt.ipeerb2.domain.Department;
 import ca.ubc.ctlt.ipeerb2.service.IPeerB2Service;
+
+import com.spvsoftwareproducts.blackboard.utils.B2Context;
 
 @Controller
 @RequestMapping("/instructor")
@@ -35,14 +41,23 @@ public class InstructorController {
 	private Configuration configuration;
 	
 	@RequestMapping(value="/course")
-	public String course(HttpServletRequest webRequest, @RequestParam("course_id") String bbCourseId, ModelMap model) {
+	public String course(HttpServletRequest request, @RequestParam("course_id") String bbCourseId, ModelMap model) {
 		if (configuration.connectionExists(bbCourseId)) {
 			model.addAttribute("course_id", bbCourseId);
 			return "manage_course";
 		}
+		B2Context b2Context = new B2Context(request);
+		blackboard.data.course.Course course = b2Context.getContext().getCourse();
+		
+		List<Department> departments = service.getDepartments();
+		model.addAttribute("departments", departments);
+		
 		Course courseForm = new Course();
 		courseForm.setBbCourseId(bbCourseId);
+		courseForm.setCourse(course.getBatchUid());
+		courseForm.setTitle(course.getDisplayTitle());
 		model.addAttribute("course", courseForm);
+		
 		return "course_creation_form";
 	}
 	
@@ -50,6 +65,9 @@ public class InstructorController {
 	public String createCourse(HttpServletRequest webRequest, @ModelAttribute("course") Course course, BindingResult result, Locale locale) {
 		ReceiptOptions ro = new ReceiptOptions();
 		if (service.createCourse(course)) {
+			for (Department dept : course.getDepartments()) {
+				service.assignCourseToDepartment(course.getId(), dept.getId());
+			}
 			ro.addSuccessMessage(messageSource.getMessage("message.create_course_success", new Object[]{course.getCourse()}, locale));
 		} else {
 			ro.addSuccessMessage(messageSource.getMessage("message.create_course_failed", new Object[]{course.getCourse()}, locale));
@@ -151,5 +169,11 @@ public class InstructorController {
 		User user = B2Util.getCurrentUser(request);
 		
 		return "redirect:"+url+"/login?course_id="+ipeerCourseId+"&username="+user.getUserName();
+	}
+	
+	@InitBinder
+	protected void initBinder(HttpServletRequest request,
+			ServletRequestDataBinder binder) throws Exception {
+		binder.registerCustomEditor(Department.class, new CourseDepartmentPropertyEditor());
 	}
 }

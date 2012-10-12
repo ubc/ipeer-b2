@@ -4,6 +4,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.when;
 
+import java.net.URI;
 import java.util.List;
 
 import org.junit.Before;
@@ -17,6 +18,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.web.client.RestOperations;
 
 import ca.ubc.ctlt.ipeerb2.domain.Course;
+import ca.ubc.ctlt.ipeerb2.domain.Department;
 import ca.ubc.ctlt.ipeerb2.domain.Event;
 import ca.ubc.ctlt.ipeerb2.domain.Grade;
 import ca.ubc.ctlt.ipeerb2.domain.Group;
@@ -62,6 +64,12 @@ public class iPeerWebServiceTest {
 	@Autowired
 	private List<Grade> gradeList;
 	
+	@Autowired
+	private Department department;
+	
+	@Autowired
+	private List<Department> departmentList;
+	
 	@Before
 	public void setUp() throws Exception {
 		// course mocking
@@ -94,6 +102,10 @@ public class iPeerWebServiceTest {
 		// grade mocking
 		when(restOperations.getForObject( Matchers.anyString(), Matchers.eq(Grade[].class), Matchers.anyInt()) ).thenReturn(gradeList.toArray(new Grade[gradeList.size()]));
 		when(restOperations.getForObject( Matchers.anyString(), Matchers.eq(Grade.class), Matchers.anyInt(), Matchers.anyInt()) ).thenReturn(grade);
+		
+		// department mocking
+		when(restOperations.getForObject( Matchers.anyString(), Matchers.eq(Department[].class)) ).thenReturn(departmentList.toArray(new Department[departmentList.size()]));
+		when(restOperations.postForLocation( Matchers.anyString(), Matchers.any(), Matchers.anyInt(), Matchers.anyInt()) ).thenReturn(new URI(""));
 	}
 
 	@Test
@@ -434,5 +446,29 @@ public class iPeerWebServiceTest {
 		
 		assertTrue(grade.getId() == 1);
 		assertTrue(10.5 == grade.getGrade());
+	}
+	
+	/************* Department API Test *************/
+	
+	@Test
+	public final void testGetDepartmentList() {
+		List<Department> dl = webService.getDepartmentList();
+		assertTrue(dl.size() == 3);
+		Department u = dl.get(0);
+		assertTrue(u.getId() == 1);
+		assertTrue("department1".equals(u.getName()));
+		
+		u = dl.get(1);
+		assertTrue(u.getId() == 2);
+		assertTrue("department2".equals(u.getName()));
+		
+		u = dl.get(2);
+		assertTrue(u.getId() == 3);
+		assertTrue("department3".equals(u.getName()));
+	}
+	
+	@Test
+	public final void testAssignCourseToDepartment() {
+		assertTrue(webService.assignCourseToDepartment(1,1));
 	}
 }

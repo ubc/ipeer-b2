@@ -14,6 +14,7 @@ import org.springframework.web.client.RestTemplate;
 
 import ca.ubc.ctlt.ipeerb2.Configuration;
 import ca.ubc.ctlt.ipeerb2.domain.Course;
+import ca.ubc.ctlt.ipeerb2.domain.Department;
 import ca.ubc.ctlt.ipeerb2.domain.Event;
 import ca.ubc.ctlt.ipeerb2.domain.Grade;
 import ca.ubc.ctlt.ipeerb2.domain.Group;
@@ -38,6 +39,7 @@ public class iPeerWebService {
 	public static final String API_GROUP_USER = "/" + API_VERSION + "/groups/{group_id}/users";
 	public static final String API_EVENT = "/" + API_VERSION + "/courses/{course_id}/events";
 	public static final String API_GRADE = "/" + API_VERSION + "/events/{event_id}/grades";
+	public static final String API_DEPARTMENT = "/" + API_VERSION + "/departments";
 	private static final Logger logger = Logger.getLogger(iPeerWebService.class);
 	
 	public String getServerUrl() {
@@ -365,4 +367,21 @@ public class iPeerWebService {
 		return result;	
 	}
 	
+	/***************** Department API ***************/
+	public List<Department> getDepartmentList() {
+		Department[] departments = restTemplate.getForObject(getServerUrl() + API_DEPARTMENT, Department[].class);
+		List<Department> result = Arrays.asList(departments);
+		return result;
+	}
+	
+	public boolean assignCourseToDepartment(int courseId, int departmentId) {
+		try {
+			restTemplate.postForLocation(getServerUrl() + API_COURSE + "/{course_id}/departments/{department_id}", "", courseId, departmentId);
+		} catch (RestClientException e) {
+			logger.warn("Cousre/Department association failed! Status code=" + e.getMessage());
+			throw new RuntimeException(messageSource.getMessage("message.failed_associate_course_department", null, null), e);
+		}
+		
+		return true;
+	}
 }

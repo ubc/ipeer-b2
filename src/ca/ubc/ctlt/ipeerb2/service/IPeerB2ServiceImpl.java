@@ -20,11 +20,13 @@ import ca.ubc.ctlt.blackboardb2util.UserAdapter;
 import ca.ubc.ctlt.ipeerb2.Configuration;
 import ca.ubc.ctlt.ipeerb2.iPeerB2Util;
 import ca.ubc.ctlt.ipeerb2.dao.CourseDao;
+import ca.ubc.ctlt.ipeerb2.dao.DepartmentDao;
 import ca.ubc.ctlt.ipeerb2.dao.EventDao;
 import ca.ubc.ctlt.ipeerb2.dao.GradeDao;
 import ca.ubc.ctlt.ipeerb2.dao.GroupDao;
 import ca.ubc.ctlt.ipeerb2.dao.UserDao;
 import ca.ubc.ctlt.ipeerb2.domain.Course;
+import ca.ubc.ctlt.ipeerb2.domain.Department;
 import ca.ubc.ctlt.ipeerb2.domain.Event;
 import ca.ubc.ctlt.ipeerb2.domain.Grade;
 import ca.ubc.ctlt.ipeerb2.domain.Group;
@@ -48,11 +50,15 @@ public class IPeerB2ServiceImpl implements IPeerB2Service, UserAdapter<User>, Gr
 	private EventDao eventDao;
 	
 	@Autowired
+	private DepartmentDao departmentDao;
+		
+	@Autowired
 	private Configuration configuration;
 	
 	@Override
 	public boolean createCourse(Course course) {
 		Course result = courseDao.createCourse(course);
+		course.setId(result.getId());
 		configuration.setConnection(course.getBbCourseId(), result.getId());
 		
 		return true;
@@ -78,9 +84,10 @@ public class IPeerB2ServiceImpl implements IPeerB2Service, UserAdapter<User>, Gr
 	@Override
 	public boolean syncClass(String bbCourseId) {
 		try {
+			userDao.createUsers(B2Util.getUsersInCourse(bbCourseId, this));
 			userDao.enrolUsersInCourse(configuration.getIpeerCourseId(bbCourseId), B2Util.getUsersInCourse(bbCourseId, this));
 		} catch (PersistenceException e) {
-			throw new RuntimeException("Failed to load class list!", e);
+			throw new RuntimeException("Failed to sync class list!", e);
 		}
 		
 		return true;
@@ -213,6 +220,17 @@ public class IPeerB2ServiceImpl implements IPeerB2Service, UserAdapter<User>, Gr
 	@Override
 	public List<Event> getEventsForUserInCourse(String username, String bbCourseId) {
 		return eventDao.getEventsForUserInCourse(username, configuration.getIpeerCourseId(bbCourseId));
+	}
+
+	@Override
+	public List<Department> getDepartments() {
+		return departmentDao.getDepartmentList();
+	}
+	
+
+	@Override
+	public boolean assignCourseToDepartment(int courseId, int departmentId) {
+		return courseDao.assignCourseToDepartment(courseId, departmentId);
 	}
 	
 	/************* Adapter functions *****************/

@@ -1,9 +1,13 @@
 package ca.ubc.ctlt.ipeerb2.form;
 
+import java.util.List;
+
+import ca.ubc.ctlt.ipeerb2.domain.Department;
+
 public class CourseCreationForm {
 	private String name;
 	private String title;
-	private int department = 0;
+	private List<Department> departments;
 
 	public String getName() {
 		return name;
@@ -21,12 +25,11 @@ public class CourseCreationForm {
 		this.title = title;
 	}
 
-	public int getDepartment() {
-		return department;
+	public List<Department> getDepartments() {
+		return departments;
 	}
 
-	public void setDepartment(int department) {
-		this.department = department;
+	public void setDepartments(List<Department> departments) {
+		this.departments = departments;
 	}
-
 }

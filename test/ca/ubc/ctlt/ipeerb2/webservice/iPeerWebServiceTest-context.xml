@@ -230,4 +230,29 @@
 	        </list>
 	    </constructor-arg>
 	</bean>
+	
+	<!-- Department fixtures -->
+	
+	<bean id="department" class="ca.ubc.ctlt.ipeerb2.domain.Department">
+        <property name="id" value="1" />
+        <property name="name" value="department1" />
+    </bean>
+	<bean id="department2" class="ca.ubc.ctlt.ipeerb2.domain.Department">
+        <property name="id" value="2" />
+        <property name="name" value="department2" />
+    </bean>
+	<bean id="department3" class="ca.ubc.ctlt.ipeerb2.domain.Department">
+        <property name="id" value="3" />
+        <property name="name" value="department3" />
+    </bean>
+    
+    <bean id="departmentList" class="java.util.ArrayList">
+	    <constructor-arg>
+	        <list>
+	            <ref bean="department" />
+	            <ref bean="department2" />   
+	            <ref bean="department3" />              
+	        </list>
+	    </constructor-arg>
+	</bean>
 </beans>
