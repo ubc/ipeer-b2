@@ -12,7 +12,7 @@
 <c:url var="pushgroups" value="/instructor/course/pushgroups?course_id=${course_id}"/>
 <c:url var="pullgroups" value="/instructor/course/pullgroups?course_id=${course_id}"/>
 <c:url var="syncgrades" value="/instructor/course/syncgrades?course_id=${course_id}"/>
-<c:url var="gotoipeer" value="/instructor/course/gotoipeer?course_id=${course_id}"/>
+<c:url var="gotoipeer" value="/instructor/course/gotoipeer?redirect=/courses/home/${ipeer_course_id}"/>
 <c:url var="disconnect" value="/instructor/course/disconnect?course_id=${course_id}"/>
 <c:url var="delete"     value="/instructor/course/delete?course_id=${course_id}"/>
 	

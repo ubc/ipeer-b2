@@ -155,6 +155,16 @@
 	    </constructor-arg>
 	</bean>
 	
+	<bean id="usersWithoutOptionalFields" class="java.util.ArrayList">
+	    <constructor-arg>
+	        <list>
+	            <bean class="ca.ubc.ctlt.ipeerb2.domain.User"><property name="username" value="username1"/></bean>
+	            <bean class="ca.ubc.ctlt.ipeerb2.domain.User"><property name="username" value="username2"/></bean>  
+	            <bean class="ca.ubc.ctlt.ipeerb2.domain.User"><property name="username" value="username3"/></bean>             
+	        </list>
+	    </constructor-arg>
+	</bean>
+	
     <!-- Group Fixtures -->
  	
  	<bean id="groupToCreate" class="ca.ubc.ctlt.ipeerb2.domain.Group">

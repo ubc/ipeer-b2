@@ -47,6 +47,8 @@
 		<oauth:url pattern="/module/**" resources="ipeerResourceDetails" />
 	</oauth:consumer>
 
+	<bean id="customErrorHandler" class="ca.ubc.ctlt.ipeerb2.iPeerResponseErrorHandler"/>
+
     <bean id="restTemplate" class="org.springframework.security.oauth.consumer.client.OAuthRestTemplate">
         <constructor-arg ref="ipeerResourceDetails" />
         <property name="messageConverters">
@@ -56,5 +58,6 @@
                 </bean>
             </list>
         </property>
+        <property name="errorHandler" ref="customErrorHandler" />
     </bean>
 </beans>

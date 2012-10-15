@@ -58,6 +58,9 @@ public class iPeerWebServiceIntegrationTest {
 	@Resource
 	private List<User> userList;
 	
+	@Resource
+	private List<User> usersWithoutOptionalFields;
+	
 	@Autowired
 	private Group groupToCreate;
 	
@@ -174,6 +177,23 @@ public class iPeerWebServiceIntegrationTest {
 	public final void testCreateUser() {
 		User user = webService.createUser(userToCreate);
 		assertTrue(user.getId() == 1);
+	}
+	
+	@Test
+	public final void testCreateUserWithoutOptionalFields() {
+		List<User> cl = webService.createUsers(usersWithoutOptionalFields);
+		assertTrue(cl.size() == 3);
+		User c = cl.get(0);
+		assertTrue(c.getId() == 1);
+		assertTrue("username1".equals(c.getUsername()));
+		
+		c = cl.get(1);
+		assertTrue(c.getId() == 2);
+		assertTrue("username2".equals(c.getUsername()));
+		
+		c = cl.get(2);
+		assertTrue(c.getId() == 3);
+		assertTrue("username3".equals(c.getUsername()));
 	}
 	
 	@Test(expected=RuntimeException.class)

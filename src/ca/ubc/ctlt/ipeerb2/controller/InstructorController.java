@@ -1,10 +1,13 @@
 package ca.ubc.ctlt.ipeerb2.controller;
 
+import java.net.URLEncoder;
 import java.util.List;
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
@@ -22,6 +25,7 @@ import blackboard.data.user.User;
 import blackboard.platform.servlet.InlineReceiptUtil;
 import ca.ubc.ctlt.blackboardb2util.B2Util;
 import ca.ubc.ctlt.ipeerb2.Configuration;
+import ca.ubc.ctlt.ipeerb2.iPeerB2Util;
 import ca.ubc.ctlt.ipeerb2.domain.Course;
 import ca.ubc.ctlt.ipeerb2.domain.Department;
 import ca.ubc.ctlt.ipeerb2.service.IPeerB2Service;
@@ -40,10 +44,14 @@ public class InstructorController {
 	@Autowired
 	private Configuration configuration;
 	
+	private static final Logger logger = LoggerFactory.getLogger(InstructorController.class);
+	
 	@RequestMapping(value="/course")
 	public String course(HttpServletRequest request, @RequestParam("course_id") String bbCourseId, ModelMap model) {
 		if (configuration.connectionExists(bbCourseId)) {
+			int ipeerCourseId = configuration.getIpeerCourseId(bbCourseId);
 			model.addAttribute("course_id", bbCourseId);
+			model.addAttribute("ipeer_course_id", ipeerCourseId);
 			return "manage_course";
 		}
 		B2Context b2Context = new B2Context(request);
@@ -163,12 +171,18 @@ public class InstructorController {
 	}
 	
 	@RequestMapping(value="/course/gotoipeer", method = RequestMethod.GET)
-	public String gotoIpeer(HttpServletRequest request, @RequestParam("course_id") String bbCourseId, Locale locale, ModelMap model) {
-		int ipeerCourseId = configuration.getIpeerCourseId(bbCourseId);
+	public String gotoIpeer(HttpServletRequest request, @RequestParam("redirect") String redirect, Locale locale, ModelMap model) {
 		String url = configuration.getIpeerUrl();
 		User user = B2Util.getCurrentUser(request);
-		
-		return "redirect:"+url+"/login?course_id="+ipeerCourseId+"&username="+user.getUserName();
+		long timestamp = System.nanoTime();
+		String key = configuration.getSetting(Configuration.TOKEN_KEY);
+		String secret = configuration.getSetting(Configuration.TOKEN_SECRET);
+		String signature = iPeerB2Util.calcSignature(user.getUserName(), timestamp, key, secret);
+		return "redirect:"+url+redirect+"?"+
+				"&username="+iPeerB2Util.urlEncode(user.getUserName())+
+				"&timestamp="+timestamp+
+				"&token="+iPeerB2Util.urlEncode(key)+
+				"&signature="+iPeerB2Util.urlEncode(signature);
 	}
 	
 	@InitBinder

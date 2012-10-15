@@ -2,8 +2,16 @@ package ca.ubc.ctlt.ipeerb2.domain;
 
 import java.util.Date;
 
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.codehaus.jackson.annotate.JsonProperty;
+import org.codehaus.jackson.map.annotate.JsonDeserialize;
+import org.codehaus.jackson.map.annotate.JsonSerialize;
+import org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion;
 
+import ca.ubc.ctlt.ipeerb2.CustomDateDeserializer;
+
+@JsonSerialize(include = Inclusion.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Event {
 	private int id;
 	
@@ -69,7 +77,8 @@ public class Event {
 	public Date getDueDate() {
 		return dueDate;
 	}
-
+	
+	@JsonDeserialize(using = CustomDateDeserializer.class)
 	public void setDueDate(Date dueDate) {
 		this.dueDate = dueDate;
 	}
@@ -78,6 +87,7 @@ public class Event {
 		return releaseDateBegin;
 	}
 
+	@JsonDeserialize(using = CustomDateDeserializer.class)
 	public void setReleaseDateBegin(Date releaseDateBegin) {
 		this.releaseDateBegin = releaseDateBegin;
 	}
@@ -86,6 +96,7 @@ public class Event {
 		return releaseDateEnd;
 	}
 
+	@JsonDeserialize(using = CustomDateDeserializer.class)
 	public void setReleaseDateEnd(Date releaseDateEnd) {
 		this.releaseDateEnd = releaseDateEnd;
 	}

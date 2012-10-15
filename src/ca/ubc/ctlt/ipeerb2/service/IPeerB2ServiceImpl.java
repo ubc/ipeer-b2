@@ -265,8 +265,12 @@ public class IPeerB2ServiceImpl implements IPeerB2Service, UserAdapter<User>, Gr
 	public User bbUserToUser(CourseMembership membership) {
 		User user = bbUserToUser(membership.getUser());
 		Map<String, Integer> roleMapping = new HashMap<String, Integer>();
-		roleMapping.put(Role.STUDENT.getFieldName(), 3);
-		roleMapping.put(Role.INSTRUCTOR.getFieldName(), 2);
+		roleMapping.put(Role.STUDENT.getFieldName(), 5);
+		roleMapping.put(Role.NONE.getFieldName(), 5);
+		roleMapping.put(Role.TEACHING_ASSISTANT.getFieldName(), 4);
+		roleMapping.put(Role.GRADER.getFieldName(), 4);
+		roleMapping.put(Role.INSTRUCTOR.getFieldName(), 3);
+		roleMapping.put(Role.COURSE_BUILDER.getFieldName(), 3);
 		user.setRoleId(roleMapping.get(membership.getRoleAsString()));
 		
 		return user;

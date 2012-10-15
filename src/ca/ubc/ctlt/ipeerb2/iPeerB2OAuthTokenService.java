@@ -33,7 +33,6 @@ public class iPeerB2OAuthTokenService implements OAuthConsumerTokenServices {
 	@Override
 	public OAuthConsumerToken getToken(String resourceId)
 			throws AuthenticationException {
-		System.out.println("************ Get token for " + resourceId);
 		String key = configuration.getSetting(Configuration.TOKEN_KEY);
 		String secret = configuration.getSetting(Configuration.TOKEN_SECRET);
 		if (null == key || key.isEmpty() || null == secret || secret.isEmpty()) {

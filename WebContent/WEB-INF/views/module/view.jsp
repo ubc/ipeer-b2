@@ -1,7 +1,9 @@
-<%@page import="blackboard.portal.external.*" errorPage="/error.jsp"%>
+<%@page import="blackboard.portal.external.*, com.spvsoftwareproducts.blackboard.utils.B2Context" errorPage="/error.jsp"%>
 <%@ taglib uri="/bbData" prefix="bbData"%>
 <%@ taglib uri="/bbNG" prefix="bbNG"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
+<c:url var="gotoipeer" value="/module/gotoipeer?redirect=/home/studentIndex" context="${webapp}"/>
 
 <bbData:context>
 <c:choose>
@@ -12,7 +14,7 @@
 	<c:otherwise>
 	<ul>
 	    <c:forEach var="event" items="${events}">
-	    	<li><a href="${ipeer_url}/event/${event.id}?username=${username}&token=${token}"><c:out value="${event.title}"/></a> due at <c:out value="${event.dueDate}"/></li>
+	    	<li><a href="${gotoipeer}" target="_blank"><c:out value="${event.title}"/></a> due at <c:out value="${event.dueDate}"/></li>
 	    </c:forEach>
 	</ul>
 	</c:otherwise>
