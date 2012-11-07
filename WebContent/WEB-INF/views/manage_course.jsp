@@ -18,6 +18,18 @@
 	
 <spring:message var="page_title" code="page.course_manage.title"/>
 	
+ <style type="text/css">
+ ul
+ {
+  border: 0px solid #90bade;
+ }
+ li
+ { 
+  list-style-type:none;
+  border: 0px solid black;
+ }
+</style>
+
 <bbNG:learningSystemPage title="${page_title}" ctxId="ctx">
 	<bbNG:pageHeader instructions="">
 		<bbNG:breadcrumbBar>

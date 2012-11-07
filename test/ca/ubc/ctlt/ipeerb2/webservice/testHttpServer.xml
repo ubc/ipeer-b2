@@ -307,35 +307,43 @@
                 test_intg_course.1.responsebody={"id":1,"course":"testt","title":"test"}
                 test_intg_course.1.responsestatus=201
                 
-                test_intg_course.2.uri=/[^/]*/courses/1/users
+                test_intg_course.2.uri=/[^/]*/courses
                 test_intg_course.2.method=post
-                test_intg_course.2.requestbody=[{"id":0,"username":"administrator","email":"bbpilot-admin@it.ubc.ca","role_id":2,"first_name":"Blackboard","last_name":"Administrator","student_no":""},{"id":0,"username":"compass","email":"","role_id":2,"first_name":"Pan","last_name":"Luo","student_no":""}]
-                test_intg_course.2.responsebody=[{"id":1,"username":"administrator","email":"bbpilot-admin@it.ubc.ca","role_id":2,"first_name":"Blackboard","last_name":"Administrator","student_no":""},{"id":2,"username":"compass","email":"","role_id":2,"first_name":"Pan","last_name":"Luo","student_no":""}]
-                test_intg_course.2.responsestatus=201
+                test_intg_course.2.requestbody={"id":0,"course":"test_exists","title":"test_exists"}
+                test_intg_course.2.responsebody={"code":1,"message":"course already exists"}
+                test_intg_course.2.responsestatus=409 
                 
-                test_intg_course.3.uri=/[^/]*/courses/1/groups
-                test_intg_course.3.method=post
-                test_intg_course.3.requestbody={"id":0,"name":"Group1","set_name":null}
-                test_intg_course.3.responsebody={"id":1,"name":"Group1","set_name":null}
-                test_intg_course.3.responsestatus=201
+                test_intg_user.2.uri=/[^/]*/courses/1/users
+                test_intg_user.2.method=post
+                test_intg_user.2.requestbody=[{"id":0,"username":"administrator","email":"bbpilot-admin@it.ubc.ca","role_id":2,"first_name":"Blackboard","last_name":"Administrator","student_no":""},{"id":0,"username":"compass","email":"","role_id":2,"first_name":"Pan","last_name":"Luo","student_no":""}]
+                test_intg_user.2.responsebody=[{"id":1,"username":"administrator","email":"bbpilot-admin@it.ubc.ca","role_id":2,"first_name":"Blackboard","last_name":"Administrator","student_no":""},{"id":2,"username":"compass","email":"","role_id":2,"first_name":"Pan","last_name":"Luo","student_no":""}]
+                test_intg_user.2.responsestatus=201
                 
-                test_intg_course.4.uri=/[^/]*/courses/1/groups
-                test_intg_course.4.method=post
-                test_intg_course.4.requestbody={"id":0,"name":"Group2","set_name":null}
-                test_intg_course.4.responsebody={"id":2,"name":"Group2","set_name":null}
-                test_intg_course.4.responsestatus=201
+                test_intg_group.3.uri=/[^/]*/courses/1/groups
+                test_intg_group.3.method=post
+                test_intg_group.3.requestbody={"id":0,"name":"Group1","set_name":null}
+                test_intg_group.3.responsebody={"id":1,"name":"Group1","set_name":null}
+                test_intg_group.3.responsestatus=201
                 
-                test_intg_course.5.uri=/[^/]*/groups/1/users
-                test_intg_course.5.method=post
-                test_intg_course.5.requestbody=[{"id":0,"username":"administrator","email":"bbpilot-admin@it.ubc.ca","role_id":2,"first_name":"Blackboard","last_name":"Administrator","student_no":""}]
-                test_intg_course.5.responsebody=[{"id":0,"username":"administrator","email":"bbpilot-admin@it.ubc.ca","role_id":2,"first_name":"Blackboard","last_name":"Administrator","student_no":""}]
-                test_intg_course.5.responsestatus=201
+                test_intg_group.4.uri=/[^/]*/courses/1/groups
+                test_intg_group.4.method=post
+                test_intg_group.4.requestbody={"id":0,"name":"Group2","set_name":null}
+                test_intg_group.4.responsebody={"id":2,"name":"Group2","set_name":null}
+                test_intg_group.4.responsestatus=201
+                
+                test_intg_group.5.uri=/[^/]*/groups/1/users
+                test_intg_group.5.method=post
+                test_intg_group.5.requestbody=[{"id":0,"username":"administrator","email":"bbpilot-admin@it.ubc.ca","role_id":2,"first_name":"Blackboard","last_name":"Administrator","student_no":""}]
+                test_intg_group.5.responsebody=[{"id":0,"username":"administrator","email":"bbpilot-admin@it.ubc.ca","role_id":2,"first_name":"Blackboard","last_name":"Administrator","student_no":""}]
+                test_intg_group.5.responsestatus=201
                        
-                test_intg_course.6.uri=/[^/]*/groups/2/users
-                test_intg_course.6.method=post
-                test_intg_course.6.requestbody=[{"id":0,"username":"compass","email":"","role_id":2,"first_name":"Pan","last_name":"Luo","student_no":""}]
-                test_intg_course.6.responsebody=[{"id":0,"username":"compass","email":"","role_id":2,"first_name":"Pan","last_name":"Luo","student_no":""}]
-                test_intg_course.6.responsestatus=201        
+                test_intg_group.6.uri=/[^/]*/groups/2/users
+                test_intg_group.6.method=post
+                test_intg_group.6.requestbody=[{"id":0,"username":"compass","email":"","role_id":2,"first_name":"Pan","last_name":"Luo","student_no":""}]
+                test_intg_group.6.responsebody=[{"id":0,"username":"compass","email":"","role_id":2,"first_name":"Pan","last_name":"Luo","student_no":""}]
+                test_intg_group.6.responsestatus=201       
+                
+
             </value>
         </property>
         <property name="contentType" ref="jsonContentType" />

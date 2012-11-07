@@ -5,11 +5,9 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Component;
-import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 import ca.ubc.ctlt.ipeerb2.Configuration;
@@ -40,7 +38,7 @@ public class iPeerWebService {
 	public static final String API_EVENT = "/" + API_VERSION + "/courses/{course_id}/events";
 	public static final String API_GRADE = "/" + API_VERSION + "/events/{event_id}/grades";
 	public static final String API_DEPARTMENT = "/" + API_VERSION + "/departments";
-	private static final Logger logger = Logger.getLogger(iPeerWebService.class);
+	//private static final Logger logger = Logger.getLogger(iPeerWebService.class);
 	
 	public String getServerUrl() {
 		return configuration.getSetting(Configuration.IPEER_URL);
@@ -56,47 +54,26 @@ public class iPeerWebService {
 
 	public Course getCourse(int id) {
 		Course result = null;
-		try {
-			result = restTemplate.getForObject(getServerUrl() + API_COURSE + "/{id}", Course.class, String.valueOf(id));
-		} catch (RestClientException e) {
-			logger.warn("Course with id " + id + " not found! Status code=" + e.getMessage());
-			throw new RuntimeException(messageSource.getMessage("message.failed_get_course", new Object[]{id}, null), e);
-	    }
+		result = restTemplate.getForObject(getServerUrl() + API_COURSE + "/{id}", Course.class, String.valueOf(id));
 		
 		return result;
 	}
 	
 	public Course createCourse(Course course) {
 		Course result = null;
-		try {
-			result = restTemplate.postForObject(getServerUrl() + API_COURSE, course,
-					Course.class);
-		} catch (RestClientException e) {
-			logger.warn("Course creation failed! Status code=" + e.getMessage());
-			throw new RuntimeException(messageSource.getMessage("message.failed_create_course", null, null), e);
-		}
-		
+		result = restTemplate.postForObject(getServerUrl() + API_COURSE, course, Course.class);
+
 		return result;
 	}
 	
 	public boolean deleteCourse(int id) {
-		try {
-			restTemplate.delete(getServerUrl() + API_COURSE + "/{id}", String.valueOf(id));
-		} catch (RestClientException e) {
-			logger.warn("Course deletion failed! Status code=" + e.getMessage());
-			throw new RuntimeException(messageSource.getMessage("message.failed_delete_course", null, null), e);
-		}
-		
+		restTemplate.delete(getServerUrl() + API_COURSE + "/{id}", String.valueOf(id));
+
 		return true;
 	}
 	
 	public boolean updateCourse(Course course) {
-		try {
-			restTemplate.put(getServerUrl() + API_COURSE + "/{id}", course, String.valueOf(course.getId()));
-		} catch (RestClientException e) {
-			logger.warn("Course update failed! Status code=" + e.getMessage());
-			throw new RuntimeException(messageSource.getMessage("message.failed_update_course", null, null), e);
-		}
+		restTemplate.put(getServerUrl() + API_COURSE + "/{id}", course, String.valueOf(course.getId()));
 		
 		return true;
 	}
@@ -111,58 +88,33 @@ public class iPeerWebService {
 	
 	public User getUser(int id) {
 		User result = null;
-		try {
-			result = restTemplate.getForObject(getServerUrl() + API_USER + "/{id}", User.class, String.valueOf(id));
-		} catch (RestClientException e) {
-			logger.warn("User with id " + id + " not found! Status code=" + e.getMessage());
-			throw new RuntimeException(messageSource.getMessage("message.failed_get_user", new Object[]{id}, null), e);
-	    }
+		result = restTemplate.getForObject(getServerUrl() + API_USER + "/{id}", User.class, String.valueOf(id));
 		
 		return result;
 	}
 	
 	public User createUser(User user) {
 		User result = null;
-		try {
-			result = restTemplate.postForObject(getServerUrl() + API_USER, user, User.class);
-		} catch (RestClientException e) {
-			logger.warn("User creation failed! Status code=" + e.getMessage());
-			throw new RuntimeException(messageSource.getMessage("message.failed_create_user", null, null), e);
-		}
+		result = restTemplate.postForObject(getServerUrl() + API_USER, user, User.class);
 		
 		return result;
 	}
 	
 	public List<User> createUsers(List<User> users) {
 		User[] result = null;
-		try {
-			result = restTemplate.postForObject(getServerUrl() + API_USER, users.toArray(new User[users.size()]), User[].class);
-		} catch (RestClientException e) {
-			logger.warn("User creation failed! Status code=" + e.getMessage());
-			throw new RuntimeException(messageSource.getMessage("message.failed_create_users", null, null), e);
-		}
+		result = restTemplate.postForObject(getServerUrl() + API_USER, users.toArray(new User[users.size()]), User[].class);
 		
 		return Arrays.asList(result);
 	}
 	
 	public boolean deleteUser(int id) {
-		try {
-			restTemplate.delete(getServerUrl() + API_USER + "/{id}", String.valueOf(id));
-		} catch (RestClientException e) {
-			logger.warn("User deletion failed! Status code=" + e.getMessage());
-			throw new RuntimeException(messageSource.getMessage("message.failed_delete_user", null, null), e);
-		}
+		restTemplate.delete(getServerUrl() + API_USER + "/{id}", String.valueOf(id));
 		
 		return true;
 	}
 	
 	public boolean updateUser(User user) {
-		try {
-			restTemplate.put(getServerUrl() + API_USER + "/{id}", user, String.valueOf(user.getId()));
-		} catch (RestClientException e) {
-			logger.warn("User update failed! Status code=" + e.getMessage());
-			throw new RuntimeException(messageSource.getMessage("message.failed_update_user", null, null), e);
-		}
+		restTemplate.put(getServerUrl() + API_USER + "/{id}", user, String.valueOf(user.getId()));
 		
 		return true;
 	}
@@ -177,58 +129,33 @@ public class iPeerWebService {
 	
 	public Group getGroup(int id) {
 		Group result = null;
-		try {
-			result = restTemplate.getForObject(getServerUrl() + API_GROUP + "/{id}", Group.class, 0, String.valueOf(id));
-		} catch (RestClientException e) {
-			logger.warn("Group with id " + id + " not found! Status code=" + e.getMessage());
-			throw new RuntimeException(messageSource.getMessage("message.failed_get_group", new Object[]{id}, null), e);
-	    }
+		result = restTemplate.getForObject(getServerUrl() + API_GROUP + "/{id}", Group.class, 0, String.valueOf(id));
 		
 		return result;
 	}
 	
 	public Group createGroup(int courseId, Group group) {
 		Group result = null;
-		try {
-			result = restTemplate.postForObject(getServerUrl() + API_GROUP, group, Group.class, courseId);
-		} catch (RestClientException e) {
-			logger.warn("Group creation failed! Status code=" + e.getMessage());
-			throw new RuntimeException(messageSource.getMessage("message.failed_create_group", null, null), e);
-		}
+		result = restTemplate.postForObject(getServerUrl() + API_GROUP, group, Group.class, courseId);
 		
 		return result;
 	}
 	
 	public List<Group> createGroups(int courseId, List<Group> groups) {
 		Group[] result = null;
-		try {
-			result = restTemplate.postForObject(getServerUrl() + API_GROUP, groups.toArray(new Group[groups.size()]), Group[].class, courseId);
-		} catch (RestClientException e) {
-			logger.warn("Group creation failed! Status code=" + e.getMessage());
-			throw new RuntimeException(messageSource.getMessage("message.failed_create_groups", null, null), e);
-		}
-		
+		result = restTemplate.postForObject(getServerUrl() + API_GROUP, groups.toArray(new Group[groups.size()]), Group[].class, courseId);
+
 		return Arrays.asList(result);
 	}
 	
 	public boolean deleteGroup(int id) {
-		try {
-			restTemplate.delete(getServerUrl() + API_GROUP + "/{id}", 0, String.valueOf(id));
-		} catch (RestClientException e) {
-			logger.warn("Group deletion failed! Status code=" + e.getMessage());
-			throw new RuntimeException(messageSource.getMessage("message.failed_delete_group", null, null), e);
-		}
+		restTemplate.delete(getServerUrl() + API_GROUP + "/{id}", 0, String.valueOf(id));
 		
 		return true;
 	}
 	
 	public boolean updateGroup(Group group) {
-		try {
-			restTemplate.put(getServerUrl() + API_GROUP + "/{id}", group, 0, String.valueOf(group.getId()));
-		} catch (RestClientException e) {
-			logger.warn("Group update failed! Status code=" + e.getMessage());
-			throw new RuntimeException(messageSource.getMessage("message.failed_update_group", null, null), e);
-		}
+		restTemplate.put(getServerUrl() + API_GROUP + "/{id}", group, 0, String.valueOf(group.getId()));
 		
 		return true;
 	}
@@ -243,23 +170,13 @@ public class iPeerWebService {
 	
 	public List<User> enrolUsersInCourse(int courseId, List<User> users) {
 		User[] result = null;
-		try {
-			result = restTemplate.postForObject(getServerUrl() + API_COURSE_USER, users.toArray(), User[].class, courseId);
-		} catch (RestClientException e) {
-			logger.warn("User enrolment failed! Status code=" + e.getMessage());
-			throw new RuntimeException(messageSource.getMessage("message.failed_enrol_user", null, null), e);
-		}
+		result = restTemplate.postForObject(getServerUrl() + API_COURSE_USER, users.toArray(), User[].class, courseId);
 		
 		return Arrays.asList(result);
 	}
 	
 	public boolean removeUserFromCourse(int courseId, long userId) {
-		try {
-			restTemplate.delete(getServerUrl() + API_COURSE_USER + "/{user_id}", courseId, userId);
-		} catch (RestClientException e) {
-			logger.warn("User enrolment deletion failed! Status code=" + e.getMessage());
-			throw new RuntimeException(messageSource.getMessage("message.failed_delete_enrolment", null, null), e);
-		}
+		restTemplate.delete(getServerUrl() + API_COURSE_USER + "/{user_id}", courseId, userId);
 		
 		return true;	
 	}
@@ -278,24 +195,14 @@ public class iPeerWebService {
 	
 	public List<User> enrolUsersInGroup(int groupId, List<User> users) {
 		User[] result = null;
-		try {
-			result = restTemplate.postForObject(getServerUrl() + API_GROUP_USER, users.toArray(), User[].class, groupId);
-		} catch (RestClientException e) {
-			logger.warn("User enrolment failed! Status code=" + e.getMessage());
-			throw new RuntimeException(messageSource.getMessage("message.failed_enrol_user", null, null), e);
-		}
+		result = restTemplate.postForObject(getServerUrl() + API_GROUP_USER, users.toArray(), User[].class, groupId);
 		
 		return Arrays.asList(result);
 	}
 	
 	public boolean removeUserFromGroup(int groupId, long userId) {
-		try {
-			restTemplate.delete(getServerUrl() + API_GROUP_USER + "/{user_id}", groupId, userId);
-		} catch (RestClientException e) {
-			logger.warn("User enrolment deletion failed! Status code=" + e.getMessage());
-			throw new RuntimeException(messageSource.getMessage("message.failed_delete_enrolment", null, null), e);
-		}
-		
+		restTemplate.delete(getServerUrl() + API_GROUP_USER + "/{user_id}", groupId, userId);
+
 		return true;	
 	}
 	
@@ -313,36 +220,21 @@ public class iPeerWebService {
 	
 	public Event getEvent(int eventId) {
 		Event result = null;
-		try {
-			result = restTemplate.getForObject(getServerUrl() + API_EVENT + "/{id}", Event.class, 0, eventId);
-		} catch (RestClientException e) {
-			logger.warn("Event with id " + eventId + " not found! Status code=" + e.getMessage());
-			throw new RuntimeException(messageSource.getMessage("message.failed_get_event", new Object[]{eventId}, null), e);
-	    }
+		result = restTemplate.getForObject(getServerUrl() + API_EVENT + "/{id}", Event.class, 0, eventId);
 		
 		return result;	
 	}
 	
 	public List<Event> getEventsForUser(String username) {
 		Event[] result;
-		try {
-			result = restTemplate.getForObject(getServerUrl() + API_USER + "/{username}/events", Event[].class, username);
-		} catch (RestClientException e) {
-			logger.warn("Events for user " + username + " not found! Status code=" + e.getMessage());
-			throw new RuntimeException(messageSource.getMessage("message.failed_get_events_for_user", new Object[]{username}, null), e);
-	    }
+		result = restTemplate.getForObject(getServerUrl() + API_USER + "/{username}/events", Event[].class, username);
 		
 		return Arrays.asList(result);	
 	}
 	
 	public List<Event> getEventsForUserInCourse(String username, int courseId) {
 		Event[] result;
-		try {
-			result = restTemplate.getForObject(getServerUrl() + API_COURSE + "/{course_id}/users/{username}/events", Event[].class, courseId, username);
-		} catch (RestClientException e) {
-			logger.warn("Events for user " + username + " in course not found! Status code=" + e.getMessage());
-			throw new RuntimeException(messageSource.getMessage("message.failed_get_events_for_user_in_course", new Object[]{username, courseId}, null), e);
-	    }
+		result = restTemplate.getForObject(getServerUrl() + API_COURSE + "/{course_id}/users/{username}/events", Event[].class, courseId, username);
 		
 		return Arrays.asList(result);	
 	}
@@ -357,12 +249,7 @@ public class iPeerWebService {
 	
 	public Grade getGradesForUserInEvent(int userId, int eventId) {
 		Grade result;
-		try {
-			result = restTemplate.getForObject(getServerUrl() + API_GRADE + "/{user_id}", Grade.class, eventId, userId);
-		} catch (RestClientException e) {
-			logger.warn("Grade for user with id " + userId + " in event with id " + eventId + " not found! Status code=" + e.getMessage());
-			throw new RuntimeException(messageSource.getMessage("message.failed_get_grade_for_user", new Object[]{userId, eventId}, null), e);
-	    }
+		result = restTemplate.getForObject(getServerUrl() + API_GRADE + "/{user_id}", Grade.class, eventId, userId);
 		
 		return result;	
 	}
@@ -375,12 +262,7 @@ public class iPeerWebService {
 	}
 	
 	public boolean assignCourseToDepartment(int courseId, int departmentId) {
-		try {
-			restTemplate.postForLocation(getServerUrl() + API_COURSE + "/{course_id}/departments/{department_id}", "", courseId, departmentId);
-		} catch (RestClientException e) {
-			logger.warn("Cousre/Department association failed! Status code=" + e.getMessage());
-			throw new RuntimeException(messageSource.getMessage("message.failed_associate_course_department", null, null), e);
-		}
+		restTemplate.postForLocation(getServerUrl() + API_COURSE + "/{course_id}/departments/{department_id}", "", courseId, departmentId);
 		
 		return true;
 	}

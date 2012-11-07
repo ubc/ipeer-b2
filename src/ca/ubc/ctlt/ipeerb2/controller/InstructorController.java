@@ -1,13 +1,10 @@
 package ca.ubc.ctlt.ipeerb2.controller;
 
-import java.net.URLEncoder;
 import java.util.List;
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
@@ -19,6 +16,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.client.RestClientException;
 
 import blackboard.data.ReceiptOptions;
 import blackboard.data.user.User;
@@ -44,7 +42,7 @@ public class InstructorController {
 	@Autowired
 	private Configuration configuration;
 	
-	private static final Logger logger = LoggerFactory.getLogger(InstructorController.class);
+	//private static final Logger logger = LoggerFactory.getLogger(InstructorController.class);
 	
 	@RequestMapping(value="/course")
 	public String course(HttpServletRequest request, @RequestParam("course_id") String bbCourseId, ModelMap model) {
@@ -72,13 +70,15 @@ public class InstructorController {
 	@RequestMapping(value="/course/create", method = RequestMethod.POST)
 	public String createCourse(HttpServletRequest webRequest, @ModelAttribute("course") Course course, BindingResult result, Locale locale) {
 		ReceiptOptions ro = new ReceiptOptions();
-		if (service.createCourse(course)) {
+		
+		try {
+			service.createCourse(course);
 			for (Department dept : course.getDepartments()) {
-				service.assignCourseToDepartment(course.getId(), dept.getId());
+					service.assignCourseToDepartment(course.getId(), dept.getId());
 			}
-			ro.addSuccessMessage(messageSource.getMessage("message.create_course_success", new Object[]{course.getCourse()}, locale));
-		} else {
-			ro.addSuccessMessage(messageSource.getMessage("message.create_course_failed", new Object[]{course.getCourse()}, locale));
+			ro.addSuccessMessage(messageSource.getMessage("message.create_course_success", new Object[]{course.getCourse()}, locale));			
+		} catch (RestClientException e) {
+			ro.addErrorMessage(messageSource.getMessage("message.create_course_failed", new Object[]{course.getCourse()}, locale) + " " + e.getMessage(), e);
 		}
 		InlineReceiptUtil.addReceiptToRequest(webRequest, ro);
 		
@@ -88,10 +88,12 @@ public class InstructorController {
 	@RequestMapping(value="/course/disconnect", method = RequestMethod.GET)
 	public String disconnectCourse(HttpServletRequest webRequest, @RequestParam("course_id") String bbCourseId, Locale locale, ModelMap model) {
 		ReceiptOptions ro = new ReceiptOptions();
-		if (service.disconnectCourse(bbCourseId)) {
+		
+		try {
+			service.disconnectCourse(bbCourseId);
 			ro.addSuccessMessage(messageSource.getMessage("message.disconnect_course_success", null, locale));
-		} else {
-			ro.addSuccessMessage(messageSource.getMessage("message.disconnect_course_failed", null, locale));
+		} catch (RestClientException e) {
+			ro.addErrorMessage(messageSource.getMessage("message.disconnect_course_failed", null, locale) + " " + e.getMessage(), e);
 		}
 		InlineReceiptUtil.addReceiptToRequest(webRequest, ro);
 		model.addAttribute("course_id", bbCourseId);
@@ -102,10 +104,11 @@ public class InstructorController {
 	@RequestMapping(value="/course/delete", method = RequestMethod.GET)
 	public String deleteCourse(HttpServletRequest webRequest, @RequestParam("course_id") String bbCourseId, Locale locale, ModelMap model) {
 		ReceiptOptions ro = new ReceiptOptions();
-		if (service.deleteCourse(bbCourseId)) {
+		try{
+			service.deleteCourse(bbCourseId);
 			ro.addSuccessMessage(messageSource.getMessage("message.delete_course_success", null, locale));
-		} else {
-			ro.addSuccessMessage(messageSource.getMessage("message.delete_course_failed", null, locale));
+		} catch (RestClientException e) {
+			ro.addErrorMessage(messageSource.getMessage("message.delete_course_failed", null, locale) + " " + e.getMessage(), e);
 		}
 		InlineReceiptUtil.addReceiptToRequest(webRequest, ro);
 		model.addAttribute("course_id", bbCourseId);
@@ -117,10 +120,11 @@ public class InstructorController {
 	@RequestMapping(value="/course/syncclass", method = RequestMethod.GET)
 	public String syncClass(HttpServletRequest webRequest, @RequestParam("course_id") String bbCourseId, Locale locale, ModelMap model) {
 		ReceiptOptions ro = new ReceiptOptions();
-		if (service.syncClass(bbCourseId)) {
+		try{
+			service.syncClass(bbCourseId);
 			ro.addSuccessMessage(messageSource.getMessage("message.sync_class_success", null, locale));
-		} else {
-			ro.addSuccessMessage(messageSource.getMessage("message.sync_class_failed", null, locale));
+		} catch (RestClientException e) {
+			ro.addErrorMessage(messageSource.getMessage("message.sync_class_failed", null, locale) + " " + e.getMessage(), e);
 		}
 		InlineReceiptUtil.addReceiptToRequest(webRequest, ro);
 		model.addAttribute("course_id", bbCourseId);
@@ -131,10 +135,11 @@ public class InstructorController {
 	@RequestMapping(value="/course/pushgroups", method = RequestMethod.GET)
 	public String pushGroups(HttpServletRequest webRequest, @RequestParam("course_id") String bbCourseId, Locale locale, ModelMap model) {
 		ReceiptOptions ro = new ReceiptOptions();
-		if (service.pushGroups(bbCourseId)) {
+		try{
+			service.pushGroups(bbCourseId);
 			ro.addSuccessMessage(messageSource.getMessage("message.sync_groups_success", null, locale));
-		} else {
-			ro.addSuccessMessage(messageSource.getMessage("message.sync_groups_failed", null, locale));
+		} catch (RestClientException e) {
+			ro.addErrorMessage(messageSource.getMessage("message.sync_groups_failed", null, locale) + " " + e.getMessage(), e);
 		}
 		InlineReceiptUtil.addReceiptToRequest(webRequest, ro);
 		model.addAttribute("course_id", bbCourseId);
@@ -145,10 +150,11 @@ public class InstructorController {
 	@RequestMapping(value="/course/pullgroups", method = RequestMethod.GET)
 	public String pullGroups(HttpServletRequest webRequest, @RequestParam("course_id") String bbCourseId, Locale locale, ModelMap model) {
 		ReceiptOptions ro = new ReceiptOptions();
-		if (service.pullGroups(bbCourseId)) {
+		try{
+			service.pullGroups(bbCourseId);
 			ro.addSuccessMessage(messageSource.getMessage("message.sync_groups_success", null, locale));
-		} else {
-			ro.addSuccessMessage(messageSource.getMessage("message.sync_groups_failed", null, locale));
+		} catch (RestClientException e) {
+			ro.addErrorMessage(messageSource.getMessage("message.sync_groups_failed", null, locale) + " " + e.getMessage(), e);
 		}
 		InlineReceiptUtil.addReceiptToRequest(webRequest, ro);
 		model.addAttribute("course_id", bbCourseId);
@@ -159,10 +165,11 @@ public class InstructorController {
 	@RequestMapping(value="/course/syncgrades", method = RequestMethod.GET)
 	public String syncGrades(HttpServletRequest webRequest, @RequestParam("course_id") String bbCourseId, Locale locale, ModelMap model) {
 		ReceiptOptions ro = new ReceiptOptions();
-		if (service.syncGrades(bbCourseId)) {
+		try {
+			service.syncGrades(bbCourseId);
 			ro.addSuccessMessage(messageSource.getMessage("message.sync_grades_success", null, locale));
-		} else {
-			ro.addSuccessMessage(messageSource.getMessage("message.sync_grades_failed", null, locale));
+		} catch (RestClientException e) {
+			ro.addErrorMessage(messageSource.getMessage("message.sync_grades_failed", null, locale) + " " + e.getMessage(), e);
 		}
 		InlineReceiptUtil.addReceiptToRequest(webRequest, ro);
 		model.addAttribute("course_id", bbCourseId);
