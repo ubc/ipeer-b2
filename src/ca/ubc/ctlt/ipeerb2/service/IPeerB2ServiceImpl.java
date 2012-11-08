@@ -92,18 +92,31 @@ public class IPeerB2ServiceImpl implements IPeerB2Service, UserAdapter<User>, Gr
 		
 		return true;
 	}
-
+	
 	@Override
-	public boolean pushGroups(String bbCourseId) {
-		int iPeerCourseId = configuration.getIpeerCourseId(bbCourseId);
-		// we need groups from both
+	public List<Group> getGroupsInBbCourse(String bbCourseId) {
 		List<Group> groupsInBb = null;
 		try {
 			groupsInBb = B2Util.getGroupsInCourse(bbCourseId, this);
 		} catch (PersistenceException e) {
 			throw new RuntimeException("Failed to load groups!", e);
 		}
-		List<Group> groupsInIpeer = groupDao.getGroupList(iPeerCourseId);
+		
+		return groupsInBb;
+	}
+	
+	@Override
+	public List<Group> getGroupsInIPeerCourse(String bbCourseId) {
+		int iPeerCourseId = configuration.getIpeerCourseId(bbCourseId);
+		return groupDao.getGroupList(iPeerCourseId);
+	}
+
+	@Override
+	public boolean pushGroups(String bbCourseId) {
+		int iPeerCourseId = configuration.getIpeerCourseId(bbCourseId);
+		// we need groups from both
+		List<Group> groupsInBb = getGroupsInBbCourse(bbCourseId);
+		List<Group> groupsInIpeer = getGroupsInIPeerCourse(bbCourseId);
 		
 		// compare the groups
 		for(Group group : groupsInBb) {
@@ -155,15 +168,9 @@ public class IPeerB2ServiceImpl implements IPeerB2Service, UserAdapter<User>, Gr
 
 	@Override
 	public boolean pullGroups(String bbCourseId) {
-		int iPeerCourseId = configuration.getIpeerCourseId(bbCourseId);
 		// we need groups from both
-		List<Group> groupsInBb = null;
-		try {
-			groupsInBb = B2Util.getGroupsInCourse(bbCourseId, this);
-		} catch (PersistenceException e) {
-			throw new RuntimeException("Failed to load groups!", e);
-		}
-		List<Group> groupsInIpeer = groupDao.getGroupList(iPeerCourseId);
+		List<Group> groupsInBb = getGroupsInBbCourse(bbCourseId);
+		List<Group> groupsInIpeer = getGroupsInIPeerCourse(bbCourseId);
 		
 		// compare the groups
 		for(Group group : groupsInIpeer) {
@@ -216,7 +223,11 @@ public class IPeerB2ServiceImpl implements IPeerB2Service, UserAdapter<User>, Gr
 		return true;
 	}
 
-
+	@Override
+	public List<Event> getEventsInCourse(String bbCourseId) {
+		return eventDao.getEventsInCourse(configuration.getIpeerCourseId(bbCourseId));
+	}
+	
 	@Override
 	public List<Event> getEventsForUserInCourse(String username, String bbCourseId) {
 		return eventDao.getEventsForUserInCourse(username, configuration.getIpeerCourseId(bbCourseId));
@@ -231,6 +242,23 @@ public class IPeerB2ServiceImpl implements IPeerB2Service, UserAdapter<User>, Gr
 	@Override
 	public boolean assignCourseToDepartment(int courseId, int departmentId) {
 		return courseDao.assignCourseToDepartment(courseId, departmentId);
+	}
+	
+	@Override
+	public int getBbClassSize(String bbCourseId) {
+		int size = 0;
+		try {
+			size = B2Util.getClassSize(bbCourseId);
+		} catch (PersistenceException e) {
+			throw new RuntimeException("Failed to load class size!", e);
+		}
+		
+		return size;
+	}
+	
+	@Override
+	public int getIPeerClassSize(String bbCourseId) {
+		return courseDao.getClassSize(configuration.getIpeerCourseId(bbCourseId));
 	}
 	
 	/************* Adapter functions *****************/

@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestClientException;
 
 import blackboard.data.ReceiptOptions;
@@ -23,6 +24,7 @@ import blackboard.data.user.User;
 import blackboard.platform.servlet.InlineReceiptUtil;
 import ca.ubc.ctlt.blackboardb2util.B2Util;
 import ca.ubc.ctlt.ipeerb2.Configuration;
+import ca.ubc.ctlt.ipeerb2.CourseInfo;
 import ca.ubc.ctlt.ipeerb2.iPeerB2Util;
 import ca.ubc.ctlt.ipeerb2.domain.Course;
 import ca.ubc.ctlt.ipeerb2.domain.Department;
@@ -191,6 +193,25 @@ public class InstructorController {
 				"&token="+iPeerB2Util.urlEncode(key)+
 				"&signature="+iPeerB2Util.urlEncode(signature);
 	}
+	
+	// ajax functions
+	@RequestMapping(value="/course/bbcourseinfo", method = RequestMethod.GET)
+	public @ResponseBody CourseInfo getBbCourseInfo(HttpServletRequest webRequest, @RequestParam("course_id") String bbCourseId, Locale locale, ModelMap model) {
+	    CourseInfo info = new CourseInfo();
+	    info.setClassSize(service.getBbClassSize(bbCourseId));
+	    info.setGroups(service.getGroupsInBbCourse(bbCourseId));
+	    return info;
+	}
+	
+	@RequestMapping(value="/course/ipeercourseinfo", method = RequestMethod.GET)
+	public @ResponseBody CourseInfo getIPeerCourseInfo(HttpServletRequest webRequest, @RequestParam("course_id") String bbCourseId, Locale locale, ModelMap model) {
+	    CourseInfo info = new CourseInfo();
+	    info.setClassSize(service.getIPeerClassSize(bbCourseId));
+	    info.setGroups(service.getGroupsInIPeerCourse(bbCourseId));
+	    info.setEvents(service.getEventsInCourse(bbCourseId));
+	    return info;
+	}
+
 	
 	@InitBinder
 	protected void initBinder(HttpServletRequest request,

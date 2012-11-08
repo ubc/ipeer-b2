@@ -53,4 +53,10 @@ public class CourseDaoImpl implements CourseDao {
 	public boolean assignCourseToDepartment(int courseId, int departmentId) {
 		return webService.assignCourseToDepartment(courseId, departmentId);
 	}
+
+	@Override
+	public int getClassSize(int courseId) {
+		Course course = webService.getCourse(courseId);
+		return course.getClassSize();
+	}
 }

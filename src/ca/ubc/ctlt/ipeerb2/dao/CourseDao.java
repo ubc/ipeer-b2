@@ -13,4 +13,5 @@ public interface CourseDao {
 	public boolean updateCourse(Course course);
 	public boolean assignCourseToDepartment(Course course, Department department);
 	public boolean assignCourseToDepartment(int courseId, int departmentId);
+	public int getClassSize(int ipeerCourseId);
 }

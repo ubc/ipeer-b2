@@ -13,7 +13,8 @@ public class Course {
 	private int id;
 	private String course;
 	private String title;
-	
+	private int classSize;
+
 	@JsonIgnore
 	private String bbCourseId;
 
@@ -58,5 +59,13 @@ public class Course {
 
 	public void setDepartments(List<Department> departments) {
 		this.departments = departments;
+	}
+	
+	public int getClassSize() {
+		return classSize;
+	}
+
+	public void setClassSize(int classSize) {
+		this.classSize = classSize;
 	}
 }
