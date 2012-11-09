@@ -17,6 +17,9 @@ public class Group {
 	@JsonProperty("set_name")
 	private String setName;
 	
+	@JsonProperty("member_count")
+	private int size;
+	
 	@JsonIgnore
 	private blackboard.data.course.Group bbGroup;
 
@@ -42,6 +45,14 @@ public class Group {
 
 	public void setSetName(String setName) {
 		this.setName = setName;
+	}
+
+	public int getSize() {
+		return size;
+	}
+
+	public void setSize(int size) {
+		this.size = size;
 	}
 
 	public blackboard.data.course.Group getBbGroup() {

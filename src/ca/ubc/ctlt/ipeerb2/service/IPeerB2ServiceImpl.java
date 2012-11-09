@@ -309,7 +309,7 @@ public class IPeerB2ServiceImpl implements IPeerB2Service, UserAdapter<User>, Gr
 		Group group = new Group();
 		group.setName(bbGroup.getTitle());
 		group.setBbGroup(bbGroup);
-		
+		group.setSize(bbGroup.getGroupMemberships().size());
 		return group;
 	}
 

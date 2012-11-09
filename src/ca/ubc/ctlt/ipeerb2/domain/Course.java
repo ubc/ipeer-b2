@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+import org.codehaus.jackson.annotate.JsonProperty;
 import org.codehaus.jackson.map.annotate.JsonSerialize;
 import org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion;
 
@@ -13,6 +14,8 @@ public class Course {
 	private int id;
 	private String course;
 	private String title;
+	
+	@JsonProperty("student_count")
 	private int classSize;
 
 	@JsonIgnore

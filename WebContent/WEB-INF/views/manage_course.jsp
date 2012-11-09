@@ -97,7 +97,7 @@ div#leftpanels div.panel-content li {
 									content = '<div class="eudModule-inner"><div class="portletBlock">Class Size: '+ res.classSize + '</div>'
 									content += '<div class="portletBlock">Groups:<ul>';
 									for (var i=0; i<res.groups.length; i++) {
-										content += '<li>'+res.groups[i].group_name+'</li>';
+										content += '<li>'+res.groups[i].group_name+' ('+res.groups[i].member_count+' members)</li>';
 									}
 									content += '</ul></div>';
 								} catch ( e ) { 
@@ -131,12 +131,12 @@ div#leftpanels div.panel-content li {
 									content = '<div class="eudModule-inner"><div class="portletBlock">Class Size: '+ res.classSize + '</div>'
 									content += '<div class="portletBlock">Groups:<ul>';
 									for (var i=0; i<res.groups.length; i++) {
-										content += '<li>'+res.groups[i].group_name+'</li>';
+										content += '<li>'+res.groups[i].group_name+' ('+res.groups[i].member_count+' members)</li>';
 									}
 									content += '</ul></div>';
 									content += '<div class="portletBlock">Events:<ul>';
 									for (var i=0; i<res.events.length; i++) {
-										content += '<li>'+res.events[i].title+' - Due on '+res.events[i].due_date+'</li>';
+										content += '<li>'+res.events[i].title+' - Due on '+new Date(res.events[i].due_date)+'</li>';
 									}
 									content += '</ul></div>';
 								} catch ( e ) { 
