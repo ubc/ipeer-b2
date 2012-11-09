@@ -1,6 +1,8 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8"
+    import="ca.ubc.ctlt.ipeerb2.*"
+    %>
 
 <%@ taglib uri="/bbNG" prefix="bbNG"%>
 <%@ taglib uri="/bbUI" prefix="bbUI"%>
@@ -54,6 +56,18 @@ div#leftpanels div.panel-content {
 
 div#leftpanels div.panel-content li {
 	padding: 0.5em 0 0.5em 3em;
+}
+
+#tinyfootnote
+{
+	margin-top: 5em;
+	font-size: 0.7em;
+	text-align: center;
+	color: #aaa;
+}
+#tinyfootnote a:link, #tinyfootnote a:visited
+{
+	color: #888;
 }
 </style>
 
@@ -154,5 +168,5 @@ div#leftpanels div.panel-content li {
 			</div>
 		</div>
 	</div>
-		
+	<p id="tinyfootnote">Version: <%=BuildingBlockHelper.getVersion()%><br />Open source project, available on <a href="https://github.com/ubc/metadata-editor-b2" target="_blank">Github</a></p>
 </bbNG:learningSystemPage>
