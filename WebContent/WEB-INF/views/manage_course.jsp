@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"
-    import="ca.ubc.ctlt.ipeerb2.*"
+    import="ca.ubc.ctlt.ipeerb2.*, ca.ubc.ctlt.ipeerb2.webservice.*"
     %>
 
 <%@ taglib uri="/bbNG" prefix="bbNG"%>
@@ -168,5 +168,8 @@ div#leftpanels div.panel-content li {
 			</div>
 		</div>
 	</div>
-	<p id="tinyfootnote">Version: <%=BuildingBlockHelper.getVersion()%><br />Open source project, available on <a href="https://github.com/ubc/metadata-editor-b2" target="_blank">Github</a></p>
+	<p id="tinyfootnote">
+		Version: <%=BuildingBlockHelper.getVersion()%> - API <%=iPeerWebService.API_VERSION%> - <a href="https://github.com/ubc/ipeer-b2/issues" target="_blank">Bug or Suggestion?</a><br />
+		Open source project, available on <a href="https://github.com/ubc/ipeer-b2" target="_blank">Github</a>
+	</p>
 </bbNG:learningSystemPage>
