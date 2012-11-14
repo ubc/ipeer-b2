@@ -14,7 +14,7 @@
        http://www.springframework.org/schema/security/oauth http://www.springframework.org/schema/security/spring-security-oauth-1.0.xsd">
 	
 	<!-- <util:properties id="settings" location="classpath:webservice.properties" />  --> 
-    <util:properties id="settings" location="file:/usr/local/blackboard/content/vi/BBLEARN/plugins/ubc-ipeerb2/config/ubc-ipeerb2.properties" />
+    <!-- <util:properties id="settings" location="file:/usr/local/blackboard/content/vi/BBLEARN/plugins/ubc-ipeerb2/config/ubc-ipeerb2.properties" /> -->
 	
 	<!-- Configure security -->
  	<security:http auto-config='true' access-denied-page="/login.jsp">

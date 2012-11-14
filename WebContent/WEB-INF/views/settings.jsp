@@ -25,19 +25,19 @@
     
     <bbNG:step hideNumber="false" id="stepTwo" title="Authentication" instructions="Setup integration authentication">
       
-      <bbNG:dataElement isRequired="true" label="Consumer Key">
+      <bbNG:dataElement isRequired="true" label="Client Credential Key">
       	<bbNG:textElement name="<%=Configuration.CONSUMER_KEY%>" value="${consumerKey}" isRequired="true" title="Consumer Key" size="50" helpText="The key used to identify the secret. This value must match the one set in iPeer"/>
       </bbNG:dataElement>
       
-      <bbNG:dataElement isRequired="true" label="Shared Secret">
+      <bbNG:dataElement isRequired="true" label="Client Credential Secret">
       	<bbNG:textElement name="<%=Configuration.SHARED_SECRET%>" value="${secret}" isRequired="true" title="Shared Secret" size="50" helpText="The secret used to sign the message. This value must match the one set in iPeer"/>
       </bbNG:dataElement>
       
-      <bbNG:dataElement isRequired="true" label="Token Key">
+      <bbNG:dataElement isRequired="true" label="Token Credential Key">
       	<bbNG:textElement name="<%=Configuration.TOKEN_KEY%>" value="${tokenKey}" isRequired="true" title="Token Key" size="50" helpText="The key used to identify the token secret. This value must match the one set in iPeer"/>
       </bbNG:dataElement>
       
-      <bbNG:dataElement isRequired="true" label="Token Secret">
+      <bbNG:dataElement isRequired="true" label="Token Credential Secret">
       	<bbNG:textElement name="<%=Configuration.TOKEN_SECRET%>" value="${tokenSecret}" isRequired="true" title="Token Secret" size="50" helpText="The secret used to sign the message. This value must match the one set in iPeer"/>
       </bbNG:dataElement>
       
