@@ -17,7 +17,6 @@ public class Group {
 	@JsonProperty("set_name")
 	private String setName;
 	
-	@JsonProperty("member_count")
 	private int size;
 	
 	@JsonIgnore
@@ -47,10 +46,12 @@ public class Group {
 		this.setName = setName;
 	}
 
+	@JsonIgnore
 	public int getSize() {
 		return size;
 	}
 
+	@JsonProperty("member_count")
 	public void setSize(int size) {
 		this.size = size;
 	}

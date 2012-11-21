@@ -266,7 +266,6 @@ public class IPeerB2ServiceImpl implements IPeerB2Service, UserAdapter<User>, Gr
 	@Override
 	public User bbUserToUser(blackboard.data.user.User bbUser) {
 		User user = new User();
-		user.setUsername(bbUser.getUserName());
 		user.setFirstName(bbUser.getGivenName());
 		user.setLastName(bbUser.getFamilyName());
 		user.setUsername(bbUser.getBatchUid());
@@ -299,7 +298,10 @@ public class IPeerB2ServiceImpl implements IPeerB2Service, UserAdapter<User>, Gr
 		roleMapping.put(Role.GRADER.getFieldName(), 4);
 		roleMapping.put(Role.INSTRUCTOR.getFieldName(), 3);
 		roleMapping.put(Role.COURSE_BUILDER.getFieldName(), 3);
-		user.setRoleId(roleMapping.get(membership.getRoleAsString()));
+
+		String roleAsString = membership.getRoleAsString();
+		int role = (roleMapping.get(roleAsString) == null ? 5 : roleMapping.get(roleAsString));
+		user.setRoleId(role);
 		
 		return user;
 	}

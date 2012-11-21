@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:oxm="http://www.springframework.org/schema/oxm"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/oxm http://www.springframework.org/schema/oxm/spring-oxm-3.0.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd">
+    
+	<bean id="configuration" class="ca.ubc.ctlt.ipeerb2.Configuration"/>
+	
+	<bean id="courseDao" class="org.mockito.Mockito" factory-method="mock" >
+		<constructor-arg value="ca.ubc.ctlt.ipeerb2.dao.CourseDao" />
+	</bean>
+	<bean id="departmentDao" class="org.mockito.Mockito" factory-method="mock" >
+		<constructor-arg value="ca.ubc.ctlt.ipeerb2.dao.DepartmentDao" />
+	</bean>
+	<bean id="eventDao" class="org.mockito.Mockito" factory-method="mock" >
+		<constructor-arg value="ca.ubc.ctlt.ipeerb2.dao.EventDao" />
+	</bean>
+	<bean id="gradeDao" class="org.mockito.Mockito" factory-method="mock" >
+		<constructor-arg value="ca.ubc.ctlt.ipeerb2.dao.GradeDao" />
+	</bean>
+	<bean id="groupDao" class="org.mockito.Mockito" factory-method="mock" >
+		<constructor-arg value="ca.ubc.ctlt.ipeerb2.dao.GroupDao" />
+	</bean>
+	<bean id="userDao" class="org.mockito.Mockito" factory-method="mock" >
+		<constructor-arg value="ca.ubc.ctlt.ipeerb2.dao.UserDao" />
+	</bean>
+	
+	<bean id="iPeerB2ServiceImpl" class="ca.ubc.ctlt.ipeerb2.service.IPeerB2ServiceImpl"/>
+	
+	<bean id="courseMembership" class="org.mockito.Mockito" factory-method="mock"  >
+		<constructor-arg value="blackboard.data.course.CourseMembership" />
+	</bean>
+	
+	<!-- User fixtures -->
+ 	<bean id="bbUser" class="blackboard.data.user.User">
+ 		<property name="userName" value="username1"/>
+ 		<property name="givenName" value="John"/>
+ 		<property name="familyName" value="Smith"/>
+ 		<property name="batchUid" value="buidstring"/>
+ 		<property name="studentId" value="12345678"/>
+ 		<property name="emailAddress" value="john@test.com"/>
+ 	</bean>
+</beans>

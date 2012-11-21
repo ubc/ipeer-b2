@@ -13,7 +13,7 @@
             <value>
                 test_course.1.uri=/[^/]*/courses
                 test_course.1.method=get
-                test_course.1.responsebody=[{"id":1,"course":"MATH101","title":"Test Course"}, {"id":2,"course":"MATH102","title":"Test Course 2"},{"id":3,"course":"MATH103","title":"Test Course 3"}]
+                test_course.1.responsebody=[{"id":1,"course":"MATH101","title":"Test Course","student_count":30}, {"id":2,"course":"MATH102","title":"Test Course 2"},{"id":3,"course":"MATH103","title":"Test Course 3"}]
                 test_course.1.responsestatus=200
            
                 test_course.2.uri=/[^/]*/courses/1

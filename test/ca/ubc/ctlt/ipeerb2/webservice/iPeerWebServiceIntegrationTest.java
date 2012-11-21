@@ -1,5 +1,6 @@
 package ca.ubc.ctlt.ipeerb2.webservice;
 
+import static org.junit.Assert.*;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
@@ -82,6 +83,7 @@ public class iPeerWebServiceIntegrationTest {
 		Course c = cl.get(0);
 		assertTrue(c.getId() == 1);
 		assertTrue("Test Course".equals(c.getTitle()));
+		assertEquals(30, c.getClassSize());
 		
 		c = cl.get(1);
 		assertTrue(c.getId() == 2);

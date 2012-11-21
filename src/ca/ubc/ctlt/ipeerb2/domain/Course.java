@@ -15,7 +15,6 @@ public class Course {
 	private String course;
 	private String title;
 	
-	@JsonProperty("student_count")
 	private int classSize;
 
 	@JsonIgnore
@@ -63,11 +62,13 @@ public class Course {
 	public void setDepartments(List<Department> departments) {
 		this.departments = departments;
 	}
-	
+
+	@JsonIgnore
 	public int getClassSize() {
 		return classSize;
 	}
 
+	@JsonProperty("student_count")
 	public void setClassSize(int classSize) {
 		this.classSize = classSize;
 	}
