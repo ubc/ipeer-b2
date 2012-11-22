@@ -237,6 +237,7 @@ public class iPeerWebServiceIntegrationTest {
 		Group c = cl.get(0);
 		assertTrue(c.getId() == 1);
 		assertTrue("groupname1".equals(c.getName()));
+		assertEquals(5, c.getSize());
 		
 		c = cl.get(1);
 		assertTrue(c.getId() == 2);

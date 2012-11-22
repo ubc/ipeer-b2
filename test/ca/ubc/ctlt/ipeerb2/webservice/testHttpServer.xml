@@ -113,7 +113,7 @@
                 
                 test_group.1.uri=/[^/]*/courses/\\d+/groups
                 test_group.1.method=get
-                test_group.1.responsebody=[{"id":1,"group_name":"groupname1","set_name":"Set1"}, {"id":2,"group_name":"groupname2","set_name":"Set1"},{"id":3,"group_name":"groupname3","set_name":"Set1"}]
+                test_group.1.responsebody=[{"id":1,"group_name":"groupname1","set_name":"Set1","member_count":5}, {"id":2,"group_name":"groupname2","set_name":"Set1"},{"id":3,"group_name":"groupname3","set_name":"Set1"}]
                 test_group.1.responsestatus=200
            
                 test_group.2.uri=/[^/]*/courses/\\d+/groups/1
@@ -128,7 +128,7 @@
                 
                 test_group.4.uri=/[^/]*/courses/\\d+/groups
                 test_group.4.method=post
-                test_group.4.requestbody={"id":0,"group_name":"groupname1","set_name":"Set1"}
+                test_group.4.requestbody={"id":0,"group_name":"groupname1","set_name":"Set1","member_count":0}
                 test_group.4.responsebody={"id":1,"group_name":"groupname1","set_name":"Set1"}
                 test_group.4.responsestatus=201
                 
@@ -153,7 +153,7 @@
                 
                 test_group.9.uri=/[^/]*/courses/\\d+/groups/1
                 test_group.9.method=put
-                test_group.9.requestbody={"id":1,"group_name":"groupname1","set_name":"Set1"}
+                test_group.9.requestbody={"id":1,"group_name":"groupname1","set_name":"Set1","member_count":0}
                 test_group.9.responsestatus=200
                 
                 test_group.10.uri=/[^/]*/courses/\\d+/groups/999
