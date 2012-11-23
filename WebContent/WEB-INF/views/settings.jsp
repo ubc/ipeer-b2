@@ -2,11 +2,14 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
    "http://www.w3.org/TR/html4/loose.dtd">
 <%@page import="com.spvsoftwareproducts.blackboard.utils.B2Context,
-	ca.ubc.ctlt.ipeerb2.Configuration"
+	ca.ubc.ctlt.ipeerb2.Configuration,
+	ca.ubc.ctlt.ipeerb2.domain.Role"
    errorPage="../error.jsp"%>
 <%@taglib prefix="bbNG" uri="/bbNG"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
+<%
+	pageContext.setAttribute("roleNames", Role.ALL_ROLE_NAMES);
+%>
 <bbNG:genericPage title="iPeer Building Block Settings" entitlement="system.admin.VIEW">
   <bbNG:pageHeader instructions="Instruction">
     <bbNG:breadcrumbBar environment="SYS_ADMIN_PANEL" navItem="admin_plugin_manage">
@@ -41,6 +44,22 @@
       	<bbNG:textElement name="<%=Configuration.TOKEN_SECRET%>" value="${tokenSecret}" isRequired="true" title="Token Secret" size="50" helpText="The secret used to sign the message. This value must match the one set in iPeer"/>
       </bbNG:dataElement>
       
+    </bbNG:step>
+    
+    <bbNG:step hideNumber="false" id="stepThree" title="Role Mapping" instructions="Please select appropriate role to map.">
+		<bbNG:dataElement isRequired="true" label="Role Mapping">
+	        <bbNG:settingsPageList collection="${bbRoles}" objectVar="bbRole" className="blackboard.platform.security.CourseRole"
+	           description="" reorderable="false">
+	        	<bbNG:listElement isRowHeader="true" label="Role Name" name="name">${bbRole.courseName}</bbNG:listElement>
+	        	<c:forEach var="role" items="<%=Role.ROLE_NAMES_FOR_MAPPING %>">
+		    	 	<bbNG:listElement isRowHeader="false" name="${roleNames[role]}" label="${roleNames[role]}">
+		    	 		<c:set var="key" value="${bbRole.identifier}${role}" />
+		    			<bbNG:checkboxElement isSelected="${roleMapping[key]}" name="role${bbRole.identifier}" value="${role}" />
+		          	</bbNG:listElement>
+	          	</c:forEach>
+      	  </bbNG:settingsPageList>
+      </bbNG:dataElement>
+    
     </bbNG:step>
     
     <bbNG:stepSubmit hideNumber="false" showCancelButton="true" />

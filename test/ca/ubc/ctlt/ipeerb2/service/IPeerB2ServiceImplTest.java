@@ -14,6 +14,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import blackboard.data.course.CourseMembership;
 import blackboard.data.course.CourseMembership.Role;
+import ca.ubc.ctlt.ipeerb2.Configuration;
 import ca.ubc.ctlt.ipeerb2.domain.User;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -130,16 +131,26 @@ public class IPeerB2ServiceImplTest {
 	@Test
 	public final void testBbUserToUserCourseMembership() {
 		when(membership.getUser()).thenReturn(bbUser);
+		Configuration config = service.getConfiguration();
+		when(config.getSetting(Configuration.ROLE_MAPPING_PREFIX + "." +Role.INSTRUCTOR.getIdentifier()))
+				.thenReturn(Integer.toString(ca.ubc.ctlt.ipeerb2.domain.Role.INSTRUCTOR));
+		when(config.getSetting(Configuration.ROLE_MAPPING_PREFIX + "." +Role.STUDENT.getIdentifier()))
+				.thenReturn(Integer.toString(ca.ubc.ctlt.ipeerb2.domain.Role.STUDENT));
+										
+		// test student role
+		when(membership.getRoleAsString()).thenReturn(Role.STUDENT.getIdentifier());
+		User user = service.bbUserToUser(membership);
+		assertEquals(ca.ubc.ctlt.ipeerb2.domain.Role.STUDENT, user.getRoleId());
 		
 		// test student role
-		when(membership.getRoleAsString()).thenReturn(Role.STUDENT.getFieldName());
-		User user = service.bbUserToUser(membership);
-		assertEquals(5, user.getRoleId());
+		when(membership.getRoleAsString()).thenReturn(Role.INSTRUCTOR.getIdentifier());
+		user = service.bbUserToUser(membership);
+		assertEquals(ca.ubc.ctlt.ipeerb2.domain.Role.INSTRUCTOR, user.getRoleId());
 		
 		// test unknown role
 		when(membership.getRoleAsString()).thenReturn("UNKNOWN");
 		user = service.bbUserToUser(membership);
-		assertEquals(5, user.getRoleId());
+		assertEquals(ca.ubc.ctlt.ipeerb2.domain.Role.STUDENT, user.getRoleId());
 	}
 
 //	@Test

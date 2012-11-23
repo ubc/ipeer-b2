@@ -16,6 +16,7 @@ public class Configuration implements ServletContextAware {
 	public static final String SHARED_SECRET = "ipeer.consumer_secret";
 	public static final String TOKEN_KEY = "ipeer.token_key";
 	public static final String TOKEN_SECRET = "ipeer.token_secret";
+	public static final String ROLE_MAPPING_PREFIX = "ipeer.role_mapping";
 	
 	private ServletContext servletContext;
 	private boolean inMemory = false;
@@ -68,7 +69,11 @@ public class Configuration implements ServletContextAware {
 	}
 	
 	public String getSetting(String key) {
-		return getSettings().getProperty(key);
+		return getSetting(key, null);
+	}
+	
+	public String getSetting(String key, String defaultValue) {
+		return getSettings().getProperty(key, defaultValue);
 	}
 	
 	public void setSetting(String key, String value) {

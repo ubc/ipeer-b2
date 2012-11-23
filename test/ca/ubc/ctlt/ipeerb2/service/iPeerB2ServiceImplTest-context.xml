@@ -4,7 +4,9 @@
        xmlns:util="http://www.springframework.org/schema/util"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/oxm http://www.springframework.org/schema/oxm/spring-oxm-3.0.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd">
     
-	<bean id="configuration" class="ca.ubc.ctlt.ipeerb2.Configuration"/>
+	<bean id="configuration" class="org.mockito.Mockito" factory-method="mock"  >
+		<constructor-arg value="ca.ubc.ctlt.ipeerb2.Configuration" />
+	</bean>
 	
 	<bean id="courseDao" class="org.mockito.Mockito" factory-method="mock" >
 		<constructor-arg value="ca.ubc.ctlt.ipeerb2.dao.CourseDao" />
