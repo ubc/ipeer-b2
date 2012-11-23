@@ -1,15 +1,12 @@
 package ca.ubc.ctlt.ipeerb2.service;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import blackboard.data.ValidationException;
 import blackboard.data.course.CourseMembership;
-import blackboard.data.course.CourseMembership.Role;
 import blackboard.data.gradebook.Score;
 import blackboard.db.ConnectionNotAvailableException;
 import blackboard.persist.PersistenceException;
@@ -55,6 +52,15 @@ public class IPeerB2ServiceImpl implements IPeerB2Service, UserAdapter<User>, Gr
 	@Autowired
 	private Configuration configuration;
 	
+	
+	public Configuration getConfiguration() {
+		return configuration;
+	}
+
+	public void setConfiguration(Configuration configuration) {
+		this.configuration = configuration;
+	}
+
 	@Override
 	public boolean createCourse(Course course) {
 		Course result = courseDao.createCourse(course);
@@ -84,8 +90,8 @@ public class IPeerB2ServiceImpl implements IPeerB2Service, UserAdapter<User>, Gr
 	@Override
 	public boolean syncClass(String bbCourseId) {
 		try {
-			userDao.createUsers(B2Util.getUsersInCourse(bbCourseId, this));
-			userDao.enrolUsersInCourse(configuration.getIpeerCourseId(bbCourseId), B2Util.getUsersInCourse(bbCourseId, this));
+			userDao.createUsers(B2Util.getActiveUsersInCourse(bbCourseId, this));
+			userDao.enrolUsersInCourse(configuration.getIpeerCourseId(bbCourseId), B2Util.getActiveUsersInCourse(bbCourseId, this));
 		} catch (PersistenceException e) {
 			throw new RuntimeException("Failed to sync class list!", e);
 		}
@@ -287,21 +293,12 @@ public class IPeerB2ServiceImpl implements IPeerB2Service, UserAdapter<User>, Gr
 		return bbUser;
 	}
 
-	//TODO: role mapping table for administrator
 	@Override
 	public User bbUserToUser(CourseMembership membership) {
 		User user = bbUserToUser(membership.getUser());
-		Map<String, Integer> roleMapping = new HashMap<String, Integer>();
-		roleMapping.put(Role.STUDENT.getFieldName(), 5);
-		roleMapping.put(Role.NONE.getFieldName(), 5);
-		roleMapping.put(Role.TEACHING_ASSISTANT.getFieldName(), 4);
-		roleMapping.put(Role.GRADER.getFieldName(), 4);
-		roleMapping.put(Role.INSTRUCTOR.getFieldName(), 3);
-		roleMapping.put(Role.COURSE_BUILDER.getFieldName(), 3);
-
-		String roleAsString = membership.getRoleAsString();
-		int role = (roleMapping.get(roleAsString) == null ? 5 : roleMapping.get(roleAsString));
-		user.setRoleId(role);
+		CourseMembership.Role role = membership.getRole();
+		String roleIdentifier = (null == role ? "_UNKNOWN_" : role.getDbRole().getIdentifier());
+		user.setRoleId(iPeerB2Util.mapBbRole(configuration, roleIdentifier));
 		
 		return user;
 	}

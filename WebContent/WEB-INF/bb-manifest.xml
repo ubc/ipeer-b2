@@ -30,7 +30,7 @@
 					<link>
 						<type value="course_tool" />
 						<name value="iPeer" />
-						<url value="/instructor/course" />
+						<url value="instructor/course" />
 						<description value="" />
 					</link>
 				</links>

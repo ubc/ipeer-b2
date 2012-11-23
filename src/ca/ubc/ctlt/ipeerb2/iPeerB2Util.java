@@ -14,8 +14,8 @@ import javax.crypto.spec.SecretKeySpec;
 
 import org.springframework.security.crypto.codec.Base64;
 
+import blackboard.data.course.CourseMembership;
 import blackboard.platform.security.CourseRole;
-
 import ca.ubc.ctlt.blackboardb2util.B2Util;
 import ca.ubc.ctlt.ipeerb2.domain.Group;
 import ca.ubc.ctlt.ipeerb2.domain.Role;
@@ -77,18 +77,20 @@ public class iPeerB2Util {
 		Map<String, Boolean> roleMapping = new HashMap<String, Boolean>();
 		List<CourseRole> roles = B2Util.getCourseRoles();
 		for(CourseRole bbRole : roles) {
+			//System.out.println("BB Role: " + bbRole.getIdentifier() + "," + bbRole.getCourseName() + "," + bbRole.getName());
 			String mapping = config.getSetting(Configuration.ROLE_MAPPING_PREFIX + "." + bbRole.getIdentifier(), "");
 			for(int role : Role.ROLE_NAMES_FOR_MAPPING) {
 				roleMapping.put(bbRole.getIdentifier()+role, mapping.contains(String.valueOf(role)));
 			}
 		}
-		
+
 		return roleMapping;
 	}
 	
 	//TODO: mapping multiple roles
 	public static int mapBbRole(Configuration config, String bbRoleIdentifier) {
 		String mapping = config.getSetting(Configuration.ROLE_MAPPING_PREFIX + "." +bbRoleIdentifier);
+		//System.out.println("Mapping Role: " + bbRoleIdentifier + " to " + (mapping == null ? Role.STUDENT : Integer.parseInt(mapping)) + "(" + mapping + ")");
 		return (mapping == null ? Role.STUDENT : Integer.parseInt(mapping));
 	}
 }
