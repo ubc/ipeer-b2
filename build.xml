@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE project>
 
-<project xmlns:ivy="antlib:org.apache.ivy.ant" name="PROJECT_NAME" basedir="." default="dist">
+<project xmlns:ivy="antlib:org.apache.ivy.ant" name="ipeer_b2" basedir="." default="dist">
     <property file="build.properties"/>
     <property file="local.properties"/>
     <property name="b2context.url" value="http://projects.oscelot.org/gf/download/frsrelease/669/4384/"/>

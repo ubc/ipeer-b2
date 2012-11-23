@@ -3,15 +3,14 @@
 <ivy-module version="2.0">
     <info organisation="ca.ubc.ctlt" module="iPeerB2"/>
 
-    <configurations defaultconfmapping="build->master;test->master">
-        <conf name="build" visibility="private" description="compilation only need api jar" />
-        <conf name="build-exclude" extends="build" visibility="private" description="used for only included in build" />
-        <conf name="runtime" extends="build"/>
+    <configurations defaultconfmapping="runtime->master;build->master;test->master">
+        <conf name="runtime"/>
+        <conf name="build" extends="runtime" visibility="private" description="compilation only need api jar" />
         <conf name="test" extends="runtime" />
     </configurations>
 
     <dependencies>
-        <dependency org="javax.servlet" name="servlet-api" rev="2.5" transitive="false" conf="build-exclude->master"/>
+        <dependency org="javax.servlet" name="servlet-api" rev="2.5" transitive="false" conf="build->master"/>
         <dependency org="junit" name="junit" rev="4.10" transitive="false" conf="test"/>
         <dependency org="org.mockito" name="mockito-all" rev="1.9.5-rc1" conf="test"/>
         <!--    <dependency org="pmd" name="pmd" rev="4.3"/>-->
@@ -29,30 +28,30 @@
         <dependency org="org.eclipse.jetty" name="jetty-io" rev="8.1.7.v20120910" transitive="false" conf="test"/>
         <dependency org="org.eclipse.jetty" name="jetty-continuation" rev="8.1.7.v20120910" transitive="false" conf="test"/>
 
-        <dependency org="org.codehaus.jackson" name="jackson-core-asl" rev="1.9.10" conf="build"/>
-        <dependency org="org.codehaus.jackson" name="jackson-mapper-asl" rev="1.9.10" conf="build"/>
-        <dependency org="jstl" name="jstl" rev="1.2" conf="build"/>
+        <dependency org="org.codehaus.jackson" name="jackson-core-asl" rev="1.9.10" conf="runtime"/>
+        <dependency org="org.codehaus.jackson" name="jackson-mapper-asl" rev="1.9.10" conf="runtime"/>
+        <dependency org="jstl" name="jstl" rev="1.2" conf="runtime"/>
 
-        <dependency org="commons-logging" name="commons-logging" rev="1.1.1" conf="build"/>
-        <dependency org="log4j" name="log4j" rev="1.2.17" transitive="false" conf="build"/>
-        <dependency org="org.slf4j" name="slf4j-api" rev="1.6.6" conf="build"/>
-        <dependency org="org.slf4j" name="slf4j-log4j12" rev="1.6.6" conf="build"/>
+        <dependency org="commons-logging" name="commons-logging" rev="1.1.1" conf="runtime"/>
+        <dependency org="log4j" name="log4j" rev="1.2.17" transitive="false" conf="runtime"/>
+        <dependency org="org.slf4j" name="slf4j-api" rev="1.6.6" conf="runtime"/>
+        <dependency org="org.slf4j" name="slf4j-log4j12" rev="1.6.6" conf="runtime"/>
 
-        <dependency org="org.springframework" name="spring-context" rev="3.1.3.RELEASE" transitive="false" conf="build"/>
-        <dependency org="org.springframework" name="spring-core" rev="3.1.3.RELEASE" transitive="false" conf="build"/>
+        <dependency org="org.springframework" name="spring-context" rev="3.1.3.RELEASE" transitive="false" conf="runtime"/>
+        <dependency org="org.springframework" name="spring-core" rev="3.1.3.RELEASE" transitive="false" conf="runtime"/>
         <dependency org="org.springframework" name="spring-test" rev="3.1.3.RELEASE" transitive="false" conf="test"/>
-        <dependency org="org.springframework" name="spring-beans" rev="3.1.3.RELEASE" transitive="false" conf="build"/>
-        <dependency org="org.springframework" name="spring-webmvc" rev="3.1.3.RELEASE" transitive="false" conf="build"/>
-        <dependency org="org.springframework" name="spring-context-support" rev="3.1.3.RELEASE" transitive="false" conf="build"/>
-        <dependency org="org.springframework" name="spring-web" rev="3.1.3.RELEASE" transitive="false" conf="build"/>
-        <dependency org="org.springframework" name="spring-expression" rev="3.1.3.RELEASE" transitive="false" conf="build"/>
-        <dependency org="org.springframework" name="spring-asm" rev="3.1.3.RELEASE" transitive="false" conf="build"/>
-        <dependency org="org.springframework" name="spring-aop" rev="3.1.3.RELEASE" transitive="false" conf="build"/>
-        <dependency org="org.springframework.security" name="spring-security-core" rev="3.1.3.RELEASE" conf="build"/>
-        <dependency org="org.springframework.security" name="spring-security-web" rev="3.1.3.RELEASE" conf="build"/>
-        <dependency org="org.springframework.security" name="spring-security-config" rev="3.1.3.RELEASE" conf="build"/>
-        <dependency org="org.springframework.security" name="spring-security-taglibs" rev="3.1.3.RELEASE" conf="build"/>
+        <dependency org="org.springframework" name="spring-beans" rev="3.1.3.RELEASE" transitive="false" conf="runtime"/>
+        <dependency org="org.springframework" name="spring-webmvc" rev="3.1.3.RELEASE" transitive="false" conf="runtime"/>
+        <dependency org="org.springframework" name="spring-context-support" rev="3.1.3.RELEASE" transitive="false" conf="runtime"/>
+        <dependency org="org.springframework" name="spring-web" rev="3.1.3.RELEASE" transitive="false" conf="runtime"/>
+        <dependency org="org.springframework" name="spring-expression" rev="3.1.3.RELEASE" transitive="false" conf="runtime"/>
+        <dependency org="org.springframework" name="spring-asm" rev="3.1.3.RELEASE" transitive="false" conf="runtime"/>
+        <dependency org="org.springframework" name="spring-aop" rev="3.1.3.RELEASE" transitive="false" conf="runtime"/>
+        <dependency org="org.springframework.security" name="spring-security-core" rev="3.1.3.RELEASE" conf="runtime"/>
+        <dependency org="org.springframework.security" name="spring-security-web" rev="3.1.3.RELEASE" conf="runtime"/>
+        <dependency org="org.springframework.security" name="spring-security-config" rev="3.1.3.RELEASE" conf="runtime"/>
+        <dependency org="org.springframework.security" name="spring-security-taglibs" rev="3.1.3.RELEASE" conf="runtime"/>
 
-        <dependency org="ca.ubc.ctlt" name="blackboard-b2-util" rev="latest.integration" conf="build->default"/>
+        <dependency org="ca.ubc.ctlt" name="blackboard-b2-util" rev="latest.integration" conf="runtime->default"/>
     </dependencies>
 </ivy-module>
