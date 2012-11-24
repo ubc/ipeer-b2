@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.log4j.Logger;
 import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.JsonParseException;
 import org.codehaus.jackson.map.JsonMappingException;
@@ -26,7 +27,9 @@ public class ApiTestServlet extends HttpServlet {
 	private MediaType contentType;
 	private Properties properties;
 	private List<TestServletConfig> servletConfigs;
-
+	
+	private static final Logger logger = Logger.getLogger(ApiTestServlet.class);
+	
 	public Properties getProperties() {
 		return properties;
 	}
@@ -139,8 +142,9 @@ public class ApiTestServlet extends HttpServlet {
 							response.getOutputStream());
 				}
 				
-				System.out.println("Processed requeset "+config.getMethod()+" " + config.getUri());
-				System.out.println("Header Authorization: "+request.getHeader("Authorization"));
+				logger.info("Processed requeset "+config.getMethod()+" " + config.getUri());
+				logger.info("Header Authorization: "+request.getHeader("Authorization"));
+				
 				return;
 			}
 		}

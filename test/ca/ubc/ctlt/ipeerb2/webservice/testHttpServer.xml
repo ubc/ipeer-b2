@@ -140,7 +140,7 @@
                 
                 test_group.6.uri=/[^/]*/courses/\\d+/groups
                 test_group.6.method=post
-                test_group.6.requestbody={"id":0,"group_name":"invalid_groupname","set_name":"Set1"}
+                test_group.6.requestbody={"id":0,"group_name":"invalid_groupname","set_name":"Set1","member_count":0}
                 test_group.6.responsestatus=500
                 
                 test_group.7.uri=/[^/]*/courses/\\d+/groups/1
@@ -158,7 +158,7 @@
                 
                 test_group.10.uri=/[^/]*/courses/\\d+/groups/999
                 test_group.10.method=put
-                test_group.10.requestbody={"id":999,"group_name":"invalid_groupname","set_name":"Set1"}
+                test_group.10.requestbody={"id":999,"group_name":"invalid_groupname","set_name":"Set1","member_count":0}
                 test_group.10.responsestatus=500
                 
                 test_course_user.1.uri=/[^/]*/courses/\\d+/users

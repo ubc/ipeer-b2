@@ -142,20 +142,17 @@
     </target>
 
     <target name="test" depends="build, buildtests" description="Run tests">
-        <junit printsummary="on"
-            fork="false"
-            haltonfailure="false"
-            failureproperty="tests.failed"
-            showoutput="true">
+        <mkdir dir="${build.report}/tests"/>
+        <junit printsummary="on" haltonfailure="false" failureproperty="tests.failed" showoutput="true">
             <classpath refid="classpath.test"/>
-            <formatter type="brief" usefile="false"/>
+            <!--<formatter type="brief" usefile="false"/>-->
+            <formatter type="xml"/>
 
-            <batchtest haltonfailure="no" fork="yes">
+            <batchtest haltonfailure="no" fork="yes" todir="${build.report}/tests">
                 <fileset dir="${build.test}">
                     <include name="**/*Test.*"/>
                 </fileset>
             </batchtest>
-
         </junit>
 
         <fail if="tests.failed">
@@ -187,6 +184,7 @@
         <delete dir="${dist}" />
         <delete dir="${reports.base}" />
         <delete dir="${ivy.lib.dir}"/>
+        <delete dir="${build.report}"/>
     </target>
 
     <target name="check-compatibility" description="Check compatibility">
