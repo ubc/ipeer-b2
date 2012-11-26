@@ -376,7 +376,7 @@
 	<bean id="httpTestServer" class="org.eclipse.jetty.server.Server" init-method="start" destroy-method="stop" depends-on="servletHandlerSetter">
 	    <property name="connectors">
 	        <list>
-	            <bean class="org.eclipse.jetty.server.bio.SocketConnector">
+	            <bean class="org.eclipse.jetty.server.nio.SelectChannelConnector">
 	                <!-- <property name="host" value="localhost" /> -->
 	                <property name="port" value="#{settings['webservice.server.port']}" />
 	            </bean>

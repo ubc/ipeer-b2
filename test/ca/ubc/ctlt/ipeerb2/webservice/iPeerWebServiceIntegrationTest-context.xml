@@ -42,7 +42,7 @@
 		<property name="servletContext" ref="servletContext"/>
 		<property name="settings">
 			<value>
-				ipeer.url=http://192.168.56.1:8899
+				ipeer.url=http://127.0.0.1:8899
 				mapping.course_id._1_1=1
 			</value>
 		</property>
