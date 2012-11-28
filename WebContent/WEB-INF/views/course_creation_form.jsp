@@ -29,6 +29,18 @@
 	        <td><form:label path="title"><spring:message code="label.course_title"/></form:label></td>
 	        <td><form:input path="title" size="50"/></td>
 	    </tr>
+	    <tr>
+	        <td><form:label path="syncClass"><spring:message code="label.sync_class"/></form:label></td>
+	        <td><form:checkbox path="syncClass" value="selected"/></td>
+	    </tr>
+	    <tr>
+	        <td><form:label path="pushGroup"><spring:message code="label.push_group"/></form:label></td>
+	        <td><form:checkbox path="pushGroup" /></td>
+	    </tr>
+	    <tr>
+	        <td><form:label path="pullGroup"><spring:message code="label.pull_group"/></form:label></td>
+	        <td><form:checkbox path="pullGroup" /></td>
+	    </tr>
  	    <tr>
 	        <td><form:label path="departments"><spring:message code="label.department"/></form:label></td>
 	        <td><form:checkboxes items="${departments}" path="departments" itemLabel="name" itemValue="id" delimiter="&nbsp;&nbsp;&nbsp;"/></td>

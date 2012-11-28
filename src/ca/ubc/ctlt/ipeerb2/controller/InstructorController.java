@@ -28,6 +28,7 @@ import ca.ubc.ctlt.ipeerb2.CourseInfo;
 import ca.ubc.ctlt.ipeerb2.iPeerB2Util;
 import ca.ubc.ctlt.ipeerb2.domain.Course;
 import ca.ubc.ctlt.ipeerb2.domain.Department;
+import ca.ubc.ctlt.ipeerb2.form.CourseCreationForm;
 import ca.ubc.ctlt.ipeerb2.service.IPeerB2Service;
 
 import com.spvsoftwareproducts.blackboard.utils.B2Context;
@@ -52,36 +53,58 @@ public class InstructorController {
 			int ipeerCourseId = configuration.getIpeerCourseId(bbCourseId);
 			model.addAttribute("course_id", bbCourseId);
 			model.addAttribute("ipeer_course_id", ipeerCourseId);
+			
 			return "manage_course";
 		}
 		B2Context b2Context = new B2Context(request);
-		blackboard.data.course.Course course = b2Context.getContext().getCourse();
 		
 		List<Department> departments = service.getDepartments();
 		model.addAttribute("departments", departments);
 		
-		Course courseForm = new Course();
+		CourseCreationForm courseForm = new CourseCreationForm();
+		blackboard.data.course.Course course = b2Context.getContext().getCourse();
 		courseForm.setBbCourseId(bbCourseId);
-		courseForm.setCourse(course.getBatchUid());
-		courseForm.setTitle(course.getDisplayTitle());
+		if (null != course) {
+			courseForm.setCourse(course.getBatchUid());
+			courseForm.setTitle(course.getDisplayTitle());
+		}
 		model.addAttribute("course", courseForm);
 		
 		return "course_creation_form";
 	}
 	
 	@RequestMapping(value="/course/create", method = RequestMethod.POST)
-	public String createCourse(HttpServletRequest webRequest, @ModelAttribute("course") Course course, BindingResult result, Locale locale) {
+	public String createCourse(HttpServletRequest webRequest, @ModelAttribute("course") CourseCreationForm courseForm, BindingResult result, Locale locale) {
 		ReceiptOptions ro = new ReceiptOptions();
 		
+		Course course = new Course();
+		course.setCourse(courseForm.getCourse());
+		course.setTitle(courseForm.getTitle());
+		course.setBbCourseId(courseForm.getBbCourseId());
+		
+		// creating the course in iPeer and the link, associate the departments as well
 		try {
 			service.createCourse(course);
-			for (Department dept : course.getDepartments()) {
+			for (Department dept : courseForm.getDepartments()) {
 					service.assignCourseToDepartment(course.getId(), dept.getId());
 			}
 			ro.addSuccessMessage(messageSource.getMessage("message.create_course_success", new Object[]{course.getCourse()}, locale));			
 		} catch (RestClientException e) {
 			ro.addErrorMessage(messageSource.getMessage("message.create_course_failed", new Object[]{course.getCourse()}, locale) + " " + e.getMessage(), e);
 		}
+
+		if (courseForm.isSyncClass()) {
+			syncClass(courseForm.getBbCourseId(), ro, locale);
+		}
+		
+		if (courseForm.isPushGroup()) {
+			pushGroups(courseForm.getBbCourseId(), ro, locale);
+		}
+		
+		if (courseForm.isPullGroup()) {
+			pullGroups(courseForm.getBbCourseId(), ro, locale);
+		}
+		
 		InlineReceiptUtil.addReceiptToRequest(webRequest, ro);
 		
 		return "redirect:/instructor/course?course_id="+course.getBbCourseId();
@@ -122,12 +145,7 @@ public class InstructorController {
 	@RequestMapping(value="/course/syncclass", method = RequestMethod.GET)
 	public String syncClass(HttpServletRequest webRequest, @RequestParam("course_id") String bbCourseId, Locale locale, ModelMap model) {
 		ReceiptOptions ro = new ReceiptOptions();
-		try{
-			service.syncClass(bbCourseId);
-			ro.addSuccessMessage(messageSource.getMessage("message.sync_class_success", null, locale));
-		} catch (RestClientException e) {
-			ro.addErrorMessage(messageSource.getMessage("message.sync_class_failed", null, locale) + " " + e.getMessage(), e);
-		}
+		syncClass(bbCourseId, ro, locale);
 		InlineReceiptUtil.addReceiptToRequest(webRequest, ro);
 		model.addAttribute("course_id", bbCourseId);
 		
@@ -137,12 +155,7 @@ public class InstructorController {
 	@RequestMapping(value="/course/pushgroups", method = RequestMethod.GET)
 	public String pushGroups(HttpServletRequest webRequest, @RequestParam("course_id") String bbCourseId, Locale locale, ModelMap model) {
 		ReceiptOptions ro = new ReceiptOptions();
-		try{
-			service.pushGroups(bbCourseId);
-			ro.addSuccessMessage(messageSource.getMessage("message.sync_groups_success", null, locale));
-		} catch (RestClientException e) {
-			ro.addErrorMessage(messageSource.getMessage("message.sync_groups_failed", null, locale) + " " + e.getMessage(), e);
-		}
+		pushGroups(bbCourseId, ro, locale);
 		InlineReceiptUtil.addReceiptToRequest(webRequest, ro);
 		model.addAttribute("course_id", bbCourseId);
 		
@@ -152,12 +165,7 @@ public class InstructorController {
 	@RequestMapping(value="/course/pullgroups", method = RequestMethod.GET)
 	public String pullGroups(HttpServletRequest webRequest, @RequestParam("course_id") String bbCourseId, Locale locale, ModelMap model) {
 		ReceiptOptions ro = new ReceiptOptions();
-		try{
-			service.pullGroups(bbCourseId);
-			ro.addSuccessMessage(messageSource.getMessage("message.sync_groups_success", null, locale));
-		} catch (RestClientException e) {
-			ro.addErrorMessage(messageSource.getMessage("message.sync_groups_failed", null, locale) + " " + e.getMessage(), e);
-		}
+		pullGroups(bbCourseId, ro, locale);
 		InlineReceiptUtil.addReceiptToRequest(webRequest, ro);
 		model.addAttribute("course_id", bbCourseId);
 		
@@ -217,5 +225,32 @@ public class InstructorController {
 	protected void initBinder(HttpServletRequest request,
 			ServletRequestDataBinder binder) throws Exception {
 		binder.registerCustomEditor(Department.class, new CourseDepartmentPropertyEditor());
+	}
+	
+	private void syncClass(String bbCourseId, ReceiptOptions ro, Locale locale) {
+		try{
+			service.syncClass(bbCourseId);
+			ro.addSuccessMessage(messageSource.getMessage("message.sync_class_success", null, locale));
+		} catch (RestClientException e) {
+			ro.addErrorMessage(messageSource.getMessage("message.sync_class_failed", null, locale) + " " + e.getMessage(), e);
+		}
+	}
+	
+	private void pushGroups(String bbCourseId, ReceiptOptions ro, Locale locale) {
+		try{
+			service.pushGroups(bbCourseId);
+			ro.addSuccessMessage(messageSource.getMessage("message.sync_groups_success", null, locale));
+		} catch (RestClientException e) {
+			ro.addErrorMessage(messageSource.getMessage("message.sync_groups_failed", null, locale) + " " + e.getMessage(), e);
+		}
+	}
+	
+	private void pullGroups(String bbCourseId, ReceiptOptions ro, Locale locale) {
+		try{
+			service.pullGroups(bbCourseId);
+			ro.addSuccessMessage(messageSource.getMessage("message.sync_groups_success", null, locale));
+		} catch (RestClientException e) {
+			ro.addErrorMessage(messageSource.getMessage("message.sync_groups_failed", null, locale) + " " + e.getMessage(), e);
+		}
 	}
 }
