@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -21,6 +22,8 @@ import org.springframework.web.client.RestClientException;
 
 import blackboard.data.ReceiptOptions;
 import blackboard.data.user.User;
+import blackboard.platform.security.AccessException;
+import blackboard.platform.security.SecurityUtil;
 import blackboard.platform.servlet.InlineReceiptUtil;
 import ca.ubc.ctlt.blackboardb2util.B2Util;
 import ca.ubc.ctlt.ipeerb2.Configuration;
@@ -35,6 +38,7 @@ import com.spvsoftwareproducts.blackboard.utils.B2Context;
 
 @Controller
 @RequestMapping("/instructor")
+@Secured("BB_ENTITLEMENT_course.content.MODIFY")
 public class InstructorController {
 	@Autowired
 	private IPeerB2Service service;
@@ -219,7 +223,6 @@ public class InstructorController {
 	    info.setEvents(service.getEventsInCourse(bbCourseId));
 	    return info;
 	}
-
 	
 	@InitBinder
 	protected void initBinder(HttpServletRequest request,
@@ -251,6 +254,15 @@ public class InstructorController {
 			ro.addSuccessMessage(messageSource.getMessage("message.sync_groups_success", null, locale));
 		} catch (RestClientException e) {
 			ro.addErrorMessage(messageSource.getMessage("message.sync_groups_failed", null, locale) + " " + e.getMessage(), e);
+		}
+	}
+	
+	public boolean currentUserHasEntitlementInCurrentContext(String entitlement) {
+		try {
+			SecurityUtil.checkEntitlement(entitlement);
+			return true;
+		} catch (AccessException e) {
+			return false;
 		}
 	}
 }

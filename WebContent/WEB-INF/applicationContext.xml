@@ -15,17 +15,7 @@
 	
 	<!-- <util:properties id="settings" location="classpath:webservice.properties" />  --> 
     <!-- <util:properties id="settings" location="file:/usr/local/blackboard/content/vi/BBLEARN/plugins/ubc-ipeerb2/config/ubc-ipeerb2.properties" /> -->
-	
-	<!-- Configure security -->
- 	<security:http auto-config='true' access-denied-page="/login.jsp">
-	    <security:intercept-url pattern="/**" access="IS_AUTHENTICATED_ANONYMOUSLY" />
-	
-	    <security:form-login authentication-failure-url="/login.jsp" default-target-url="/index.jsp" login-page="/login.jsp" login-processing-url="/login.do"/>
-	    <security:logout logout-success-url="/index.jsp" logout-url="/logout.do"/>
-	</security:http>
-
-	<security:authentication-manager>
-	</security:authentication-manager>
+	<import resource="security.xml" />
 
 	<bean id="configuration" class="ca.ubc.ctlt.ipeerb2.Configuration"/>
 	
