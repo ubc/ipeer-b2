@@ -89,8 +89,11 @@ public class InstructorController {
 		// creating the course in iPeer and the link, associate the departments as well
 		try {
 			service.createCourse(course);
-			for (Department dept : courseForm.getDepartments()) {
-					service.assignCourseToDepartment(course.getId(), dept.getId());
+			if (courseForm.getDepartments() != null) {
+				for (Department dept : courseForm.getDepartments()) {
+					service.assignCourseToDepartment(course.getId(),
+							dept.getId());
+				}
 			}
 			ro.addSuccessMessage(messageSource.getMessage("message.create_course_success", new Object[]{course.getCourse()}, locale));			
 		} catch (RestClientException e) {
@@ -198,9 +201,9 @@ public class InstructorController {
 		long timestamp = System.nanoTime();
 		String key = configuration.getSetting(Configuration.TOKEN_KEY);
 		String secret = configuration.getSetting(Configuration.TOKEN_SECRET);
-		String signature = iPeerB2Util.calcSignature(user.getUserName(), timestamp, key, secret);
+		String signature = iPeerB2Util.calcSignature(user.getBatchUid(), timestamp, key, secret);
 		return "redirect:"+url+redirect+"?"+
-				"&username="+iPeerB2Util.urlEncode(user.getUserName())+
+				"&username="+iPeerB2Util.urlEncode(user.getBatchUid())+
 				"&timestamp="+timestamp+
 				"&token="+iPeerB2Util.urlEncode(key)+
 				"&signature="+iPeerB2Util.urlEncode(signature);
