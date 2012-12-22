@@ -200,8 +200,10 @@ public class IPeerB2ServiceImpl implements IPeerB2Service, UserAdapter<User>, Gr
 				// e.g. only enrol the new ones and remove the missing ones.
 				B2Util.setUsersInGroup(groupInBb.getBbGroup(), usersInIpeer, this);
 				List<User> usersInBb = B2Util.getUsersInGroup(groupInBb.getBbGroup(), this);
+				System.out.println("user in BB:" + usersInBb);
 				if (usersInIpeer.size() != usersInBb.size()) {
 					for (User user : usersInIpeer) {
+						System.out.println("in iPeer: "+user.getUsername());
 						if(null == iPeerB2Util.findUserInList(user, usersInBb)) {
 							throw new RuntimeException("User " + user.getUsername() + " from iPeer is not enrolled in this course. Please enrol the student first!");
 						}
@@ -254,7 +256,7 @@ public class IPeerB2ServiceImpl implements IPeerB2Service, UserAdapter<User>, Gr
 	public int getBbClassSize(String bbCourseId) {
 		int size = 0;
 		try {
-			size = B2Util.getClassSize(bbCourseId);
+			size = B2Util.getClassSize(bbCourseId, iPeerB2Util.getAllRolesMappedToStudent(configuration));
 		} catch (PersistenceException e) {
 			throw new RuntimeException("Failed to load class size!", e);
 		}

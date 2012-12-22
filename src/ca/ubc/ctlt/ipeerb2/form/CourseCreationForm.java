@@ -8,7 +8,7 @@ public class CourseCreationForm {
 	private String course;
 	private String title;
 	private String bbCourseId;
-	private boolean syncClass;
+	private boolean syncClass = true;
 	private boolean pushGroup;
 	private boolean pullGroup;
 	private List<Department> departments;

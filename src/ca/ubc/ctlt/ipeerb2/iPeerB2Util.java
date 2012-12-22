@@ -4,6 +4,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,7 +14,9 @@ import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 
 import org.springframework.security.crypto.codec.Base64;
+import org.springframework.util.StringUtils;
 
+import blackboard.data.course.CourseMembership;
 import blackboard.platform.security.CourseRole;
 import ca.ubc.ctlt.blackboardb2util.B2Util;
 import ca.ubc.ctlt.ipeerb2.domain.Group;
@@ -91,5 +94,17 @@ public class iPeerB2Util {
 		String mapping = config.getSetting(Configuration.ROLE_MAPPING_PREFIX + "." +bbRoleIdentifier);
 		//System.out.println("Mapping Role: " + bbRoleIdentifier + " to " + (mapping == null ? Role.STUDENT : Integer.parseInt(mapping)) + "(" + mapping + ")");
 		return (mapping == null ? Role.STUDENT : Integer.parseInt(mapping));
+	}
+	
+	public static List<CourseMembership.Role> getAllRolesMappedToStudent(Configuration config) {
+		List<CourseMembership.Role> mappedRoles = new ArrayList<CourseMembership.Role>();
+		List<CourseRole> roles = B2Util.getCourseRoles();
+		for(CourseRole role : roles) {
+			if (Role.STUDENT == mapBbRole(config, role.getIdentifier())) {
+				mappedRoles.add(CourseMembership.Role.fromIdentifier(role.getIdentifier()));
+			}
+		}
+		
+		return mappedRoles;
 	}
 }
