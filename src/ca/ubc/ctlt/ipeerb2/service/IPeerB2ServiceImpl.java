@@ -326,7 +326,7 @@ public class IPeerB2ServiceImpl implements IPeerB2Service, UserAdapter<User>, Gr
 	public Score gradeToBbScore(Grade grade, List<CourseMembership> memberships) {
 		Score score = new Score();
 		for (CourseMembership membership : memberships) {
-			if (membership.getUser().getUserName().equals(grade.getUsername())) {
+			if (membership.getUser().getBatchUid().equals(grade.getUsername())) {
 				score.setCourseMembershipId(membership.getId());
 			}
 		}
