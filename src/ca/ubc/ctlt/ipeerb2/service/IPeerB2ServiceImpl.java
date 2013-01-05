@@ -71,6 +71,13 @@ public class IPeerB2ServiceImpl implements IPeerB2Service, UserAdapter<User>, Gr
 	}
 
 	@Override
+	public boolean linkCourse(Course course) {
+		configuration.setConnection(course.getBbCourseId(), course.getId());
+		
+		return true;
+	}
+	
+	@Override
 	public boolean disconnectCourse(String bbCourseId) {
 		configuration.deleteConnection(bbCourseId);
 		

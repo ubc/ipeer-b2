@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
@@ -32,6 +33,7 @@ import ca.ubc.ctlt.ipeerb2.iPeerB2Util;
 import ca.ubc.ctlt.ipeerb2.domain.Course;
 import ca.ubc.ctlt.ipeerb2.domain.Department;
 import ca.ubc.ctlt.ipeerb2.form.CourseCreationForm;
+import ca.ubc.ctlt.ipeerb2.form.CourseLinkingForm;
 import ca.ubc.ctlt.ipeerb2.service.IPeerB2Service;
 
 import com.spvsoftwareproducts.blackboard.utils.B2Context;
@@ -50,8 +52,29 @@ public class InstructorController {
 	private Configuration configuration;
 	
 	//private static final Logger logger = LoggerFactory.getLogger(InstructorController.class);
+	private CourseCreationForm getCourseCreationForm(HttpServletRequest request, String bbCourseId) {
+		B2Context b2Context = new B2Context(request);
+		
+		CourseCreationForm courseForm = new CourseCreationForm();
+		blackboard.data.course.Course course = b2Context.getContext().getCourse();
+		courseForm.setBbCourseId(bbCourseId);
+		
+		if (null != course) {
+			courseForm.setCourse(course.getBatchUid());
+			courseForm.setTitle(course.getDisplayTitle());
+		}
+		
+		return courseForm;
+	}
 	
-	@RequestMapping(value="/course")
+	private CourseLinkingForm getCourseLinkingForm(String bbCourseId) {
+		CourseLinkingForm courseLinkForm = new CourseLinkingForm();
+		courseLinkForm.setBbCourseId(bbCourseId);
+		
+		return courseLinkForm;
+	}
+
+	@RequestMapping(value="/course", method = RequestMethod.GET)
 	public String course(HttpServletRequest request, @RequestParam("course_id") String bbCourseId, ModelMap model) {
 		if (configuration.connectionExists(bbCourseId)) {
 			int ipeerCourseId = configuration.getIpeerCourseId(bbCourseId);
@@ -60,26 +83,31 @@ public class InstructorController {
 			
 			return "manage_course";
 		}
-		B2Context b2Context = new B2Context(request);
+		
+		model.addAttribute("courseCreate", getCourseCreationForm(request, bbCourseId));
+		model.addAttribute("courseLink", getCourseLinkingForm(bbCourseId));
 		
 		List<Department> departments = service.getDepartments();
 		model.addAttribute("departments", departments);
 		
-		CourseCreationForm courseForm = new CourseCreationForm();
-		blackboard.data.course.Course course = b2Context.getContext().getCourse();
-		courseForm.setBbCourseId(bbCourseId);
-		if (null != course) {
-			courseForm.setCourse(course.getBatchUid());
-			courseForm.setTitle(course.getDisplayTitle());
-		}
-		model.addAttribute("course", courseForm);
-		
 		return "course_creation_form";
 	}
 	
-	@RequestMapping(value="/course/create", method = RequestMethod.POST)
-	public String createCourse(HttpServletRequest webRequest, @ModelAttribute("course") CourseCreationForm courseForm, BindingResult result, Locale locale) {
+	@RequestMapping(value="/course", method = RequestMethod.POST, params = "create")
+	public String createCourse(HttpServletRequest request, @ModelAttribute("courseCreate") @Valid CourseCreationForm courseForm, BindingResult result, Locale locale, ModelMap model) {
 		ReceiptOptions ro = new ReceiptOptions();
+
+		if (result.hasErrors()) {
+			ro.addErrorMessage(messageSource.getMessage("message.create_course_failed", new Object[]{courseForm.getCourse()}, locale), null);
+			InlineReceiptUtil.addReceiptToRequest(request, ro);
+			
+			// prepare the model in case of failure
+			List<Department> departments = service.getDepartments();
+			model.addAttribute("departments", departments);
+			model.addAttribute("courseLink", getCourseLinkingForm(courseForm.getBbCourseId()));
+			
+			return "course_creation_form";
+		}
 		
 		Course course = new Course();
 		course.setCourse(courseForm.getCourse());
@@ -95,26 +123,75 @@ public class InstructorController {
 							dept.getId());
 				}
 			}
+			
+			if (courseForm.isSyncClass()) {
+				syncClass(courseForm.getBbCourseId(), ro, locale);
+			}
+			
+			if (courseForm.isPushGroup()) {
+				pushGroups(courseForm.getBbCourseId(), ro, locale);
+			}
+			
+			if (courseForm.isPullGroup()) {
+				pullGroups(courseForm.getBbCourseId(), ro, locale);
+			}
+			
 			ro.addSuccessMessage(messageSource.getMessage("message.create_course_success", new Object[]{course.getCourse()}, locale));			
 		} catch (RestClientException e) {
 			ro.addErrorMessage(messageSource.getMessage("message.create_course_failed", new Object[]{course.getCourse()}, locale) + " " + e.getMessage(), e);
+			InlineReceiptUtil.addReceiptToRequest(request, ro);
+			
+			// prepare the model in case of failure
+			List<Department> departments = service.getDepartments();
+			model.addAttribute("departments", departments);
+			model.addAttribute("courseLink", getCourseLinkingForm(courseForm.getBbCourseId()));
+			
+			return "course_creation_form";
 		}
 
-		if (courseForm.isSyncClass()) {
-			syncClass(courseForm.getBbCourseId(), ro, locale);
-		}
-		
-		if (courseForm.isPushGroup()) {
-			pushGroups(courseForm.getBbCourseId(), ro, locale);
-		}
-		
-		if (courseForm.isPullGroup()) {
-			pullGroups(courseForm.getBbCourseId(), ro, locale);
-		}
-		
-		InlineReceiptUtil.addReceiptToRequest(webRequest, ro);
+		InlineReceiptUtil.addReceiptToRequest(request, ro);
 		
 		return "redirect:/instructor/course?course_id="+course.getBbCourseId();
+	}
+	
+	@RequestMapping(value="/course", method = RequestMethod.POST, params = "link")
+	public String linkCourse(HttpServletRequest request, @ModelAttribute("courseLink") @Valid CourseLinkingForm courseForm, BindingResult result, Locale locale, ModelMap model) {
+		ReceiptOptions ro = new ReceiptOptions();
+		
+		if (result.hasErrors()) {
+			ro.addErrorMessage(messageSource.getMessage("message.link_course_failed", null, locale), null);
+			InlineReceiptUtil.addReceiptToRequest(request, ro);
+			
+			// prepare the model in case of failure
+			List<Department> departments = service.getDepartments();
+			model.addAttribute("departments", departments);
+			model.addAttribute("courseCreate", getCourseCreationForm(request, courseForm.getBbCourseId()));
+			System.out.println("Link form has error!"+result.toString());
+			return "course_creation_form";
+		} else {	
+			Course course = new Course();
+			course.setId(courseForm.getIpeerId());
+			course.setBbCourseId(courseForm.getBbCourseId());
+			
+			// creating the course in iPeer and the link, associate the departments as well
+			try {
+				service.linkCourse(course);
+				ro.addSuccessMessage(messageSource.getMessage("message.link_course_success", null, locale));			
+			} catch (RestClientException e) {
+				ro.addErrorMessage(messageSource.getMessage("message.link_course_failed", null, locale) + " " + e.getMessage(), e);
+				InlineReceiptUtil.addReceiptToRequest(request, ro);
+				
+				// prepare the model in case of failure
+				List<Department> departments = service.getDepartments();
+				model.addAttribute("departments", departments);
+				model.addAttribute("courseCreate", getCourseCreationForm(request, courseForm.getBbCourseId()));
+				
+				return "course_creation_form";
+			}
+		}
+		InlineReceiptUtil.addReceiptToRequest(request, ro);
+		
+		return "redirect:/instructor/course?course_id="+courseForm.getBbCourseId();
 	}
 	
 	@RequestMapping(value="/course/disconnect", method = RequestMethod.GET)

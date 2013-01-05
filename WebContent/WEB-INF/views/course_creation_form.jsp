@@ -18,16 +18,16 @@
 		<bbNG:pageTitleBar>${page_title}</bbNG:pageTitleBar>
 	</bbNG:pageHeader>
 
-
-	<form:form method="post" action="course/create" commandName="course">
+	<h3>Creating Course in iPeer</h3>
+	<form:form method="post" action="course" commandName="courseCreate">
 	    <table>
 	    <tr>
 	        <td><form:label path="course"><spring:message code="label.course_name"/></form:label></td>
-	        <td><form:input path="course" size="50"/></td> 
+	        <td><form:input path="course" size="50"/> <font color="red"><form:errors path="course" /></font></td> 
 	    </tr>
 	    <tr>
 	        <td><form:label path="title"><spring:message code="label.course_title"/></form:label></td>
-	        <td><form:input path="title" size="50"/></td>
+	        <td><form:input path="title" size="50"/> <font color="red"><form:errors path="title" /></font></td>
 	    </tr>
 	    <tr>
 	        <td><form:label path="syncClass"><spring:message code="label.sync_class"/></form:label></td>
@@ -42,14 +42,33 @@
 	        <td><form:checkbox path="pullGroup" /></td>
 	    </tr>
  	    <tr>
-	        <td><form:label path="departments"><spring:message code="label.department"/></form:label></td>
-	        <td><form:checkboxes items="${departments}" path="departments" itemLabel="name" itemValue="id" delimiter="&nbsp;&nbsp;&nbsp;"/></td>
+	        <td style="vertical-align:top;"><form:label path="departments"><spring:message code="label.department"/></form:label></td>
+	        <td><form:checkboxes items="${departments}" path="departments" itemLabel="name" itemValue="id" delimiter="<br/>"/></td>
 	    </tr>
 	    <tr>
 	        <td colspan="2">
 	        	<form:hidden path="bbCourseId" />
-	        	<input type="hidden" name="course_id" value="${course.bbCourseId}" />
-	            <input type="submit" value="Create Course"/>
+	        	<input type="hidden" name="course_id" value="${courseCreate.bbCourseId}" />
+	            <input type="submit" name="create" value="Create Course"/>
+	        </td>
+	    </tr>
+		</table>  
+	     
+	</form:form>
+	
+	<hr />
+	<h3>Linking This Course to Existing iPeer Course</h3>
+	<form:form method="post" action="course" commandName="courseLink">
+	    <table>
+	    <tr>
+	        <td><form:label path="ipeerId"><spring:message code="label.ipeer_course_id"/></form:label></td>
+	        <td><form:input path="ipeerId" size="50"/> <font color="red"><form:errors path="ipeerId" /></font></td> 
+	    </tr>
+	    <tr>
+	        <td colspan="2">
+	        	<form:hidden path="bbCourseId" />
+	        	<input type="hidden" name="course_id" value="${courseLink.bbCourseId}" />
+	            <input type="submit" name="link" value="Link Course"/>
 	        </td>
 	    </tr>
 		</table>  

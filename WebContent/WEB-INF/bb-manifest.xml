@@ -5,7 +5,7 @@
 		<name value="iPeer Building Block" />
 		<handle value="ipeerb2" />
 		<description value="" />
-		<version value="1.0.0" />
+		<version value="1.0.1" />
 		<requires>
 			<bbversion value="9.1" />
 		</requires>
@@ -80,9 +80,9 @@
 			<permission type="java.net.SocketPermission" name="*" actions="connect,resolve" />
 			<permission type="java.net.NetPermission" name="*" actions="getProxySelector" />
 			<permission type="java.lang.RuntimePermission" name="*" actions="getProtectionDomain" />
-			<!-- <permission type="java.util.PropertyPermission" name="*" actions="read,write" 
-				/> <permission type="blackboard.data.AttributePermission" name="user.authinfo" 
-				actions="get,set" /> <permission type="java.security.SecurityPermission" 
+			<!-- <permission type="java.util.PropertyPermission" name="*" actions="read,write"
+				/> <permission type="blackboard.data.AttributePermission" name="user.authinfo"
+				actions="get,set" /> <permission type="java.security.SecurityPermission"
 				name="*" /> <permission type="java.lang.RuntimePermission" name="*" /> -->
 		</permissions>
 

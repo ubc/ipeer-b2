@@ -2,10 +2,18 @@ package ca.ubc.ctlt.ipeerb2.form;
 
 import java.util.List;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 import ca.ubc.ctlt.ipeerb2.domain.Department;
 
 public class CourseCreationForm {
+	@NotNull
+	@Size(min=1)
 	private String course;
+	
+	@NotNull
+	@Size(min=1)
 	private String title;
 	private String bbCourseId;
 	private boolean syncClass = true;
