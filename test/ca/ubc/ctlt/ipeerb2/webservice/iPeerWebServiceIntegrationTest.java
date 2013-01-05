@@ -465,6 +465,21 @@ public class iPeerWebServiceIntegrationTest {
 		c = el.get(2);
 		assertTrue(c.getId() == 3);
 		assertTrue("eventname3".equals(c.getTitle()));
+		
+		el = webService.getEventsForUserInCourse("student",1);
+		System.out.println(el);
+		assertTrue(el.size() == 4);
+		c = el.get(0);
+		assertTrue(c.getId() == 1);
+		assertTrue("Term 1 Evaluation".equals(c.getTitle()));
+		
+		c = el.get(1);
+		assertTrue(c.getId() == 2);
+		assertTrue("Term Report Evaluation".equals(c.getTitle()));
+		
+		c = el.get(2);
+		assertTrue(c.getId() == 3);
+		assertTrue("Project Evaluation".equals(c.getTitle()));
 	}
 	
 	@Test(expected=RuntimeException.class)

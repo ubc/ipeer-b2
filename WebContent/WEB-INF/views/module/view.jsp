@@ -1,22 +1,34 @@
-<%@page import="blackboard.portal.external.*, com.spvsoftwareproducts.blackboard.utils.B2Context" errorPage="/error.jsp"%>
+<%@page
+	import="blackboard.portal.external.*, com.spvsoftwareproducts.blackboard.utils.B2Context"
+	errorPage="/error.jsp"%>
 <%@ taglib uri="/bbData" prefix="bbData"%>
 <%@ taglib uri="/bbNG" prefix="bbNG"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
-<c:url var="gotoipeer" value="/module/gotoipeer?redirect=/home/studentIndex" context="${webapp}"/>
+	
+<c:url var="getEvents" value="/module/getEvents" context="${webapp}"/>
 
 <bbData:context>
-<c:choose>
-	<c:when test="${empty events}">
-	    No available events
-	</c:when>
-	
-	<c:otherwise>
-	<ul>
-	    <c:forEach var="event" items="${events}">
-	    	<li><a href="${gotoipeer}" target="_blank"><c:out value="${event.title}"/></a> due at <c:out value="${event.dueDate}"/></li>
-	    </c:forEach>
-	</ul>
-	</c:otherwise>
-</c:choose>
+	<div id="div_ipeer">Please wait while the module loads...</div>
+	<script type="text/javascript">
+		Event.observe(window, 'load', function() {
+			new Ajax.Request('${getEvents}', {
+				method : 'get',
+				parameters : 'course_id=${course_id}',
+				onSuccess : function(transport) {
+					try {
+						var res = transport.responseText;
+						$('div_ipeer').innerHTML = res.stripScripts();
+						page.globalEvalScripts(res, true);
+					} catch (e) {
+						$('div_ipeer').innerHTML = 
+							'Module information is temporarily unavailable. Please reload the page. <!--' + 
+							e.toString().escapeHTML().gsub('-', '&#045;') + '-->';
+					}
+				},
+				onFailure : function(transport) {
+					$('div_ipeer').innerHTML = 'Error loading module.';
+				}
+			});
+		});
+	</script>
 </bbData:context>

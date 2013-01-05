@@ -243,11 +243,16 @@
    				test_event.21.uri=/[^/]*/users/invalidname/events
                 test_event.21.method=get
                 test_event.21.responsestatus=500
-                
+                                
                 test_event.30.uri=/[^/]*/courses/1/users/administrator/events
                 test_event.30.method=get
                 test_event.30.responsebody=[{"id":1,"course_id":1,"title":"eventname1","description":"","self_eval":1,"due_date":"2012-10-30 16:43:12","release_date_begin":"2012-09-30 16:43:11","release_date_end":"2012-10-30 16:43:11"}, {"id":2,"course_id":1,"title":"eventname2","description":"","self_eval":1,"due_date":"2012-10-30 16:43:11","release_date_begin":"2012-09-30 16:43:11","release_date_end":"2012-10-30 16:43:11"}, {"id":3,"course_id":1,"title":"eventname3","description":"","self_eval":1,"due_date":"2012-10-30 16:43:11","release_date_begin":"2012-09-30 16:43:11","release_date_end":"2012-10-30 16:43:11"}]   
                 test_event.30.responsestatus=200
+                
+                test_event.31.uri=/[^/]*/courses/1/users/student/events
+                test_event.31.method=get
+                test_event.31.responsebody=[{"title":"Term 1 Evaluation","course_id":"1","event_template_type_id":"1","due_date":"2013-07-02 16:34:43","release_date_begin":"2011-06-16 16:34:49","release_date_end":"2023-07-22 16:34:53","id":"1","is_released":true,"is_ended":false},{"title":"Term Report Evaluation","course_id":"1","event_template_type_id":"2","due_date":"2013-06-08 08:59:29","release_date_begin":"2011-06-06 08:59:35","release_date_end":"2023-07-02 08:59:41","id":"2","is_released":true,"is_ended":false},{"title":"Project Evaluation","course_id":"1","event_template_type_id":"4","due_date":"2013-07-02 09:00:28","release_date_begin":"2011-06-07 09:00:35","release_date_end":"2023-07-09 09:00:39","id":"3","is_released":true,"is_ended":false},{"title":"simple evaluation 2","course_id":"1","event_template_type_id":"1","due_date":"2012-11-28 00:00:00","release_date_begin":"2012-11-20 00:00:00","release_date_end":"2022-11-29 00:00:00","id":"6","is_released":true,"is_ended":false}]  
+                test_event.31.responsestatus=200
                 
                 test_grade.1.uri=/[^/]*/events/1/grades
                 test_grade.1.method=get

@@ -35,7 +35,7 @@ public class ModuleController {
 	private Configuration configuration;
 	
 	@RequestMapping(value="/view")
-	public String course(HttpServletRequest request, @RequestParam(value="course_id", defaultValue="") String bbCourseId, ModelMap model) {
+	public String view(HttpServletRequest request, @RequestParam(value="course_id", defaultValue="") String bbCourseId, ModelMap model) {
 //		try {
 //			Module m = PortalUtil.getModule(request);
 //			System.out.println(m);
@@ -48,19 +48,38 @@ public class ModuleController {
 //			// TODO Auto-generated catch block
 //			e.printStackTrace();
 //		}
-		
+
+		/**
+		 * The Filters are not executed when Blackboard calls a module action.
+		 * Spring security filters don't get called. Thus the oauth request do
+		 * not get token from token service. The workaround is generating an
+		 * ajax request, let client browser to do the request (getEvents).
+		 */
 		if (!configuration.connectionExists(bbCourseId)) {
 			
 			return "module/unavailable";
 		}
-		
+
 		B2Context b2Context = new B2Context(request);
-		List<Event> events = service.getEventsForUserInCourse(B2Util.getCurrentUsername(request), bbCourseId);
-		model.addAttribute("events", events);
 		model.addAttribute("webapp", b2Context.getPath());
+		model.addAttribute("course_id", bbCourseId);
 		
 		return "module/view";
 	}
+	
+	@RequestMapping(value="/getEvents")
+	public String getEvents(HttpServletRequest request, @RequestParam(value="course_id", defaultValue="") String bbCourseId, ModelMap model) {
+
+		B2Context b2Context = new B2Context(request);
+		List<Event> events = null;
+		events = service.getEventsForUserInCourse(B2Util.getCurrentUsername(request), bbCourseId);
+
+		model.addAttribute("events", events);
+		model.addAttribute("webapp", b2Context.getPath());
+		
+		return "module/getEvents";
+	}
+	
 	
 	@RequestMapping(value="/gotoipeer", method = RequestMethod.GET)
 	public String gotoIpeer(HttpServletRequest request, @RequestParam("redirect") String redirect, Locale locale, ModelMap model) {
