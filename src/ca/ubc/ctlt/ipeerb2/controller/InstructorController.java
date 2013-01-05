@@ -6,13 +6,17 @@ import java.util.Locale;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.ServletRequestDataBinder;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -51,7 +55,8 @@ public class InstructorController {
 	@Autowired
 	private Configuration configuration;
 	
-	//private static final Logger logger = LoggerFactory.getLogger(InstructorController.class);
+	private static final Logger logger = LoggerFactory.getLogger(InstructorController.class);
+	
 	private CourseCreationForm getCourseCreationForm(HttpServletRequest request, String bbCourseId) {
 		B2Context b2Context = new B2Context(request);
 		
@@ -80,7 +85,7 @@ public class InstructorController {
 			int ipeerCourseId = configuration.getIpeerCourseId(bbCourseId);
 			model.addAttribute("course_id", bbCourseId);
 			model.addAttribute("ipeer_course_id", ipeerCourseId);
-			
+
 			return "manage_course";
 		}
 		
@@ -344,5 +349,11 @@ public class InstructorController {
 		} catch (AccessException e) {
 			return false;
 		}
+	}
+	
+	@ExceptionHandler(HttpMessageNotReadableException.class)
+	public String handleHttpMessageNotReadableException(HttpMessageNotReadableException ex, HttpServletRequest request) {
+		logger.error(ex.getMessage(), ex);
+		return "error";
 	}
 }

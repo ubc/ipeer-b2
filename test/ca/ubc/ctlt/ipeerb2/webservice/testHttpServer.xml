@@ -348,7 +348,10 @@
                 test_intg_group.6.responsebody=[{"id":0,"username":"compass","email":"","role_id":2,"first_name":"Pan","last_name":"Luo","student_no":""}]
                 test_intg_group.6.responsestatus=201       
                 
-
+                test_intg_group.1.uri=/[^/]*/courses/0/groups/9999
+                test_intg_group.1.method=get
+                test_intg_group.1.responsebody=invalidresponse
+                test_intg_group.1.responsestatus=200
             </value>
         </property>
         <property name="contentType" ref="jsonContentType" />

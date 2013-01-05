@@ -13,6 +13,7 @@ import javax.annotation.Resource;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -565,5 +566,13 @@ public class iPeerWebServiceIntegrationTest {
 	public final void testNonExistingDepartmentWithCourseAssociation() {
 		webService.assignCourseToDepartment(1,999);
 		fail("No exception when associating a course to a non-exist department!");
+	}
+	
+	/***************** Test Invalid Responses ******************/
+	
+	@Test(expected=HttpMessageNotReadableException.class)
+	public final void testInvalidResponses() {
+		webService.getGroup(9999);
+		fail("No exception when getting invalid group!");
 	}
 }

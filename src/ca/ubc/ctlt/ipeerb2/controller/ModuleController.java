@@ -5,10 +5,14 @@ import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -33,6 +37,8 @@ public class ModuleController {
 	
 	@Autowired
 	private Configuration configuration;
+	
+	private static final Logger logger = LoggerFactory.getLogger(ModuleController.class);
 	
 	@RequestMapping(value="/view")
 	public String view(HttpServletRequest request, @RequestParam(value="course_id", defaultValue="") String bbCourseId, ModelMap model) {
@@ -94,5 +100,11 @@ public class ModuleController {
 				"&timestamp="+timestamp+
 				"&token="+iPeerB2Util.urlEncode(key)+
 				"&signature="+iPeerB2Util.urlEncode(signature);
+	}
+	
+	@ExceptionHandler(HttpMessageNotReadableException.class)
+	public String handleHttpMessageNotReadableException(HttpMessageNotReadableException ex, HttpServletRequest request) {
+		logger.error(ex.getMessage(), ex);
+		return "error";
 	}
 }

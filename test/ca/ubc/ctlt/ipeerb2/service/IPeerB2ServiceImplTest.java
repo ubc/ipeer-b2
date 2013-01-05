@@ -1,7 +1,7 @@
 package ca.ubc.ctlt.ipeerb2.service;
 
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.when;
 
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -14,7 +14,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import blackboard.data.course.CourseMembership;
 import blackboard.data.course.CourseMembership.Role;
-import blackboard.platform.security.CourseRole;
 import ca.ubc.ctlt.ipeerb2.Configuration;
 import ca.ubc.ctlt.ipeerb2.domain.User;
 
