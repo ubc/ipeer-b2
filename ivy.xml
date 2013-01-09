@@ -60,6 +60,6 @@
         <dependency org="aopalliance" name="aopalliance" rev="1.0" conf="runtime"/>
         <dependency org="cglib" name="cglib-nodep" rev="2.2.2" conf="runtime"/>
 
-        <dependency org="ca.ubc.ctlt" name="blackboard-b2-util" rev="latest.integration" conf="runtime->default"/>
+        <dependency org="ca.ubc.ctlt" name="blackboard-b2-util" rev="1.0.6" conf="runtime->default"/>
     </dependencies>
 </ivy-module>

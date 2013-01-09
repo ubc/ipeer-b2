@@ -252,6 +252,11 @@ public class IPeerB2ServiceImpl implements IPeerB2Service, UserAdapter<User>, Gr
 	}
 	
 	@Override
+	public List<Event> getEventsForUser(String username) {
+		return eventDao.getEventsForUser(username);
+	}
+	
+	@Override
 	public List<Event> getEventsForUserInCourse(String username, String bbCourseId) {
 		return eventDao.getEventsForUserInCourse(username, configuration.getIpeerCourseId(bbCourseId));
 	}

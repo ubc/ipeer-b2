@@ -43,8 +43,8 @@
 				<jsp-dir>module</jsp-dir>
 				<jsp>
 					<view>view</view>
-					<!--<edit>edit</edit>-->
-					<admin>admin</admin>
+					<!--<edit>edit</edit>
+					<admin>admin</admin>-->
 				</jsp>
 			</module-type>
 			<module type="ipeerb2" isadmin="true" useraddable="true"

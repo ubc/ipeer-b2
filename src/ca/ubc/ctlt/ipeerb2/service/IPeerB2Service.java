@@ -21,6 +21,7 @@ public interface IPeerB2Service {
 	public boolean syncGrades(String bbCourseId);
 	public List<Event> getEventsForUserInCourse(String username, String bbCourseId);
 	public List<Event> getEventsInCourse(String bbCourseId);
+	public List<Event> getEventsForUser(String username);
 	public List<Department> getDepartments();
 	public boolean assignCourseToDepartment(int courseId, int departmentId);
 	public int getBbClassSize(String bbCourseId);

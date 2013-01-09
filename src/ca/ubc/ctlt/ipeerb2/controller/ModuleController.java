@@ -78,8 +78,12 @@ public class ModuleController {
 
 		B2Context b2Context = new B2Context(request);
 		List<Event> events = null;
-		events = service.getEventsForUserInCourse(B2Util.getCurrentUsername(request), bbCourseId);
-
+		if ("".equals(bbCourseId)) {
+			events = service.getEventsForUser(B2Util.getCurrentUsername(request));
+		} else {
+			events = service.getEventsForUserInCourse(B2Util.getCurrentUsername(request), bbCourseId);
+		}
+		
 		model.addAttribute("events", events);
 		model.addAttribute("webapp", b2Context.getPath());
 		
