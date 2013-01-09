@@ -155,6 +155,11 @@ public class InstructorController {
 			ro.addSuccessMessage(messageSource.getMessage("message.create_course_success", new Object[]{course.getCourse()}, locale));			
 		} catch (RestClientException e) {
 			ro.addErrorMessage(messageSource.getMessage("message.create_course_failed", new Object[]{course.getCourse()}, locale) + " " + e.getMessage(), e);
+			if ("course already exists. (code=1)".equals(e.getMessage())) {
+				// show additional messages
+				ro.addErrorMessage(messageSource.getMessage("message.course_exists_instruction", null, locale), null);
+			}
+
 			InlineReceiptUtil.addReceiptToRequest(request, ro);
 			
 			// prepare the model in case of failure
