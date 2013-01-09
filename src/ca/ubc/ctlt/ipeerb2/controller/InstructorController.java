@@ -34,6 +34,7 @@ import ca.ubc.ctlt.blackboardb2util.B2Util;
 import ca.ubc.ctlt.ipeerb2.Configuration;
 import ca.ubc.ctlt.ipeerb2.CourseInfo;
 import ca.ubc.ctlt.ipeerb2.iPeerB2Util;
+import ca.ubc.ctlt.ipeerb2.iPeerHttpErrorException;
 import ca.ubc.ctlt.ipeerb2.domain.Course;
 import ca.ubc.ctlt.ipeerb2.domain.Department;
 import ca.ubc.ctlt.ipeerb2.form.CourseCreationForm;
@@ -82,11 +83,21 @@ public class InstructorController {
 	@RequestMapping(value="/course", method = RequestMethod.GET)
 	public String course(HttpServletRequest request, @RequestParam("course_id") String bbCourseId, ModelMap model) {
 		if (configuration.connectionExists(bbCourseId)) {
-			int ipeerCourseId = configuration.getIpeerCourseId(bbCourseId);
-			model.addAttribute("course_id", bbCourseId);
-			model.addAttribute("ipeer_course_id", ipeerCourseId);
+			try {
+				// try to see if the course exists in iPeer
+				Course course = service.getCourse(bbCourseId);
+				
+				model.addAttribute("course_id", bbCourseId);
+				model.addAttribute("ipeer_course_id", course.getId());
 
-			return "manage_course";
+				return "manage_course";
+			} catch (iPeerHttpErrorException e) {
+				// course doesn't exists, continue to create course
+				if (!"Course does not exists. (code=2)".equals(e.getMessage())) {
+					// caught the wrong exception, throw it again
+					throw e;
+				}
+			}
 		}
 		
 		model.addAttribute("courseCreate", getCourseCreationForm(request, bbCourseId));

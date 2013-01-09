@@ -61,6 +61,14 @@ public class IPeerB2ServiceImpl implements IPeerB2Service, UserAdapter<User>, Gr
 		this.configuration = configuration;
 	}
 
+	
+	@Override
+	public Course getCourse(String bbCourseId) {
+		int iPeerCourseId = configuration.getIpeerCourseId(bbCourseId);
+		
+		return courseDao.getCourse(iPeerCourseId);
+	}
+
 	@Override
 	public boolean createCourse(Course course) {
 		Course result = courseDao.createCourse(course);

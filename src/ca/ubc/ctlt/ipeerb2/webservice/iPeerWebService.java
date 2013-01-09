@@ -49,6 +49,7 @@ public class iPeerWebService {
 	public List<Course> getCourseList() {
 		Course[] courses = restTemplate.getForObject(getServerUrl() + API_COURSE, Course[].class);
 		List<Course> result = Arrays.asList(courses);
+		
 		return result;
 	}
 

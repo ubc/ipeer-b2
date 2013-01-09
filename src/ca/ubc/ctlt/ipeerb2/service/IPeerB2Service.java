@@ -8,6 +8,7 @@ import ca.ubc.ctlt.ipeerb2.domain.Event;
 import ca.ubc.ctlt.ipeerb2.domain.Group;
 
 public interface IPeerB2Service {
+	public Course getCourse(String bbCourseId);
 	public boolean createCourse(Course course);
 	public boolean linkCourse(Course course);
 	public boolean disconnectCourse(String bbCourseId);

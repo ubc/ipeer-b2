@@ -13,16 +13,20 @@ import javax.crypto.Mac;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.crypto.codec.Base64;
 
 import blackboard.data.course.CourseMembership;
 import blackboard.platform.security.CourseRole;
 import ca.ubc.ctlt.blackboardb2util.B2Util;
+import ca.ubc.ctlt.ipeerb2.controller.InstructorController;
 import ca.ubc.ctlt.ipeerb2.domain.Group;
 import ca.ubc.ctlt.ipeerb2.domain.Role;
 import ca.ubc.ctlt.ipeerb2.domain.User;
 
 public class iPeerB2Util {
+	private static final Logger logger = LoggerFactory.getLogger(iPeerB2Util.class);
 	
 	public static Group findGroupInList(Group group, List<Group> groupList) {
 		for(Group g : groupList) {
@@ -92,7 +96,14 @@ public class iPeerB2Util {
 	public static int mapBbRole(Configuration config, String bbRoleIdentifier) {
 		String mapping = config.getSetting(Configuration.ROLE_MAPPING_PREFIX + "." +bbRoleIdentifier);
 		//System.out.println("Mapping Role: " + bbRoleIdentifier + " to " + (mapping == null ? Role.STUDENT : Integer.parseInt(mapping)) + "(" + mapping + ")");
-		return (mapping == null ? Role.STUDENT : Integer.parseInt(mapping));
+		int role = Role.STUDENT;
+		try {
+			role = Integer.parseInt(mapping);
+		} catch (NumberFormatException e) {
+			logger.warn(String.format("Failed to parse role mapping string %s for %s. Missing mapping in iPeer B2 setup.", mapping, Configuration.ROLE_MAPPING_PREFIX + "." +bbRoleIdentifier));
+		}
+		
+		return role;
 	}
 	
 	public static List<CourseMembership.Role> getAllRolesMappedToStudent(Configuration config) {
