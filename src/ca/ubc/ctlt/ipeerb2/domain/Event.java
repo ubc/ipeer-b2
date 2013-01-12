@@ -13,6 +13,11 @@ import ca.ubc.ctlt.ipeerb2.CustomDateDeserializer;
 @JsonSerialize(include = Inclusion.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Event {
+	public static final int TYPE_SIMPLE = 1;
+	public static final int TYPE_RUBRIC = 2;
+	public static final int TYPE_SURVEY = 3;
+	public static final int TYPE_MIXEVAL = 4;
+	
 	private int id;
 	
 	private String title;
@@ -21,6 +26,9 @@ public class Event {
 	private int courseId;
 	
 	private String description;
+	
+	@JsonProperty("event_template_type_id")
+	private int templateType;
 	
 	@JsonProperty("self_eval")
 	private boolean selfEval;
@@ -66,6 +74,14 @@ public class Event {
 		this.description = description;
 	}
 
+	public int getTemplateType() {
+		return templateType;
+	}
+
+	public void setTemplateType(int templateType) {
+		this.templateType = templateType;
+	}
+
 	public boolean isSelfEval() {
 		return selfEval;
 	}
@@ -99,5 +115,14 @@ public class Event {
 	@JsonDeserialize(using = CustomDateDeserializer.class)
 	public void setReleaseDateEnd(Date releaseDateEnd) {
 		this.releaseDateEnd = releaseDateEnd;
+	}
+
+	@Override
+	public String toString() {
+		return "Event [id=" + id + ", title=" + title + ", courseId="
+				+ courseId + ", description=" + description + ", templateType="
+				+ templateType + ", selfEval=" + selfEval + ", dueDate="
+				+ dueDate + ", releaseDateBegin=" + releaseDateBegin
+				+ ", releaseDateEnd=" + releaseDateEnd + "]";
 	}
 }

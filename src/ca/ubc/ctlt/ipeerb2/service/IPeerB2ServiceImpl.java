@@ -239,6 +239,10 @@ public class IPeerB2ServiceImpl implements IPeerB2Service, UserAdapter<User>, Gr
 		List<Event> events = eventDao.getEventsInCourse(configuration.getIpeerCourseId(bbCourseId));
 		
 		for(Event event : events) {
+			if (event.getTemplateType() == Event.TYPE_SURVEY) {
+				// skip surveys as they don't have scores for students
+				continue;
+			}
 			List<Grade> grades = gradeDao.getGradesInEvent(event.getId());
 			B2Util.setGradebook(bbCourseId, event.getTitle(), grades, this);
 		}

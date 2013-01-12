@@ -9,6 +9,7 @@ import org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Grade {
 	private int id;
+	@JsonProperty("score")
 	private double grade;
 	
 	@JsonProperty("event_id")
@@ -68,5 +69,12 @@ public class Grade {
 
 	public void setUsername(String username) {
 		this.username = username;
+	}
+
+	@Override
+	public String toString() {
+		return "Grade [id=" + id + ", grade=" + grade + ", eventId=" + eventId
+				+ ", eventTitle=" + eventTitle + ", userId=" + userId
+				+ ", username=" + username + "]";
 	}
 }

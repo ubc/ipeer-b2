@@ -256,17 +256,17 @@
                 
                 test_grade.1.uri=/[^/]*/events/1/grades
                 test_grade.1.method=get
-                test_grade.1.responsebody=[{"id":1,"grade":10.5,"event_id":1,"event_title":"Test Event","user_id":1,"username":"username1"}, {"id":2,"grade":10.6,"event_id":1,"event_title":"Test Event","user_id":2,"username":"username2"},{"id":3,"grade":10.7,"event_id":1,"event_title":"Test Event","user_id":3,"username":"username3"}]
+                test_grade.1.responsebody=[{"id":1,"score":10.5,"event_id":1,"event_title":"Test Event","user_id":1,"username":"username1"}, {"id":2,"score":10.6,"event_id":1,"event_title":"Test Event","user_id":2,"username":"username2"},{"id":3,"score":10.7,"event_id":1,"event_title":"Test Event","user_id":3,"username":"username3"}]
                 test_grade.1.responsestatus=200
                 
                 test_grade.2.uri=/[^/]*/events/2/grades
                 test_grade.2.method=get
-                test_grade.2.responsebody=[{"id":1,"grade":8,"event_id":2,"event_title":"Test Event2","user_id":1,"username":"username1"}, {"id":2,"grade":28,"event_id":2,"event_title":"Test Event2","user_id":2,"username":"username2"},{"id":3,"grade":99,"event_id":2,"event_title":"Test Event2","user_id":3,"username":"username3"}]
+                test_grade.2.responsebody=[{"id":1,"score":8,"event_id":2,"event_title":"Test Event2","user_id":1,"username":"username1"}, {"id":2,"score":28,"event_id":2,"event_title":"Test Event2","user_id":2,"username":"username2"},{"id":3,"score":99,"event_id":2,"event_title":"Test Event2","user_id":3,"username":"username3"}]
                 test_grade.2.responsestatus=200
                 
 				test_grade.3.uri=/[^/]*/events/3/grades
                 test_grade.3.method=get
-                test_grade.3.responsebody=[{"id":1,"grade":8,"event_id":3,"event_title":"Test Event3","user_id":1,"username":"username1"}, {"id":2,"grade":28,"event_id":3,"event_title":"Test Event3","user_id":2,"username":"username2"},{"id":3,"grade":99,"event_id":3,"event_title":"Test Event3","user_id":3,"username":"username3"}]
+                test_grade.3.responsebody=[{"id":1,"score":8,"event_id":3,"event_title":"Test Event3","user_id":1,"username":"username1"}, {"id":2,"score":28,"event_id":3,"event_title":"Test Event3","user_id":2,"username":"username2"},{"id":3,"score":99,"event_id":3,"event_title":"Test Event3","user_id":3,"username":"username3"}]
                 test_grade.3.responsestatus=200
                 
                 test_grade.4.uri=/[^/]*/events/999/grades
@@ -275,7 +275,7 @@
                 
                 test_grade.10.uri=/[^/]*/events/1/grades/1
                 test_grade.10.method=get
-                test_grade.10.responsebody={"id":1,"grade":10.5,"event_id":1,"event_title":"Test Event","user_id":1,"username":"username1"}
+                test_grade.10.responsebody={"id":1,"score":10.5,"event_id":1,"event_title":"Test Event","user_id":1,"username":"username1"}
                 test_grade.10.responsestatus=200
                 
                 test_grade.11.uri=/[^/]*/events/1/grades/999

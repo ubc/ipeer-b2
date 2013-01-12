@@ -87,7 +87,7 @@ div#leftpanels div.panel-content li {
 				<li><a href="${syncclass}">Synchronize Class List</a></li>
 				<li><a href="${pushgroups}">Push Groups</a></li>
 				<li><a href="${pullgroups}">Pull Groups</a></li>
-				<!-- <li><a href="${syncgrades}">Synchronize Grades</a></li> -->
+				<li><a href="${syncgrades}">Synchronize Grades</a></li>
 				<li><a href="${gotoipeer}" target="_blank">Manage Course in iPeer</a></li>
 				<li><a href="${disconnect}">Disconnect Course</a></li>
 				
