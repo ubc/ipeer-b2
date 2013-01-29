@@ -309,7 +309,7 @@ a.buttons:hover {
 /* Section - for main page content */
 
 section {
-  width:650px;
+  width:680px;
   float:right;
   padding-bottom:50px;
 }
@@ -410,4 +410,47 @@ footer {
     font-size:12pt;
     color:#444;
   }
+}
+
+ol.screencap-list li {
+  display: inline;
+  float: left;
+  width: 293px;
+  margin: 0 20px 20px 0;
+  list-style: numeric;
+  font-size: 1em;
+  font-weight: 300;
+  text-align: center;
+}
+
+ol.screencap-list span img {
+  display: block;
+  height: 215px;
+  width: 293px;
+  margin: 0px 0 10px 0;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border: none;
+  border-radius: 5px;
+
+  box-shadow: 0 0 5px rgba(0,0,0,.3);
+}
+
+div.feature-blocks {
+  display: inline;
+  float: left;
+  width: 293px;
+  margin: 0 20px 20px 0;
+  list-style: numeric;
+  font-size: 1em;
+  font-weight: 300;
+  text-align: left;
+}
+
+.section {
+    clear: both;
+}
+
+span.strong {
+    font-weight: 500;
 }
