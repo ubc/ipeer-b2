@@ -20,7 +20,6 @@ import org.springframework.security.crypto.codec.Base64;
 import blackboard.data.course.CourseMembership;
 import blackboard.platform.security.CourseRole;
 import ca.ubc.ctlt.blackboardb2util.B2Util;
-import ca.ubc.ctlt.ipeerb2.controller.InstructorController;
 import ca.ubc.ctlt.ipeerb2.domain.Group;
 import ca.ubc.ctlt.ipeerb2.domain.Role;
 import ca.ubc.ctlt.ipeerb2.domain.User;

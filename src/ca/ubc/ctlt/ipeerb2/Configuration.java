@@ -1,6 +1,8 @@
 package ca.ubc.ctlt.ipeerb2;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 
 import blackboard.platform.plugin.PlugInException;
@@ -18,7 +20,6 @@ public class Configuration {
 		Properties settings = null;
 		try {
 			settings = BuildingBlockHelper.loadBuildingBlockSettings();
-			System.out.println("Loaded settings from file.");
 		} catch (PlugInException e) {
 			throw new RuntimeException(
 					"There is an error loading the settings!", e);
@@ -26,7 +27,6 @@ public class Configuration {
 			throw new RuntimeException("Could not read setting files!", e);
 		}
 		
-		System.out.println("Settings: " + settings);
 		return settings;
 	}
 	
@@ -87,5 +87,19 @@ public class Configuration {
 	
 	public void deleteConnection(String bbCourseId) {
 		deleteSetting(COURSE_ID + bbCourseId);
+	}
+	
+	public List<MappingWrapper> getCourseMappings() {
+		List<MappingWrapper> mapping = new ArrayList<MappingWrapper>();
+		Properties settings = getSettings();
+		for (String key : settings.stringPropertyNames()) {
+			if (!key.startsWith(COURSE_ID)) {
+				continue;
+			}
+			String value = settings.getProperty(key);
+			mapping.add(new MappingWrapper(key.substring(COURSE_ID.length()), value));
+		}
+		System.out.println("Course Mapping: "+mapping);
+		return mapping;
 	}
 }

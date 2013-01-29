@@ -46,6 +46,7 @@ public class SettingController {
 		model.addAttribute("secret", configuration.getSetting(Configuration.SHARED_SECRET));
 		model.addAttribute("tokenKey", configuration.getSetting(Configuration.TOKEN_KEY));
 		model.addAttribute("tokenSecret", configuration.getSetting(Configuration.TOKEN_SECRET));
+		model.addAttribute("courseMapping", configuration.getCourseMappings());
 		
 		// load roles and role mappings
 		model.addAttribute("roleMapping", iPeerB2Util.getRoleMapping(configuration));

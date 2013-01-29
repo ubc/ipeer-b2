@@ -62,6 +62,14 @@
     
     </bbNG:step>
     
+    <bbNG:step hideNumber="false" id="stepFour" title="Course Mapping" instructions="Viewing the Course Mappings">
+    	<bbNG:inventoryList collection="${courseMapping}" objectVar="mapping" className="ca.ubc.ctlt.ipeerb2.MappingWrapper"
+					initialSortCol="bbCourseId" includePageParameters="true">
+			<bbNG:listElement label="BB Course" name="bbCourseId" isRowHeader="true">${mapping.key}</bbNG:listElement>
+			<bbNG:listElement label="iPeer Course" name="ipeerCourseId">${mapping.value}</bbNG:listElement>
+		</bbNG:inventoryList>	 	
+    </bbNG:step>
+    
     <bbNG:stepSubmit hideNumber="false" showCancelButton="true" />
   </bbNG:dataCollection>
   </bbNG:form>
