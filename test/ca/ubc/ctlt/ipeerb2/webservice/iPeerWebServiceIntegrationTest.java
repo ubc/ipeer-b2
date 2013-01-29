@@ -4,12 +4,15 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
+import static org.mockito.Mockito.*;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Properties;
 
 import javax.annotation.Resource;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +21,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import ca.ubc.ctlt.ipeerb2.Configuration;
 import ca.ubc.ctlt.ipeerb2.domain.Course;
 import ca.ubc.ctlt.ipeerb2.domain.Department;
 import ca.ubc.ctlt.ipeerb2.domain.Event;
@@ -75,7 +79,19 @@ public class iPeerWebServiceIntegrationTest {
 	@Autowired
 	private Group invalidGroupToUpdate;
 
+	@Autowired
+	private Configuration configuration;
+	
+	@Autowired
+	private Properties config;
+	
 	/************* Course API Tests ****************/
+	
+	@Before
+	public void setUp() throws Exception {
+		// mocking configuration
+		doReturn(config).when(configuration).getSettings();
+	}
 	
 	@Test
 	public final void testGetCourseList() {
@@ -468,7 +484,6 @@ public class iPeerWebServiceIntegrationTest {
 		assertTrue("eventname3".equals(c.getTitle()));
 		
 		el = webService.getEventsForUserInCourse("student",1);
-		System.out.println(el);
 		assertTrue(el.size() == 4);
 		c = el.get(0);
 		assertTrue(c.getId() == 1);

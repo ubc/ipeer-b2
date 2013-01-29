@@ -5,7 +5,7 @@
 		<name value="iPeer Building Block" />
 		<handle value="ipeerb2" />
 		<description value="" />
-		<version value="1.0.5" />
+		<version value="1.0.6" />
 		<requires>
 			<bbversion value="9.1" />
 		</requires>

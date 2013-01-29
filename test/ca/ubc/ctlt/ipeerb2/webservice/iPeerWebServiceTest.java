@@ -6,6 +6,7 @@ import static org.mockito.Mockito.when;
 
 import java.net.URI;
 import java.util.List;
+import java.util.Properties;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -17,6 +18,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.web.client.RestOperations;
 
+import ca.ubc.ctlt.ipeerb2.Configuration;
 import ca.ubc.ctlt.ipeerb2.domain.Course;
 import ca.ubc.ctlt.ipeerb2.domain.Department;
 import ca.ubc.ctlt.ipeerb2.domain.Event;
@@ -70,8 +72,17 @@ public class iPeerWebServiceTest {
 	@Autowired
 	private List<Department> departmentList;
 	
+	@Autowired
+	private Configuration configuration;
+	
+	@Autowired
+	private Properties config;
+	
 	@Before
 	public void setUp() throws Exception {
+		// mocking configuration
+		when(configuration.getSettings()).thenReturn(config);
+		
 		// course mocking
 		when(restOperations.getForObject( Matchers.anyString(), Matchers.eq(Course.class), Matchers.anyString()) ).thenReturn(course);
 		when(restOperations.getForObject( Matchers.anyString(), Matchers.eq(Course[].class)) ).thenReturn(courseList.toArray(new Course[courseList.size()]));

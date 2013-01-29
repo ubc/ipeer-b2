@@ -8,6 +8,7 @@
     
     <!-- Loading the property files -->
    	<util:properties id="settings" location="classpath:webservice.properties" />  
+   	<util:properties id="config" location="classpath:config.properties" /> 
 	
 	<bean id="messageSource"
 	    class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
@@ -36,18 +37,12 @@
     <import resource="testHttpServer.xml"/>
 	
 	<!-- WebService Bean Setup -->
-	<bean id="servletContext" class="org.springframework.mock.web.MockServletContext"/>
-	<bean id="configuration" class="ca.ubc.ctlt.ipeerb2.Configuration">
-		<property name="inMemory" value="true"/>
-		<property name="servletContext" ref="servletContext"/>
-		<property name="settings">
-			<value>
-				ipeer.url=http://127.0.0.1:8899
-				mapping.course_id._1_1=1
-			</value>
-		</property>
-	</bean>
-    <bean id="webService" class="ca.ubc.ctlt.ipeerb2.webservice.iPeerWebService" />
+	<bean id="configuration" class="ca.ubc.ctlt.ipeerb2.MockitoSpyFactoryBean">
+	    <property name="target">
+	       <bean class="ca.ubc.ctlt.ipeerb2.Configuration" />
+	    </property>
+    </bean>
+    <bean id="webService" class="ca.ubc.ctlt.ipeerb2.webservice.iPeerWebService"/>
 
     <!-- Course Fixtures -->
     

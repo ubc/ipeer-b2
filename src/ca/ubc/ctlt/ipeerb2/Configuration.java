@@ -99,7 +99,7 @@ public class Configuration {
 			String value = settings.getProperty(key);
 			mapping.add(new MappingWrapper(key.substring(COURSE_ID.length()), value));
 		}
-		System.out.println("Course Mapping: "+mapping);
+		
 		return mapping;
 	}
 }
