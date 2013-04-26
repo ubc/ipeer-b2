@@ -65,17 +65,7 @@ public class ModuleController {
 			
 			return "module/unavailable";
 		}
-
-		B2Context b2Context = new B2Context(request);
-		model.addAttribute("webapp", b2Context.getPath());
-		model.addAttribute("course_id", bbCourseId);
 		
-		return "module/view";
-	}
-	
-	@RequestMapping(value="/getEvents")
-	public String getEvents(HttpServletRequest request, @RequestParam(value="course_id", defaultValue="") String bbCourseId, ModelMap model) {
-
 		B2Context b2Context = new B2Context(request);
 		List<Event> events = null;
 		if ("".equals(bbCourseId)) {
@@ -87,9 +77,8 @@ public class ModuleController {
 		model.addAttribute("events", events);
 		model.addAttribute("webapp", b2Context.getPath());
 		
-		return "module/getEvents";
+		return "module/view";
 	}
-	
 	
 	@RequestMapping(value="/gotoipeer", method = RequestMethod.GET)
 	public String gotoIpeer(HttpServletRequest request, @RequestParam("redirect") String redirect, Locale locale, ModelMap model) {

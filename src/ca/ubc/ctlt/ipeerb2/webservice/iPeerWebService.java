@@ -2,15 +2,21 @@ package ca.ubc.ctlt.ipeerb2.webservice;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 import javax.annotation.Resource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
+import org.springframework.security.oauth.consumer.OAuthConsumerToken;
+import org.springframework.security.oauth.consumer.OAuthSecurityContextHolder;
+import org.springframework.security.oauth.consumer.OAuthSecurityContextImpl;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
 import ca.ubc.ctlt.ipeerb2.Configuration;
+import ca.ubc.ctlt.ipeerb2.iPeerB2ProtectedResourceDetailsService;
 import ca.ubc.ctlt.ipeerb2.domain.Course;
 import ca.ubc.ctlt.ipeerb2.domain.Department;
 import ca.ubc.ctlt.ipeerb2.domain.Event;
@@ -41,6 +47,30 @@ public class iPeerWebService {
 	//private static final Logger logger = Logger.getLogger(iPeerWebService.class);
 	
 	public String getServerUrl() {
+		// Temporary hack to generate an OAuth security context with token
+		// This fixes the requests that are not covered by oauth:url patten defined in applicationContext.xml
+		if (OAuthSecurityContextHolder.getContext() == null) {
+			OAuthSecurityContextImpl context = new OAuthSecurityContextImpl();
+	
+			String key = configuration.getSetting(Configuration.TOKEN_KEY);
+			String secret = configuration.getSetting(Configuration.TOKEN_SECRET);
+			if (null == key || key.isEmpty() || null == secret || secret.isEmpty()) {
+				throw new RuntimeException("Token key or secret is empty. Did you forget to set up the building block?");
+			}
+			
+			OAuthConsumerToken token = new OAuthConsumerToken();
+			token.setAccessToken(true);
+			token.setSecret(secret);
+			token.setValue(key);
+			
+			Map<String, OAuthConsumerToken> accessTokens = new TreeMap<String, OAuthConsumerToken>();
+			accessTokens.put(iPeerB2ProtectedResourceDetailsService.IPEERB2_DETAILS_ID, token);
+					
+	
+			context.setAccessTokens(accessTokens);
+			OAuthSecurityContextHolder.setContext(context);
+		}
+		
 		return configuration.getSetting(Configuration.IPEER_URL);
 	}
 
