@@ -93,7 +93,11 @@
     </target>
 
     <target name="resolve" description="Retrieve dependencies with ivy">
-        <ivy:retrieve pattern="${ivy.lib.dir}/[conf]/[artifact]-[type]-[revision].[ext]"/>
+        <ivy:retrieve pattern="${ivy.lib.dir}/[conf]/[artifact]-[type]-[revision].[ext]" type="jar"/>
+    </target>
+
+    <target name="resolve-src" description="Retrieve dependencies with ivy">
+        <ivy:retrieve pattern="${ivy.lib.dir}-src/[conf]/[artifact]-[type]-[revision].[ext]" type="source"/>
     </target>
 
     <target name="ivy-report" depends="pre" description="Generate ivy dependency report">
@@ -184,6 +188,7 @@
         <delete dir="${dist}" />
         <delete dir="${reports.base}" />
         <delete dir="${ivy.lib.dir}"/>
+        <delete dir="${ivy.lib.dir}-src"/>
         <delete dir="${build.report}"/>
     </target>
 

@@ -2,10 +2,10 @@
 <ivy-settings>
   <settings defaultResolver="main" />
   <!--Authentication required for publishing (deployment). 'Artifactory Realm' is the realm used by Artifactory so don't change it.-->
-  <credentials host="137.82.12.72" realm="Artifactory Realm" username="admin" passwd="" />
+  <credentials host="artifactory.ctlt.ubc.ca" realm="Artifactory Realm" username="admin" passwd="" />
   <resolvers>
     <chain name="main">
-      <ibiblio name="ctlt-repo" m2compatible="true" root="http://137.82.12.72/artifactory/repo" />
+      <ibiblio name="ctlt-repo" m2compatible="true" root="http://artifactory.ctlt.ubc.ca/artifactory/repo" />
     </chain>
     <ibiblio name="public" m2compatible="true"/>
   </resolvers>
