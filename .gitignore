@@ -17,3 +17,9 @@ local.properties
 # Package Files #
 *.war
 *.ear
+
+.idea/
+iPeerB2.iml
+out/
+screenshots/
+test-output/
