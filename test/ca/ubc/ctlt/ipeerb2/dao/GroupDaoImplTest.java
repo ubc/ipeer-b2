@@ -1,14 +1,13 @@
 package ca.ubc.ctlt.ipeerb2.dao;
 
-import static org.junit.Assert.*;
-
-import org.junit.Test;
+import org.testng.annotations.Test;
+import org.testng.AssertJUnit;
 
 //TODO we don't need to implement it for now. Will do it in future when group dao get more complicated
 public class GroupDaoImplTest {
 	@Test
 	public final void testPlaceHolder() {
-		assertTrue(true);
+		AssertJUnit.assertTrue(true);
 	}	
 	
 //	@Test

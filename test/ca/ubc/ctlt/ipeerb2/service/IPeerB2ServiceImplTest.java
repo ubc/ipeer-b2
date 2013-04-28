@@ -1,23 +1,20 @@
 package ca.ubc.ctlt.ipeerb2.service;
 
-import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
+import static org.testng.AssertJUnit.assertEquals;
 
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
 
 import blackboard.data.course.CourseMembership;
 import blackboard.data.course.CourseMembership.Role;
 import ca.ubc.ctlt.ipeerb2.Configuration;
 import ca.ubc.ctlt.ipeerb2.domain.User;
 
-@RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration
 @ActiveProfiles({"dev", "integration"})
 public class IPeerB2ServiceImplTest {
@@ -34,7 +31,7 @@ public class IPeerB2ServiceImplTest {
 	public static void setUpBeforeClass() throws Exception {
 	}
 
-	@Before
+	@BeforeMethod
 	public void setUp() throws Exception {
 	}
 

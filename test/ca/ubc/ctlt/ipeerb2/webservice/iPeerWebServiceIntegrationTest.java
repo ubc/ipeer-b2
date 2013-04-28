@@ -1,9 +1,11 @@
 package ca.ubc.ctlt.ipeerb2.webservice;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.testng.AssertJUnit.assertEquals;
+import static org.testng.AssertJUnit.assertNotNull;
+import static org.testng.AssertJUnit.assertTrue;
+import org.testng.annotations.Test;
+import org.testng.annotations.BeforeMethod;
+import org.testng.Assert;
 import static org.mockito.Mockito.*;
 
 import java.util.Arrays;
@@ -12,9 +14,6 @@ import java.util.Properties;
 
 import javax.annotation.Resource;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.test.context.ActiveProfiles;
@@ -29,7 +28,6 @@ import ca.ubc.ctlt.ipeerb2.domain.Grade;
 import ca.ubc.ctlt.ipeerb2.domain.Group;
 import ca.ubc.ctlt.ipeerb2.domain.User;
 
-@RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration
 @ActiveProfiles({"dev", "integration"})
 public class iPeerWebServiceIntegrationTest {
@@ -87,7 +85,7 @@ public class iPeerWebServiceIntegrationTest {
 	
 	/************* Course API Tests ****************/
 	
-	@Before
+	@BeforeMethod
 	public void setUp() throws Exception {
 		// mocking configuration
 		doReturn(config).when(configuration).getSettings();
@@ -118,10 +116,10 @@ public class iPeerWebServiceIntegrationTest {
 		assertTrue(course.getId() == 1);
 	}
 	
-	@Test(expected=RuntimeException.class)
+	@Test(expectedExceptions=RuntimeException.class)
 	public final void testGetInvalidCourse() {
 		webService.getCourse(999);
-		fail("No exception when requesting an invalid course!");
+		Assert.fail("No exception when requesting an invalid course!");
 	}
 	
 	@Test
@@ -130,10 +128,10 @@ public class iPeerWebServiceIntegrationTest {
 		assertTrue(course.getId() == 1);
 	}
 	
-	@Test(expected=RuntimeException.class)
+	@Test(expectedExceptions=RuntimeException.class)
 	public final void testCreateInvalidCourse() {
 		webService.createCourse(invalidCourseToCreate);
-		fail("No exception when creating an invalid course!");
+		Assert.fail("No exception when creating an invalid course!");
 	}
 	
 	@Test
@@ -142,10 +140,10 @@ public class iPeerWebServiceIntegrationTest {
 		assertTrue(result);
 	}
 	
-	@Test(expected=RuntimeException.class)
+	@Test(expectedExceptions=RuntimeException.class)
 	public final void testDeleteNonExistingCourse() {
 		webService.deleteCourse(999);
-		fail("No exception when deleting an invalid course!");
+		Assert.fail("No exception when deleting an invalid course!");
 	}
 	
 	@Test
@@ -154,10 +152,10 @@ public class iPeerWebServiceIntegrationTest {
 		assertTrue(result);
 	}
 	
-	@Test(expected=RuntimeException.class)
+	@Test(expectedExceptions=RuntimeException.class)
 	public final void testUpdateInvalidCourse() {
 		webService.updateCourse(invalidCourseToUpdate);
-		fail("No exception when deleting an invalid course!");
+		Assert.fail("No exception when deleting an invalid course!");
 	}
 	
 	/************* User API Tests ****************/
@@ -186,10 +184,10 @@ public class iPeerWebServiceIntegrationTest {
 		assertTrue(user.getId() == 1);
 	}
 	
-	@Test(expected=RuntimeException.class)
+	@Test(expectedExceptions=RuntimeException.class)
 	public final void testGetInvalidUser() {
 		webService.getUser(999);
-		fail("No exception when requesting an invalid user!");
+		Assert.fail("No exception when requesting an invalid user!");
 	}
 	
 	@Test
@@ -215,10 +213,10 @@ public class iPeerWebServiceIntegrationTest {
 		assertTrue("username3".equals(c.getUsername()));
 	}
 	
-	@Test(expected=RuntimeException.class)
+	@Test(expectedExceptions=RuntimeException.class)
 	public final void testCreateInvalidUser() {
 		webService.createUser(invalidUserToCreate);
-		fail("No exception when creating an invalid user!");
+		Assert.fail("No exception when creating an invalid user!");
 	}
 	
 	@Test
@@ -227,10 +225,10 @@ public class iPeerWebServiceIntegrationTest {
 		assertTrue(result);
 	}
 	
-	@Test(expected=RuntimeException.class)
+	@Test(expectedExceptions=RuntimeException.class)
 	public final void testDeleteNonExistingUser() {
 		webService.deleteUser(999);
-		fail("No exception when deleting an invalid user!");
+		Assert.fail("No exception when deleting an invalid user!");
 	}
 	
 	@Test
@@ -239,10 +237,10 @@ public class iPeerWebServiceIntegrationTest {
 		assertTrue(result);
 	}
 	
-	@Test(expected=RuntimeException.class)
+	@Test(expectedExceptions=RuntimeException.class)
 	public final void testUpdateInvalidUser() {
 		webService.updateUser(invalidUserToUpdate);
-		fail("No exception when deleting an invalid user!");
+		Assert.fail("No exception when deleting an invalid user!");
 	}
 	
 	/************* Group API Tests ****************/
@@ -272,10 +270,10 @@ public class iPeerWebServiceIntegrationTest {
 		assertTrue(group.getId() == 1);
 	}
 	
-	@Test(expected=RuntimeException.class)
+	@Test(expectedExceptions=RuntimeException.class)
 	public final void testGetInvalidGroup() {
 		webService.getGroup(999);
-		fail("No exception when requesting an invalid group!");
+		Assert.fail("No exception when requesting an invalid group!");
 	}
 	
 	@Test
@@ -284,10 +282,10 @@ public class iPeerWebServiceIntegrationTest {
 		assertTrue(group.getId() == 1);
 	}
 	
-	@Test(expected=RuntimeException.class)
+	@Test(expectedExceptions=RuntimeException.class)
 	public final void testCreateInvalidGroup() {
 		webService.createGroup(1, invalidGroupToCreate);
-		fail("No exception when creating an invalid group!");
+		Assert.fail("No exception when creating an invalid group!");
 	}
 	
 	@Test
@@ -296,10 +294,10 @@ public class iPeerWebServiceIntegrationTest {
 		assertTrue(result);
 	}
 	
-	@Test(expected=RuntimeException.class)
+	@Test(expectedExceptions=RuntimeException.class)
 	public final void testDeleteNonExistingGroup() {
 		webService.deleteGroup(999);
-		fail("No exception when deleting an invalid group!");
+		Assert.fail("No exception when deleting an invalid group!");
 	}
 	
 	@Test
@@ -308,10 +306,10 @@ public class iPeerWebServiceIntegrationTest {
 		assertTrue(result);
 	}
 	
-	@Test(expected=RuntimeException.class)
+	@Test(expectedExceptions=RuntimeException.class)
 	public final void testUpdateInvalidGroup() {
 		webService.updateGroup(invalidGroupToUpdate);
-		fail("No exception when deleting an invalid group!");
+		Assert.fail("No exception when deleting an invalid group!");
 	}
 	
 	/************* Course/User API Tests ****************/
@@ -333,10 +331,10 @@ public class iPeerWebServiceIntegrationTest {
 		assertTrue("username3".equals(c.getUsername()));
 	}
 	
-	@Test(expected=RuntimeException.class)
+	@Test(expectedExceptions=RuntimeException.class)
 	public final void testGetUsersInInvalidCourse() {
 		webService.getUsersInCourse(999);
-		fail("No exception when get users from invalid course!");
+		Assert.fail("No exception when get users from invalid course!");
 	}
 	
 	@Test
@@ -345,10 +343,10 @@ public class iPeerWebServiceIntegrationTest {
 		assertTrue(ul.size() == userList.size());
 	}
 	
-	@Test(expected=RuntimeException.class)
+	@Test(expectedExceptions=RuntimeException.class)
 	public final void testEnrolInvalidUserInCourse() {
 		webService.enrolUsersInCourse(1, Arrays.asList(invalidUserToUpdate));
-		fail("No exception when enroling invalid users to course!");
+		Assert.fail("No exception when enroling invalid users to course!");
 	}
 	
 	@Test
@@ -357,10 +355,10 @@ public class iPeerWebServiceIntegrationTest {
 		assertTrue(result);
 	}
 	
-	@Test(expected=RuntimeException.class)
+	@Test(expectedExceptions=RuntimeException.class)
 	public final void testRemoveInvalidUsersFromCourse() {
 		webService.removeUserFromCourse(1, invalidUserToUpdate);
-		fail("No exception when removing invalid users to course!");
+		Assert.fail("No exception when removing invalid users to course!");
 	}
 	
 	/************* Group/User API Tests ****************/
@@ -382,10 +380,10 @@ public class iPeerWebServiceIntegrationTest {
 		assertTrue("username3".equals(c.getUsername()));
 	}
 	
-	@Test(expected=RuntimeException.class)
+	@Test(expectedExceptions=RuntimeException.class)
 	public final void testGetUsersInInvalidGroup() {
 		webService.getUsersInGroup(999);
-		fail("No exception when get users from invalid group!");
+		Assert.fail("No exception when get users from invalid group!");
 	}
 	
 	@Test
@@ -394,10 +392,10 @@ public class iPeerWebServiceIntegrationTest {
 		assertTrue(ul.size() == userList.size());
 	}
 	
-	@Test(expected=RuntimeException.class)
+	@Test(expectedExceptions=RuntimeException.class)
 	public final void testEnrolInvalidUserInGroup() {
 		webService.enrolUsersInGroup(1, Arrays.asList(invalidUserToUpdate));
-		fail("No exception when enroling invalid users to group!");
+		Assert.fail("No exception when enroling invalid users to group!");
 	}
 	
 	@Test
@@ -406,10 +404,10 @@ public class iPeerWebServiceIntegrationTest {
 		assertTrue(result);
 	}
 	
-	@Test(expected=RuntimeException.class)
+	@Test(expectedExceptions=RuntimeException.class)
 	public final void testRemoveInvalidUsersFromGroup() {
 		webService.removeUserFromGroup(1, invalidUserToUpdate);
-		fail("No exception when removing invalid users to group!");
+		Assert.fail("No exception when removing invalid users to group!");
 	}
 	
 	/************* Event API Tests ****************/
@@ -431,10 +429,10 @@ public class iPeerWebServiceIntegrationTest {
 		assertTrue("eventname3".equals(c.getTitle()));
 	}
 	
-	@Test(expected=RuntimeException.class)
+	@Test(expectedExceptions=RuntimeException.class)
 	public final void testGetEventsInInvalidCourse() {
 		webService.getEventsInCourse(999);
-		fail("No exception when get events from invalid group!");
+		Assert.fail("No exception when get events from invalid group!");
 	}
 	
 	@Test
@@ -444,10 +442,10 @@ public class iPeerWebServiceIntegrationTest {
 		assertTrue("eventname1".equals(event.getTitle()));
 	}
 	
-	@Test(expected=RuntimeException.class)
+	@Test(expectedExceptions=RuntimeException.class)
 	public final void testGetInvalidEvent() {
 		webService.getEvent(999);
-		fail("No exception when getting invalid event!");
+		Assert.fail("No exception when getting invalid event!");
 	}
 	
 	@Test
@@ -498,10 +496,10 @@ public class iPeerWebServiceIntegrationTest {
 		assertTrue("Project Evaluation".equals(c.getTitle()));
 	}
 	
-	@Test(expected=RuntimeException.class)
+	@Test(expectedExceptions=RuntimeException.class)
 	public final void testGetEventsForInvalidUser() {
 		webService.getEventsForUser("invalidname");
-		fail("No exception when getting events for invalid user!");
+		Assert.fail("No exception when getting events for invalid user!");
 	}
 	
 	/************* Grade API Tests ****************/
@@ -523,10 +521,10 @@ public class iPeerWebServiceIntegrationTest {
 		assertTrue(10.7 == u.getGrade());
 	}
 	
-	@Test(expected=RuntimeException.class)
+	@Test(expectedExceptions=RuntimeException.class)
 	public final void testGetGradesInInvalidEvent() {
 		webService.getGradesInEvent(999);
-		fail("No exception when get grades from invalid event!");
+		Assert.fail("No exception when get grades from invalid event!");
 	}
 	
 	@Test
@@ -536,16 +534,16 @@ public class iPeerWebServiceIntegrationTest {
 		assertTrue(10.5 == grade.getGrade());
 	}
 	
-	@Test(expected=RuntimeException.class)
+	@Test(expectedExceptions=RuntimeException.class)
 	public final void testGetGradesForInvalidUserInEvent() {
 		webService.getGradesForUserInEvent(999, 1);
-		fail("No exception when enroling invalid users to group!");
+		Assert.fail("No exception when enroling invalid users to group!");
 	}
 	
-	@Test(expected=RuntimeException.class)
+	@Test(expectedExceptions=RuntimeException.class)
 	public final void testGetGradesForUserInInvalidEvent() {
 		webService.getGradesForUserInEvent(1, 999);
-		fail("No exception when enroling invalid users to group!");
+		Assert.fail("No exception when enroling invalid users to group!");
 	}
 	
 	/************** Department API Tests *******************/
@@ -571,23 +569,23 @@ public class iPeerWebServiceIntegrationTest {
 		assertTrue(webService.assignCourseToDepartment(1,1));
 	}
 	
-	@Test(expected=RuntimeException.class)
+	@Test(expectedExceptions=RuntimeException.class)
 	public final void testNonExistingCourseDepartmentAssociation() {
 		webService.assignCourseToDepartment(999,1);
-		fail("No exception when associating a non-exist course to department!");
+		Assert.fail("No exception when associating a non-exist course to department!");
 	}
 	
-	@Test(expected=RuntimeException.class)
+	@Test(expectedExceptions=RuntimeException.class)
 	public final void testNonExistingDepartmentWithCourseAssociation() {
 		webService.assignCourseToDepartment(1,999);
-		fail("No exception when associating a course to a non-exist department!");
+		Assert.fail("No exception when associating a course to a non-exist department!");
 	}
 	
 	/***************** Test Invalid Responses ******************/
 	
-	@Test(expected=HttpMessageNotReadableException.class)
+	@Test(expectedExceptions=HttpMessageNotReadableException.class)
 	public final void testInvalidResponses() {
 		webService.getGroup(9999);
-		fail("No exception when getting invalid group!");
+		Assert.fail("No exception when getting invalid group!");
 	}
 }

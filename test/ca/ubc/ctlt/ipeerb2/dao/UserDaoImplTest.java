@@ -1,15 +1,14 @@
 package ca.ubc.ctlt.ipeerb2.dao;
 
 
-import static org.junit.Assert.*;
-
-import org.junit.Test;
+import org.testng.annotations.Test;
+import org.testng.AssertJUnit;
 
 //TODO we don't need to implement it for now. Will do it in future when user dao get more complicated
 public class UserDaoImplTest {
 	@Test
 	public final void testPlaceHolder() {
-		assertTrue(true);
+		AssertJUnit.assertTrue(true);
 	}	
 //	@Test
 //	public final void testGetUserList() {

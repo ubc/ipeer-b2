@@ -1,8 +1,7 @@
 package ca.ubc.ctlt.ipeerb2.dao;
 
-import static org.junit.Assert.assertTrue;
-
-import org.junit.Test;
+import static org.testng.AssertJUnit.assertTrue;
+import org.testng.annotations.Test;
 
 //TODO we don't need to implement it for now. Will do it in future when course dao get more complicated
 public class CourseDaoImplTest {
