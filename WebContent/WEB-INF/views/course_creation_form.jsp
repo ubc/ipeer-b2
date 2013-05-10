@@ -66,7 +66,7 @@
 	<h3>Linking This Course to Existing iPeer Course</h3>
 	<p class="helphelp">This feature can be used when you already have an iPeer course and want to link this course to the existing iPeer course.<br />
 	Caution: By linking the wrong course, there maybe unexpected result. Please make sure you are using the correct iPeer Course ID.
-	(<a href="http://ipeer.ctlt.ubc.ca/trac/wiki/HowToFindCourseId" target="_blank">How to find iPeer Course ID?</a>)
+	(<a href="http://ipeer.ctlt.ubc.ca/wiki/HowToFindCourseId" target="_blank">How to find iPeer Course ID?</a>)
 	</p>
 	<br />
 	<form:form method="post" action="course" commandName="courseLink">
