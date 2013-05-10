@@ -7,6 +7,7 @@
     <property name="b2context.url" value="http://projects.oscelot.org/gf/download/frsrelease/669/4384/"/>
     <property name="b2context.zip_basename" value="B2Context-1.2.00"/>
     <property name="b2context.jar" value="b2context-1.2.00.jar"/>
+    <xmlproperty file="${web}/WEB-INF/bb-manifest.xml" collapseAttributes="true"/>
 
     <path id="classpath.master">
         <fileset dir="${web}/WEB-INF/lib">
@@ -125,6 +126,11 @@
             <classes dir="${build}"/>
             <lib dir="${ivy.lib.runtime.dir}"/>
         </war>
+    </target>
+
+    <target name="release" depends="dist" description="Release the file to SourceForge">
+        <move file="${dist}/${b2.package.name}.war" tofile="${dist}/${b2.package.name}-${manifest.plugin.version.value}.war" />
+        <scp file="${dist}/${b2.package.name}-${manifest.plugin.version.value}.war" todir="compass@frs.sourceforge.net:/home/frs/project/ipeer/iPeerB2" keyfile="${user.home}/.ssh/id_rsa"/>
     </target>
 
     <target name="deploy" depends="dist" description="Deploy application to BB server">
