@@ -203,7 +203,7 @@ public class CourseCreationTest extends BaseTest {
     }
 
     @Test(dependsOnMethods = "testPushGroup")
-    public final void testManangeCourse() {
+    public final void testManageCourse() {
         CourseManagePage page = new CourseManagePage(getDriver(), siteBase, courseId).get();
         String currentWindow = driver.getWindowHandle();
 
@@ -235,10 +235,10 @@ public class CourseCreationTest extends BaseTest {
         }
     }
 
-    @Test(dependsOnMethods = "testManangeCourse")
+    @Test(dependsOnMethods = "testManageCourse")
     public final void testPullGroups() {
         CourseManagePage page = new CourseManagePage(getDriver(), siteBase, courseId).get();
-        // refresh the page to get the lastest group info
+        // refresh the page to get the latest group info
         driver.navigate().refresh();
 
         // test bb course info

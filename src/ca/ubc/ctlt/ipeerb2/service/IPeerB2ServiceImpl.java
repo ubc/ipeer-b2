@@ -170,7 +170,7 @@ public class IPeerB2ServiceImpl implements IPeerB2Service, UserAdapter<User>, Gr
 					User userInBb = iPeerB2Util.findUserInList(userInIpeer, usersInBb);
 					// user not in bb group, so we remove it from ipeer
 					if (null == userInBb) {
-						userDao.removeUserFromGroup(groupInIpeer.getId(), userInBb);
+						userDao.removeUserFromGroup(groupInIpeer.getId(), userInIpeer);
 					}
 				}
 				

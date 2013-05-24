@@ -79,7 +79,7 @@ public class iPeerWebService {
 	public List<Course> getCourseList() {
 		Course[] courses = restTemplate.getForObject(getServerUrl() + API_COURSE, Course[].class);
 		List<Course> result = Arrays.asList(courses);
-		
+
 		return result;
 	}
 
@@ -132,7 +132,7 @@ public class iPeerWebService {
 	}
 	
 	public List<User> createUsers(List<User> users) {
-		User[] result = null;
+		User[] result;
 		result = restTemplate.postForObject(getServerUrl() + API_USER, users.toArray(new User[users.size()]), User[].class);
 		
 		return Arrays.asList(result);
