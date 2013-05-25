@@ -1,36 +1,27 @@
 package ca.ubc.ctlt.ipeerb2.webservice;
 
-import static org.testng.AssertJUnit.assertEquals;
-import static org.testng.AssertJUnit.assertNotNull;
-import static org.testng.AssertJUnit.assertTrue;
-import org.testng.annotations.Test;
-import org.testng.annotations.BeforeMethod;
-import org.testng.Assert;
-import static org.mockito.Mockito.*;
-
-import java.util.Arrays;
-import java.util.List;
-import java.util.Properties;
-
-import javax.annotation.Resource;
-
+import ca.ubc.ctlt.ipeerb2.Configuration;
+import ca.ubc.ctlt.ipeerb2.domain.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
+import org.testng.Assert;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
 
-import ca.ubc.ctlt.ipeerb2.Configuration;
-import ca.ubc.ctlt.ipeerb2.domain.Course;
-import ca.ubc.ctlt.ipeerb2.domain.Department;
-import ca.ubc.ctlt.ipeerb2.domain.Event;
-import ca.ubc.ctlt.ipeerb2.domain.Grade;
-import ca.ubc.ctlt.ipeerb2.domain.Group;
-import ca.ubc.ctlt.ipeerb2.domain.User;
+import javax.annotation.Resource;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Properties;
+
+import static org.mockito.Mockito.doReturn;
+import static org.testng.AssertJUnit.*;
 
 @ContextConfiguration
 @ActiveProfiles({"dev", "integration"})
-public class iPeerWebServiceIntegrationTest {
+public class iPeerWebServiceIntegrationTest extends AbstractTestNGSpringContextTests {
 	
 	@Autowired
 	private iPeerWebService webService;
@@ -89,7 +80,7 @@ public class iPeerWebServiceIntegrationTest {
 	public void setUp() throws Exception {
 		// mocking configuration
 		doReturn(config).when(configuration).getSettings();
-	}
+    }
 	
 	@Test
 	public final void testGetCourseList() {

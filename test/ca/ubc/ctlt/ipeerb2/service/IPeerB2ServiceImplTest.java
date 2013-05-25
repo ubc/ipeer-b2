@@ -6,6 +6,7 @@ import static org.testng.AssertJUnit.assertEquals;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -17,7 +18,7 @@ import ca.ubc.ctlt.ipeerb2.domain.User;
 
 @ContextConfiguration
 @ActiveProfiles({"dev", "integration"})
-public class IPeerB2ServiceImplTest {
+public class IPeerB2ServiceImplTest extends AbstractTestNGSpringContextTests {
 	@Autowired
 	private IPeerB2ServiceImpl service;
 	

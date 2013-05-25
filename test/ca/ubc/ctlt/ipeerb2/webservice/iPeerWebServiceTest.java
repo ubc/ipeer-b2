@@ -12,6 +12,7 @@ import org.mockito.Matchers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.springframework.web.client.RestOperations;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -26,7 +27,7 @@ import ca.ubc.ctlt.ipeerb2.domain.User;
 
 @ContextConfiguration
 @ActiveProfiles({"dev", "integration"})
-public class iPeerWebServiceTest {
+public class iPeerWebServiceTest extends AbstractTestNGSpringContextTests {
 	@Autowired
 	private iPeerWebService webService;
 	
