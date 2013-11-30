@@ -10,9 +10,6 @@
         <fileset dir="${web}/WEB-INF/lib">
             <include name="*.jar"/>
         </fileset>
-        <fileset dir="${bb.sdk}">
-            <include name="**/*.jar"/>
-        </fileset>
         <pathelement path="${build}"/>
     </path>
 
@@ -43,12 +40,10 @@
         <fail if="local.properties.exists">"local.properties" exists. Please remove it before initializing the project!</fail>
 
         <input message="Building Block Name(required):" addproperty="b2.package.name"/>
-        <input message="B2 SDK Path(required):" addproperty="bb.sdk"/>
         <input message="BB Dev Server IP (for auto deployment, optional):" addproperty="bb.server" defaultvalue="192.168.56.101"/>
         <input message="Contact(for compatibility check, optional):" addproperty="contact"/>
         <propertyfile file="local.properties">
               <entry  key="b2.package.name" value="${b2.package.name}"/>
-              <entry  key="bb.sdk" value="${bb.sdk}"/>
               <entry  key="bb.server" value="${bb.server}"/>
               <entry  key="contact" value="${contact}"/>
         </propertyfile>
@@ -85,7 +80,6 @@
     </target>
 
     <target name="build" description="Compile main source tree java files" depends="pre, resolve">
-        <fail message="Please set bb.sdk property in local.properties to your Blackboard SDK directory" unless="bb.sdk"/>
         <javac destdir="${build}" source="1.5" target="1.5" debug="true"
                deprecation="false" optimize="false" failonerror="true" includeantruntime="false">
             <src path="${src}"/>
