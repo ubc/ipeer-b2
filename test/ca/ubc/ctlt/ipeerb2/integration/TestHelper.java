@@ -4,6 +4,7 @@ import java.net.URI;
 import java.util.Date;
 import java.util.Properties;
 
+import ca.ubc.ctlt.ipeerb2.integration.page.SettingPage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -194,13 +195,23 @@ public class TestHelper {
 		driver.findElement(By.linkText("Add Course Module")).click();
 		
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.name("txtSearch")));
-//		driver.findElement(By.name("txtSearch")).sendKeys("iPeer");
-//		driver.findElement(By.xpath("//*[@id='searchBlock']/li/input[2]"));
-		driver.findElement(By.linkText("Other")).click();
+		driver.findElement(By.name("txtSearch")).sendKeys("iPeer");
+        driver.findElement(By.xpath("//input[@value='Go']")).click();
+		//driver.findElement(By.linkText("Other")).click();
 		
 		wait.until(ExpectedConditions.textToBePresentInElement(By.id("containerdiv"), "iPeer Events"));
 		driver.findElement(By.linkText("Add")).click();
 	}
+
+    /**
+     * Set up default settings for tests
+     *
+     * @param settings the settings to be set on the setting page
+     * @return current settings on the page
+     */
+    public Properties setSettings(Properties settings) {
+        return new SettingPage(driver, siteBase).get().save(settings);
+    }
 	
 	private String getGroupIdByName(String courseId, String groupName) {
 		driver.get(siteBase+"webapps/blackboard/execute/groupInventoryList?course_id="+courseId);

@@ -36,9 +36,17 @@ public class CourseCreationTest extends BaseTest {
     @Qualifier("courseData")
     protected Properties courseData;
 
+    @Autowired
+    @Qualifier("defaultSettings")
+    private Properties defaultSettings;
+
     protected String courseId;
     protected int iPeerCourseId;
     protected TestHelper helper;
+    /**
+     * The original settings in the BB system. Used to restore setting after tests
+     */
+    protected Properties originalSettings;
 
     @BeforeClass
     public void setUp() {
@@ -56,6 +64,7 @@ public class CourseCreationTest extends BaseTest {
         getDriver().get(siteBase.toString());
         new LoginPage(getDriver(), siteBase).logon("administrator", "bblearn");
         helper = new TestHelper(driver, siteBase);
+        originalSettings = helper.setSettings(defaultSettings);
         helper.importUsers();
         courseId = helper.createCourse(courseData);
         helper.enrolUsers(courseId);
@@ -66,6 +75,8 @@ public class CourseCreationTest extends BaseTest {
     public void tearDown() {
         // clean up the course
         helper.deleteCourse(courseData);
+        // restore settings
+        helper.setSettings(originalSettings);
     }
 
     @Test
