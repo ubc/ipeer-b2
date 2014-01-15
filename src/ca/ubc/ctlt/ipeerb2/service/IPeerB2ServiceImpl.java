@@ -144,17 +144,23 @@ public class IPeerB2ServiceImpl implements IPeerB2Service, UserAdapter<User>, Gr
 			Group groupInIpeer = iPeerB2Util.findGroupInList(group, groupsInIpeer);
 			if (null == groupInIpeer) {
 				// not found group in iPeer, so we create a new group
-				Group newGroup = groupDao.createGroup(iPeerCourseId, group);
-				List<User> users = null;
-				try {
-					users = B2Util.getUsersInGroup(group.getBbGroup(), this);
-				} catch (PersistenceException e) {
-					throw new RuntimeException("Failed to load group members!", e);
-				} catch (ConnectionNotAvailableException e) {
-					throw new RuntimeException("No connection is available!", e);
-				}
-				userDao.enrolUsersInGroup(newGroup.getId(), users);
-			} else {
+				groupInIpeer = groupDao.createGroup(iPeerCourseId, group);
+			}
+
+            // update users, just post all users in groups
+            // the heavy lifting (compare and update) is on iPeer.
+            List<User> users;
+            try {
+                users = B2Util.getUsersInGroup(group.getBbGroup(), this);
+            } catch (PersistenceException e) {
+                throw new RuntimeException("Failed to load group members!", e);
+            } catch (ConnectionNotAvailableException e) {
+                throw new RuntimeException("No connection is available!", e);
+            }
+
+            userDao.enrolUsersInGroup(groupInIpeer.getId(), users);
+
+            /*else {
 				// found group in iPeer, we check the group memberships
 				List<User> usersInIpeer = userDao.getUsersInGroup(groupInIpeer.getId());
 				List<User> usersInBb = null;
@@ -181,7 +187,7 @@ public class IPeerB2ServiceImpl implements IPeerB2Service, UserAdapter<User>, Gr
 						userDao.enrolUserInGroup(groupInIpeer.getId(), userInBb);
 					}
 				}
-			}
+			}*/
 		}
 		
 		return true;
