@@ -22,7 +22,7 @@
   <bbNG:dataCollection markUnsavedChanges="true" showSubmitButtons="true">
     <bbNG:step hideNumber="false" id="stepOne" title="iPeer Server URL" instructions="">
       <bbNG:dataElement isRequired="true" label="iPeer Server URL">
-      	<bbNG:textElement name="<%=Configuration.IPEER_URL%>" value="${ipeerUrl}" isRequired="true" title="iPeer Server URL" size="50" helpText="e.g. https://ipeer.your.edu.ca"/>
+      	<bbNG:textElement name="<%=Configuration.IPEER_URL%>" value="${ipeerUrl}" isRequired="true" title="iPeer Server URL" size="50" helpText="e.g. https://ipeer.your.edu.ca. Please LEAVE the trailing slash OUT. Otherwise, you may get a \"invalid signature\" error message"/>
       </bbNG:dataElement>
     </bbNG:step>
     
