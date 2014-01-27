@@ -12,7 +12,7 @@
 <%@ taglib uri="/bbUI" prefix="bbUI"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%
-	final Logger log = LoggerFactory.getLogger("ca.ubc.ctlt.metadataeditor.internal-error");
+	final Logger log = LoggerFactory.getLogger("ca.ubc.ctlt.ipeerb2.internal-error");
 	log.error("Internal Server Error", exception);
 %>
 
