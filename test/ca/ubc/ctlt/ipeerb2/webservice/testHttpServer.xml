@@ -107,9 +107,21 @@
                 
                 test_user.11.uri=/[^/]*/users
                 test_user.11.method=post
-                test_user.5.requestbody=[{"id":0,"username":"username1","role_id":0},{"id":0,"username":"username2","role_id":0},{"id":0,"username":"username3","role_id":0}]
-                test_user.5.responsebody=[{"id":1,"username":"username1","role_id":5}, {"id":2,"username":"username2","role_id":5},{"id":3,"username":"username3","role_id":5}]
-                test_user.5.responsestatus=201
+                test_user.11.requestbody=[{"id":0,"username":"username1","role_id":0},{"id":0,"username":"username2","role_id":0},{"id":0,"username":"username3","role_id":0}]
+                test_user.11.responsebody=[{"id":1,"username":"username1","role_id":5}, {"id":2,"username":"username2","role_id":5},{"id":3,"username":"username3","role_id":5}]
+                test_user.11.responsestatus=201
+
+                test_user.12.uri=/[^/]*/users
+                test_user.12.method=post
+                test_user.12.requestbody=[{"id":0,"username":"returnempty","role_id":0}]
+                test_user.12.responsebody=[]
+                test_user.12.responsestatus=201
+
+                test_user.13.uri=/[^/]*/users
+                test_user.13.method=post
+                test_user.13.requestbody=[{"id":0,"username":"returninvalid","role_id":0}]
+                test_user.13.responsebody=1
+                test_user.13.responsestatus=201
                 
                 test_group.1.uri=/[^/]*/courses/\\d+/groups
                 test_group.1.method=get

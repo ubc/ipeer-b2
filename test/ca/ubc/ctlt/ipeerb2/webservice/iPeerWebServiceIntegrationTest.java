@@ -1,9 +1,16 @@
 package ca.ubc.ctlt.ipeerb2.webservice;
 
 import ca.ubc.ctlt.ipeerb2.Configuration;
+import ca.ubc.ctlt.ipeerb2.IPeerB2OAuthRestTemplate;
 import ca.ubc.ctlt.ipeerb2.domain.*;
+import ca.ubc.ctlt.ipeerb2.iPeerB2ProtectedResourceDetails;
+import ca.ubc.ctlt.ipeerb2.iPeerResponseErrorHandler;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.http.converter.json.MappingJacksonHttpMessageConverter;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
@@ -12,9 +19,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import javax.annotation.Resource;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Properties;
+import java.util.*;
 
 import static org.mockito.Mockito.doReturn;
 import static org.testng.AssertJUnit.*;
@@ -55,7 +60,13 @@ public class iPeerWebServiceIntegrationTest extends AbstractTestNGSpringContextT
 	
 	@Resource
 	private List<User> usersWithoutOptionalFields;
-	
+
+    @Resource
+    private List<User> usersReturnEmpty;
+
+    @Resource
+    private List<User> usersReturnInvalid;
+
 	@Autowired
 	private Group groupToCreate;
 	
@@ -80,6 +91,15 @@ public class iPeerWebServiceIntegrationTest extends AbstractTestNGSpringContextT
 	public void setUp() throws Exception {
 		// mocking configuration
 		doReturn(config).when(configuration).getSettings();
+
+//        iPeerB2ProtectedResourceDetails details = Mockito.mock(iPeerB2ProtectedResourceDetails.class);
+//        IPeerB2OAuthRestTemplate restTemplate = new IPeerB2OAuthRestTemplate(details);
+//        MappingJacksonHttpMessageConverter msgConverter = new MappingJacksonHttpMessageConverter();
+//        msgConverter.setSupportedMediaTypes(Collections.singletonList(MediaType.APPLICATION_JSON));
+//        restTemplate.setErrorHandler(new iPeerResponseErrorHandler());
+//        restTemplate.getMessageConverters().add(msgConverter);
+//        webService = new iPeerWebService();
+//        webService.setRestTemplate(restTemplate);
     }
 	
 	@Test
@@ -233,7 +253,21 @@ public class iPeerWebServiceIntegrationTest extends AbstractTestNGSpringContextT
 		webService.updateUser(invalidUserToUpdate);
 		Assert.fail("No exception when deleting an invalid user!");
 	}
-	
+
+    @Test
+    public final void testCreateUsersReturnEmpty() {
+        // when the all users created failed, it should return empty
+        List<User> ul = webService.createUsers(usersReturnEmpty);
+        assertTrue("Creating User Return Empty didn't return empty.", ul.size() == 0);
+    }
+
+    @Test//(expectedExceptions=RuntimeException.class)
+    public final void testCreateUsersReturnInvalid() {
+        // when the all users created failed, it should return empty
+        List<User> ul = webService.createUsers(usersReturnInvalid);
+        Assert.fail("No exception when handling an invalid return value!");
+    }
+
 	/************* Group API Tests ****************/
 	
 	@Test
