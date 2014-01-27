@@ -157,6 +157,22 @@
 	        </list>
 	    </constructor-arg>
 	</bean>
+
+    <bean id="usersReturnEmpty" class="java.util.ArrayList">
+        <constructor-arg>
+            <list>
+                <bean class="ca.ubc.ctlt.ipeerb2.domain.User"><property name="username" value="returnempty"/></bean>
+            </list>
+        </constructor-arg>
+    </bean>
+
+    <bean id="usersReturnInvalid" class="java.util.ArrayList">
+        <constructor-arg>
+            <list>
+                <bean class="ca.ubc.ctlt.ipeerb2.domain.User"><property name="username" value="returninvalid"/></bean>
+            </list>
+        </constructor-arg>
+    </bean>
 	
     <!-- Group Fixtures -->
  	

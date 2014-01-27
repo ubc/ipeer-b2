@@ -261,7 +261,7 @@ public class iPeerWebServiceIntegrationTest extends AbstractTestNGSpringContextT
         assertTrue("Creating User Return Empty didn't return empty.", ul.size() == 0);
     }
 
-    @Test//(expectedExceptions=RuntimeException.class)
+    @Test(expectedExceptions=RuntimeException.class)
     public final void testCreateUsersReturnInvalid() {
         // when the all users created failed, it should return empty
         List<User> ul = webService.createUsers(usersReturnInvalid);
