@@ -22,7 +22,7 @@ public class iPeerResponseErrorHandler extends DefaultResponseErrorHandler {
 	public void handleError(ClientHttpResponse response) throws IOException {
 		ResponseError error = null;
 		HttpStatus statusCode = getHttpStatusCode(response);
-		byte[] responseBody = getResponseBody(response);
+		byte[] responseBody = iPeerB2Util.getResponseBody(response);
 		try {
 			ObjectMapper mapper = new ObjectMapper();
 			error = mapper.readValue(responseBody, ResponseError.class);
@@ -44,19 +44,6 @@ public class iPeerResponseErrorHandler extends DefaultResponseErrorHandler {
 			throw new RestClientException("Unknown status code [" + response.getRawStatusCode() + "]");
 		}
 		return statusCode;
-	}
-	
-	private byte[] getResponseBody(ClientHttpResponse response) {
-		try {
-			InputStream responseBody = response.getBody();
-			if (responseBody != null) {
-				return FileCopyUtils.copyToByteArray(responseBody);
-			}
-		}
-		catch (IOException ex) {
-			// ignore
-		}
-		return new byte[0];
 	}
 
 	private Charset getCharset(ClientHttpResponse response) {

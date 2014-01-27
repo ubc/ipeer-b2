@@ -1,5 +1,7 @@
 package ca.ubc.ctlt.ipeerb2;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.security.InvalidKeyException;
@@ -15,6 +17,7 @@ import javax.crypto.spec.SecretKeySpec;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.client.ClientHttpResponse;
 import org.springframework.security.crypto.codec.Base64;
 
 import blackboard.data.course.CourseMembership;
@@ -23,6 +26,7 @@ import ca.ubc.ctlt.blackboardb2util.B2Util;
 import ca.ubc.ctlt.ipeerb2.domain.Group;
 import ca.ubc.ctlt.ipeerb2.domain.Role;
 import ca.ubc.ctlt.ipeerb2.domain.User;
+import org.springframework.util.FileCopyUtils;
 
 public class iPeerB2Util {
 	private static final Logger logger = LoggerFactory.getLogger(iPeerB2Util.class);
@@ -116,4 +120,17 @@ public class iPeerB2Util {
 		
 		return mappedRoles;
 	}
+
+    public static byte[] getResponseBody(ClientHttpResponse response) {
+        try {
+            InputStream responseBody = response.getBody();
+            if (responseBody != null) {
+                return FileCopyUtils.copyToByteArray(responseBody);
+            }
+        }
+        catch (IOException ex) {
+            // ignore
+        }
+        return new byte[0];
+    }
 }
