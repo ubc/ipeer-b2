@@ -90,4 +90,18 @@ public class User {
 	public void setRoleId(int roleId) {
 		this.roleId = roleId;
 	}
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", roleId=" + roleId +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                ", studentId='" + studentId + '\'' +
+                '}';
+    }
 }

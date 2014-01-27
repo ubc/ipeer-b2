@@ -45,8 +45,13 @@ public class iPeerWebService {
 	public static final String API_GRADE = "/" + API_VERSION + "/events/{event_id}/grades";
 	public static final String API_DEPARTMENT = "/" + API_VERSION + "/departments";
 	//private static final Logger logger = Logger.getLogger(iPeerWebService.class);
-	
-	public String getServerUrl() {
+
+
+    public void setRestTemplate(RestTemplate restTemplate) {
+        this.restTemplate = restTemplate;
+    }
+
+    public String getServerUrl() {
 		// Temporary hack to generate an OAuth security context with token
 		// This fixes the requests that are not covered by oauth:url patten defined in applicationContext.xml
 		if (OAuthSecurityContextHolder.getContext() == null) {
@@ -125,7 +130,7 @@ public class iPeerWebService {
 	}
 	
 	public User createUser(User user) {
-		User result = null;
+		User result;
 		result = restTemplate.postForObject(getServerUrl() + API_USER, user, User.class);
 		
 		return result;
@@ -134,7 +139,7 @@ public class iPeerWebService {
 	public List<User> createUsers(List<User> users) {
 		User[] result;
 		result = restTemplate.postForObject(getServerUrl() + API_USER, users.toArray(new User[users.size()]), User[].class);
-		
+
 		return Arrays.asList(result);
 	}
 	
