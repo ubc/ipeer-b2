@@ -1,7 +1,6 @@
 package ca.ubc.ctlt.ipeerb2.webservice;
 
 import ca.ubc.ctlt.ipeerb2.Configuration;
-import ca.ubc.ctlt.ipeerb2.IPeerB2OAuthRestTemplate;
 import ca.ubc.ctlt.ipeerb2.domain.*;
 import ca.ubc.ctlt.ipeerb2.iPeerB2ProtectedResourceDetails;
 import ca.ubc.ctlt.ipeerb2.iPeerResponseErrorHandler;
