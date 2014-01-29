@@ -1,5 +1,6 @@
 package ca.ubc.ctlt.ipeerb2.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -244,8 +245,9 @@ public class IPeerB2ServiceImpl implements IPeerB2Service, UserAdapter<User>, Gr
     }
 
     @Override
-    public boolean syncGrades(String bbCourseId) {
+    public List<Grade> syncGrades(String bbCourseId) {
         List<Event> events = eventDao.getEventsInCourse(configuration.getIpeerCourseId(bbCourseId));
+        List<Grade> failed = new ArrayList<Grade>();
 
         for (Event event : events) {
             if (event.getTemplateType() == Event.TYPE_SURVEY) {
@@ -253,11 +255,18 @@ public class IPeerB2ServiceImpl implements IPeerB2Service, UserAdapter<User>, Gr
                 continue;
             }
             List<Grade> grades = gradeDao.getGradesInEvent(event.getId());
+
+            // fill the missing info to grade objects
+            for (Grade grade : grades) {
+                grade.setEventId(event.getId());
+                grade.setEventTitle(event.getTitle());
+            }
+
             logger.debug("Fetched grades from iPeer: " + grades);
-            B2Util.setGradebook(bbCourseId, event.getTitle(), grades, this);
+            failed.addAll(B2Util.setGradebook(bbCourseId, event.getTitle(), grades, this));
         }
 
-        return true;
+        return failed;
     }
 
     @Override
@@ -361,11 +370,18 @@ public class IPeerB2ServiceImpl implements IPeerB2Service, UserAdapter<User>, Gr
     @Override
     public Score gradeToBbScore(Grade grade, List<CourseMembership> memberships) {
         Score score = new Score();
+        boolean found = false;
         for (CourseMembership membership : memberships) {
             if (membership.getUser().getBatchUid().equals(grade.getUsername())) {
                 score.setCourseMembershipId(membership.getId());
+                found = true;
             }
         }
+
+        if (!found) {
+            return null;
+        }
+
         score.setDateAdded();
         score.setGrade(Double.toString(grade.getGrade()));
 

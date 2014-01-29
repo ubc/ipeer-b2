@@ -15,6 +15,7 @@ import javax.crypto.Mac;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 
+import ca.ubc.ctlt.ipeerb2.domain.Grade;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.client.ClientHttpResponse;
@@ -132,5 +133,15 @@ public class iPeerB2Util {
             // ignore
         }
         return new byte[0];
+    }
+
+    public static String extractUserId(List<Grade> grades) {
+        StringBuffer ids = new StringBuffer();
+
+        for (Grade grade : grades) {
+            ids.append(grade.getUsername()).append("("+grade.getEventTitle()+")").append(", ");
+        }
+
+        return ids.toString();
     }
 }

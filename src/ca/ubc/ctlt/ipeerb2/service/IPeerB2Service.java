@@ -2,10 +2,7 @@ package ca.ubc.ctlt.ipeerb2.service;
 
 import java.util.List;
 
-import ca.ubc.ctlt.ipeerb2.domain.Course;
-import ca.ubc.ctlt.ipeerb2.domain.Department;
-import ca.ubc.ctlt.ipeerb2.domain.Event;
-import ca.ubc.ctlt.ipeerb2.domain.Group;
+import ca.ubc.ctlt.ipeerb2.domain.*;
 
 public interface IPeerB2Service {
 	public Course getCourse(String bbCourseId);
@@ -18,7 +15,7 @@ public interface IPeerB2Service {
 	public List<Group> getGroupsInIPeerCourse(String bbCourseId);
 	public boolean pushGroups(String bbCourseId);
 	public boolean pullGroups(String bbCourseId);
-	public boolean syncGrades(String bbCourseId);
+	public List<Grade> syncGrades(String bbCourseId);
 	public List<Event> getEventsForUserInCourse(String username, String bbCourseId);
 	public List<Event> getEventsInCourse(String bbCourseId);
 	public List<Event> getEventsForUser(String username);

@@ -6,6 +6,7 @@ import java.util.Locale;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
+import ca.ubc.ctlt.ipeerb2.domain.Grade;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -281,8 +282,12 @@ public class InstructorController {
 	public String syncGrades(HttpServletRequest webRequest, @RequestParam("course_id") String bbCourseId, Locale locale, ModelMap model) {
 		ReceiptOptions ro = new ReceiptOptions();
 		try {
-			service.syncGrades(bbCourseId);
-			ro.addSuccessMessage(messageSource.getMessage("message.sync_grades_success", null, locale));
+			List<Grade> failed = service.syncGrades(bbCourseId);
+            if (failed.isEmpty()) {
+			    ro.addSuccessMessage(messageSource.getMessage("message.sync_grades_success", null, locale));
+            } else {
+                ro.addWarningMessage(messageSource.getMessage("message.sync_grades_warn", null, locale) + iPeerB2Util.extractUserId(failed));
+            }
 		} catch (RestClientException e) {
 			ro.addErrorMessage(messageSource.getMessage("message.sync_grades_failed", null, locale) + " " + e.getMessage(), e);
 		}
