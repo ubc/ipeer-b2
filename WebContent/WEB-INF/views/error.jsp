@@ -7,6 +7,7 @@
     org.slf4j.LoggerFactory,
     ca.ubc.ctlt.ipeerb2.BuildingBlockHelper
     " %>
+<%@ page import="java.util.Calendar" %>
 
 <%@ taglib prefix="bbNG" uri="/bbNG"%>
 <%@ taglib uri="/bbUI" prefix="bbUI"%>
@@ -52,6 +53,7 @@ if (exception != null) {
 out.println("<br />Cookies:<br />");
 out.println(BuildingBlockHelper.dumpCookies(request));
 out.println("<br />Version: " + BuildingBlockHelper.getVersion() + "<br />");
+out.println("<br />Timestamp: " + Calendar.getInstance().getTime() + "<br />");
 %>
 </ul>
 </div>
