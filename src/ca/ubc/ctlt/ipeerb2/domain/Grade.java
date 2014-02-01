@@ -18,7 +18,7 @@ public class Grade {
 	@JsonProperty("event_title")
 	private String eventTitle;
 	
-	@JsonProperty("user_id")
+	@JsonProperty("evaluatee")
 	private int userId;
 	
 	private String username;

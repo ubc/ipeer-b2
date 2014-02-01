@@ -139,7 +139,7 @@ public class iPeerB2Util {
         StringBuffer ids = new StringBuffer();
 
         for (Grade grade : grades) {
-            ids.append(grade.getUsername()).append("("+grade.getEventTitle()+")").append(", ");
+            ids.append(grade.getUsername()).append("(" + grade.getEventTitle() + ")").append(", ");
         }
 
         return ids.toString();

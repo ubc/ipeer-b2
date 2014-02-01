@@ -26,11 +26,11 @@
 	    <table>
 	    <tr>
 	        <td><form:label path="course"><spring:message code="label.course_name"/></form:label></td>
-	        <td><form:input path="course" size="50"/> <font color="red"><form:errors path="course" /></font></td> 
+	        <td><form:input path="course" size="50"/> <span style="color: red; "><form:errors path="course" /></span></td>
 	    </tr>
 	    <tr>
 	        <td><form:label path="title"><spring:message code="label.course_title"/></form:label></td>
-	        <td><form:input path="title" size="50"/> <font color="red"><form:errors path="title" /></font></td>
+	        <td><form:input path="title" size="50"/> <span style="color: red; "><form:errors path="title" /></span></td>
 	    </tr>
 	    <tr>
 	        <td><form:label path="syncClass"><spring:message code="label.sync_class"/></form:label></td>
@@ -39,10 +39,6 @@
 	    <tr>
 	        <td><form:label path="pushGroup"><spring:message code="label.push_group"/></form:label></td>
 	        <td><form:checkbox path="pushGroup" /></td>
-	    </tr>
-	    <tr>
-	        <td><form:label path="pullGroup"><spring:message code="label.pull_group"/></form:label></td>
-	        <td><form:checkbox path="pullGroup" /></td>
 	    </tr>
  	    <tr>
 	        <td style="vertical-align:top;"><form:label path="departments"><spring:message code="label.department"/></form:label></td>
@@ -73,7 +69,7 @@
 	    <table>
 	    <tr>
 	        <td><form:label path="ipeerId"><spring:message code="label.ipeer_course_id"/></form:label></td>
-	        <td><form:input path="ipeerId" size="50"/> <font color="red"><form:errors path="ipeerId" /></font></td> 
+	        <td><form:input path="ipeerId" size="50"/> <span style="color: red; "><form:errors path="ipeerId" /></span></td>
 	    </tr>
 	    <tr>
 	        <td colspan="2">
