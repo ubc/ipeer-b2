@@ -39,11 +39,11 @@
         <dependency org="org.eclipse.jetty" name="jetty-start" rev="7.6.8.v20121106" transitive="false" conf="test"/>
         <dependency org="org.mortbay.jetty" name="jetty-spring" rev="7.6.8.v20121106" transitive="false" conf="test"/>
 
-        <dependency org="org.seleniumhq.selenium" name="selenium-java" rev="2.37.0" conf="test"/>
-        <dependency org="org.seleniumhq.selenium" name="selenium-firefox-driver" rev="2.37.0" conf="test"/>
-        <dependency org="org.seleniumhq.selenium" name="selenium-api" rev="2.37.0" conf="test"/>
-        <dependency org="org.seleniumhq.selenium" name="selenium-support" rev="2.37.0" conf="test"/>
-        <dependency org="org.seleniumhq.selenium" name="selenium-remote-driver" rev="2.37.0" conf="test"/>
+        <dependency org="org.seleniumhq.selenium" name="selenium-java" rev="2.39.0" conf="test"/>
+        <dependency org="org.seleniumhq.selenium" name="selenium-firefox-driver" rev="2.39.0" conf="test"/>
+        <dependency org="org.seleniumhq.selenium" name="selenium-api" rev="2.39.0" conf="test"/>
+        <dependency org="org.seleniumhq.selenium" name="selenium-support" rev="2.39.0" conf="test"/>
+        <dependency org="org.seleniumhq.selenium" name="selenium-remote-driver" rev="2.39.0" conf="test"/>
         <dependency org="com.google.guava" name="guava" rev="14.0.1" conf="test"/>
         <dependency org="org.json" name="json" rev="20090211" conf="test"/>
         <dependency org="org.apache.commons" name="commons-exec" rev="1.1" conf="test"/>
