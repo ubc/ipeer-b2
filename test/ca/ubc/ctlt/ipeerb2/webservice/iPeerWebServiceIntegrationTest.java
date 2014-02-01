@@ -2,14 +2,8 @@ package ca.ubc.ctlt.ipeerb2.webservice;
 
 import ca.ubc.ctlt.ipeerb2.Configuration;
 import ca.ubc.ctlt.ipeerb2.domain.*;
-import ca.ubc.ctlt.ipeerb2.iPeerB2ProtectedResourceDetails;
-import ca.ubc.ctlt.ipeerb2.iPeerResponseErrorHandler;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
-import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.HttpMessageNotReadableException;
-import org.springframework.http.converter.json.MappingJacksonHttpMessageConverter;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
@@ -18,7 +12,9 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import javax.annotation.Resource;
-import java.util.*;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Properties;
 
 import static org.mockito.Mockito.doReturn;
 import static org.testng.AssertJUnit.*;
@@ -90,15 +86,6 @@ public class iPeerWebServiceIntegrationTest extends AbstractTestNGSpringContextT
 	public void setUp() throws Exception {
 		// mocking configuration
 		doReturn(config).when(configuration).getSettings();
-
-//        iPeerB2ProtectedResourceDetails details = Mockito.mock(iPeerB2ProtectedResourceDetails.class);
-//        IPeerB2OAuthRestTemplate restTemplate = new IPeerB2OAuthRestTemplate(details);
-//        MappingJacksonHttpMessageConverter msgConverter = new MappingJacksonHttpMessageConverter();
-//        msgConverter.setSupportedMediaTypes(Collections.singletonList(MediaType.APPLICATION_JSON));
-//        restTemplate.setErrorHandler(new iPeerResponseErrorHandler());
-//        restTemplate.getMessageConverters().add(msgConverter);
-//        webService = new iPeerWebService();
-//        webService.setRestTemplate(restTemplate);
     }
 	
 	@Test

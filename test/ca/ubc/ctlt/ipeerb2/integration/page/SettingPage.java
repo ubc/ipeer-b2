@@ -18,7 +18,7 @@ public class SettingPage extends PageBase<SettingPage> {
 	protected WebElement tokenKey;
 	@FindBy(name = "ipeer.token_secret")
 	protected WebElement tokenSecret;
-	@FindBy(xpath = "//*[@id='top_submitButtonRow']/input[2]")
+	@FindBy(name = "top_Submit")
 	protected WebElement submitButon;
 
 	public SettingPage(WebDriver driver, URI siteBase) {

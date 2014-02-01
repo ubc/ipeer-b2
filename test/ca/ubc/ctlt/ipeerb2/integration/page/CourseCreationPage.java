@@ -28,8 +28,8 @@ public class CourseCreationPage extends PageBase<CourseCreationPage> {
 	@FindBy(id = "departments3")
 	protected WebElement departments3;
 
-	@FindBy(xpath = "//*[@id='courseCreate']/table/tbody/tr[7]/td/input[3]")
-	protected WebElement createCourseButon;
+	@FindBy(name = "create")
+    protected WebElement createCourseButon;
 
 	@FindBy(name = "ipeerId")
 	protected WebElement ipeerCourseId;

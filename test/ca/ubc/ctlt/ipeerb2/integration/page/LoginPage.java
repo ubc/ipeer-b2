@@ -11,7 +11,7 @@ public class LoginPage extends PageBase<LoginPage> {
 	protected WebElement userNameField;
 	@FindBy(name = "password")
 	protected WebElement passwordField;
-	@FindBy(xpath = "//*[@id='loginFormList']/li[4]/input")
+	@FindBy(xpath = "//input[@value = 'Login']")
 	protected WebElement logonButon;
 	
 	public LoginPage(WebDriver driver, URI siteBase) {

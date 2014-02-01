@@ -46,10 +46,10 @@ public class IPeerCourseHomePage extends PageBase<IPeerCourseHomePage> {
 			members.selectByVisibleText(name);
 		}
 		// move members
-		driver.findElement(By.xpath("//*[@id='frm']/div[5]/div/table/tbody/tr/td[2]/input[1]")).click();
+		driver.findElement(By.xpath("//input[@value = 'Assign >>']")).click();
 		
 		// submit
-		driver.findElement(By.xpath("//*[@id='frm']/div[6]/input")).click();
+		driver.findElement(By.xpath("//input[@value = 'Add Group']")).click();
 	}
 	
 
@@ -74,8 +74,8 @@ public class IPeerCourseHomePage extends PageBase<IPeerCourseHomePage> {
 		for (String group : groups) {
 			groupSelect.selectByVisibleText(group);
 		}
-		
-		driver.findElement(By.xpath("//form/div[19]/input")).click();
+
+		driver.findElement(By.xpath("//input[@value='Submit']")).click();
 	}
 	
 	public void createOpenEvent(String eventName, String type, String template, String[] groups) {

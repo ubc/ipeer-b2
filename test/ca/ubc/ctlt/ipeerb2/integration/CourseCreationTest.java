@@ -117,7 +117,7 @@ public class CourseCreationTest extends BaseTest {
 
         // test bb course info
         // wait for ajax call to complete before asserts
-        (new WebDriverWait(driver, 10)).until(ExpectedConditions.textToBePresentInElement(By.id("bbcourse"), "Class Size"));
+        (new WebDriverWait(driver, 10)).until(ExpectedConditions.textToBePresentInElementLocated(By.id("bbcourse"), "Class Size"));
         WebElement bbInfo = driver.findElement(By.id("bbcourse"));
         assertTrue("Should have correct class size",
                 bbInfo.getText().contains("Class Size: " + (UserFixture.NUM_STUDENTS - 1)));
@@ -129,7 +129,7 @@ public class CourseCreationTest extends BaseTest {
                 bbInfo.getText().contains("Group 2 (1 members)"));
 
         // test ipeer course info
-        (new WebDriverWait(driver, 10)).until(ExpectedConditions.textToBePresentInElement(By.id("ipeercourse"), "Class Size"));
+        (new WebDriverWait(driver, 10)).until(ExpectedConditions.textToBePresentInElementLocated(By.id("ipeercourse"), "Class Size"));
         WebElement ipeerInfo = driver.findElement(By.id("ipeercourse"));
         assertTrue("Should have correct class size",
                 ipeerInfo.getText().contains("Class Size: " + (UserFixture.NUM_STUDENTS - 1)));
@@ -151,28 +151,28 @@ public class CourseCreationTest extends BaseTest {
 
         // test bb course info
         // wait for ajax call to complete before asserts
-        (new WebDriverWait(driver, 10)).until(ExpectedConditions.textToBePresentInElement(By.id("bbcourse"), "Class Size"));
+        (new WebDriverWait(driver, 10)).until(ExpectedConditions.textToBePresentInElementLocated(By.id("bbcourse"), "Class Size"));
         WebElement bbInfo = driver.findElement(By.id("bbcourse"));
         assertTrue("Should have correct class size",
                 bbInfo.getText().contains("Class Size: " + UserFixture.NUM_STUDENTS));
 
         // test ipeer course info
-        (new WebDriverWait(driver, 10)).until(ExpectedConditions.textToBePresentInElement(By.id("ipeercourse"), "Class Size"));
+        (new WebDriverWait(driver, 10)).until(ExpectedConditions.textToBePresentInElementLocated(By.id("ipeercourse"), "Class Size"));
         WebElement ipeerInfo = driver.findElement(By.id("ipeercourse"));
         assertTrue("Should have correct class size",
                 ipeerInfo.getText().contains("Class Size: " + (UserFixture.NUM_STUDENTS - 1)));
 
-        page = page.syncClass().get();
+        page.syncClass().get();
 
         // test bb course info
         // wait for ajax call to complete before asserts
-        (new WebDriverWait(driver, 10)).until(ExpectedConditions.textToBePresentInElement(By.id("bbcourse"), "Class Size"));
+        (new WebDriverWait(driver, 10)).until(ExpectedConditions.textToBePresentInElementLocated(By.id("bbcourse"), "Class Size"));
         bbInfo = driver.findElement(By.id("bbcourse"));
         assertTrue("Should have correct class size",
                 bbInfo.getText().contains("Class Size: " + UserFixture.NUM_STUDENTS));
 
         // test ipeer course info
-        (new WebDriverWait(driver, 10)).until(ExpectedConditions.textToBePresentInElement(By.id("ipeercourse"), "Class Size"));
+        (new WebDriverWait(driver, 10)).until(ExpectedConditions.textToBePresentInElementLocated(By.id("ipeercourse"), "Class Size"));
         ipeerInfo = driver.findElement(By.id("ipeercourse"));
         assertTrue("Should have correct class size",
                 ipeerInfo.getText().contains("Class Size: " + UserFixture.NUM_STUDENTS));
@@ -186,28 +186,28 @@ public class CourseCreationTest extends BaseTest {
 
         // test bb course info
         // wait for ajax call to complete before asserts
-        (new WebDriverWait(driver, 10)).until(ExpectedConditions.textToBePresentInElement(By.id("bbcourse"), "Class Size"));
+        (new WebDriverWait(driver, 10)).until(ExpectedConditions.textToBePresentInElementLocated(By.id("bbcourse"), "Class Size"));
         WebElement bbInfo = driver.findElement(By.id("bbcourse"));
         assertTrue("Should have correct groups",
                 bbInfo.getText().contains("Group 2 (2 members)"));
 
         // test ipeer course info
-        (new WebDriverWait(driver, 10)).until(ExpectedConditions.textToBePresentInElement(By.id("ipeercourse"), "Class Size"));
+        (new WebDriverWait(driver, 10)).until(ExpectedConditions.textToBePresentInElementLocated(By.id("ipeercourse"), "Class Size"));
         WebElement ipeerInfo = driver.findElement(By.id("ipeercourse"));
         assertTrue("Should have correct groups",
                 ipeerInfo.getText().contains("Group 2 (1 members)"));
 
-        page = page.pushGroups().get();
+        page.pushGroups().get();
 
         // test bb course info
         // wait for ajax call to complete before asserts
-        (new WebDriverWait(driver, 10)).until(ExpectedConditions.textToBePresentInElement(By.id("bbcourse"), "Class Size"));
+        (new WebDriverWait(driver, 10)).until(ExpectedConditions.textToBePresentInElementLocated(By.id("bbcourse"), "Class Size"));
         bbInfo = driver.findElement(By.id("bbcourse"));
         assertTrue("Should have correct groups",
                 bbInfo.getText().contains("Group 2 (2 members)"));
 
         // test ipeer course info
-        (new WebDriverWait(driver, 10)).until(ExpectedConditions.textToBePresentInElement(By.id("ipeercourse"), "Class Size"));
+        (new WebDriverWait(driver, 10)).until(ExpectedConditions.textToBePresentInElementLocated(By.id("ipeercourse"), "Class Size"));
         ipeerInfo = driver.findElement(By.id("ipeercourse"));
         assertTrue("Should have correct groups",
                 ipeerInfo.getText().contains("Group 2 (2 members)"));
@@ -254,28 +254,28 @@ public class CourseCreationTest extends BaseTest {
 
         // test bb course info
         // wait for ajax call to complete before asserts
-        (new WebDriverWait(driver, 10)).until(ExpectedConditions.textToBePresentInElement(By.id("bbcourse"), "Class Size"));
+        (new WebDriverWait(driver, 10)).until(ExpectedConditions.textToBePresentInElementLocated(By.id("bbcourse"), "Class Size"));
         WebElement bbInfo = driver.findElement(By.id("bbcourse"));
         assertTrue("Should have correct groups",
                 !bbInfo.getText().contains("iPeer Group"));
 
         // test ipeer course info
-        (new WebDriverWait(driver, 10)).until(ExpectedConditions.textToBePresentInElement(By.id("ipeercourse"), "Class Size"));
+        (new WebDriverWait(driver, 10)).until(ExpectedConditions.textToBePresentInElementLocated(By.id("ipeercourse"), "Class Size"));
         WebElement ipeerInfo = driver.findElement(By.id("ipeercourse"));
         assertTrue("Should have correct groups",
                 ipeerInfo.getText().contains("iPeer Group (2 members)"));
 
-        page = page.pullGroups().get();
+        page.pullGroups().get();
 
         // test bb course info
         // wait for ajax call to complete before asserts
-        (new WebDriverWait(driver, 10)).until(ExpectedConditions.textToBePresentInElement(By.id("bbcourse"), "Class Size"));
+        (new WebDriverWait(driver, 10)).until(ExpectedConditions.textToBePresentInElementLocated(By.id("bbcourse"), "Class Size"));
         bbInfo = driver.findElement(By.id("bbcourse"));
         assertTrue("Should have correct groups",
                 bbInfo.getText().contains("iPeer Group (2 members)"));
 
         // test ipeer course info
-        (new WebDriverWait(driver, 10)).until(ExpectedConditions.textToBePresentInElement(By.id("ipeercourse"), "Class Size"));
+        (new WebDriverWait(driver, 10)).until(ExpectedConditions.textToBePresentInElementLocated(By.id("ipeercourse"), "Class Size"));
         ipeerInfo = driver.findElement(By.id("ipeercourse"));
         assertTrue("Should have correct groups",
                 ipeerInfo.getText().contains("iPeer Group (2 members)"));
@@ -329,12 +329,12 @@ public class CourseCreationTest extends BaseTest {
         driver.get(siteBase + "webapps/portal/frameset.jsp?tab_tab_group_id=_2_1&url=%2Fwebapps%2Fblackboard%2Fexecute%2Flauncher%3Ftype%3DCourse%26id%3D" + courseId + "%26url%3D");
         driver.switchTo().frame("contentFrame");
         Wait<WebDriver> wait = new WebDriverWait(driver, 10);
-        wait.until(ExpectedConditions.textToBePresentInElement(By.tagName("body"), "B2 Test Event"));
+        wait.until(ExpectedConditions.textToBePresentInElementLocated(By.tagName("body"), "B2 Test Event"));
         WebElement body = driver.findElement(By.tagName("body"));
         assertTrue("Should have iPeer Events module", body.getText().contains("iPeer Events"));
         assertTrue("Should have the new event listed", body.getText().contains("B2 Test Event"));
 
-        // make sure student can be transfered to iPeer
+        // make sure student can be transferred to iPeer
         driver.findElement(By.linkText("B2 Test Event")).click();
         bbWindow = page.switchWindowTo();
         body = driver.findElement(By.tagName("body"));
@@ -371,7 +371,7 @@ public class CourseCreationTest extends BaseTest {
         Wait<WebDriver> wait = new WebDriverWait(driver, 10);
         wait.until(ExpectedConditions.presenceOfElementLocated(By.linkText("Full Grade Center"))).click();
 
-        wait.until(ExpectedConditions.presenceOfElementLocated(By.id("cell_0_1")));
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.id("cell_0_12")));
         WebElement body = driver.findElement(By.id("nonAccessibleTableDiv"));
 
         assertTrue("Should have event Term 1 Evaluation",
