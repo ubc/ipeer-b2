@@ -9,16 +9,16 @@ import org.openqa.selenium.support.FindBy;
 
 public class CourseManagePage extends PageBase<CourseManagePage> {
 	
-	@FindBy(linkText = "Synchronize Class List")
+	@FindBy(linkText = "Push Class List to iPeer")
 	protected WebElement syncClassButton;
 	
-	@FindBy(linkText = "Push Groups")
+	@FindBy(linkText = "Push Groups to iPeer")
 	protected WebElement pushGroupsButton;
 	
-	@FindBy(linkText = "Pull Groups")
+	@FindBy(linkText = "Pull Groups from iPeer")
 	protected WebElement pullGroupsButton;
 	
-	@FindBy(linkText = "Synchronize Grades")
+	@FindBy(linkText = "Pull Grades from iPeer")
 	protected WebElement syncGradesButton;
 	
 	@FindBy(linkText = "Manage Course in iPeer")
@@ -27,7 +27,7 @@ public class CourseManagePage extends PageBase<CourseManagePage> {
 	@FindBy(linkText = "Disconnect Course")
 	protected WebElement disconnectButton;
 	
-//	@FindBy(linkText = "Delete Course")
+//	@FindBy(linkText = "Delete iPeer Course")
 //	protected WebElement deleteButon;
 	
 	protected String courseId;
@@ -56,7 +56,7 @@ public class CourseManagePage extends PageBase<CourseManagePage> {
 	
 	public CourseCreationPage deleteCourse() {
 		// find the element, can't be injected as instructor doesn't have this link
-		driver.findElement(By.linkText("Delete Course")).click();
+		driver.findElement(By.linkText("Delete iPeer Course")).click();
 		return new CourseCreationPage(driver, siteBase, courseId);
 	}
 

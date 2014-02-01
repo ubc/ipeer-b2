@@ -84,16 +84,16 @@ div#leftpanels div.panel-content li {
 		<h2>Actions</h2>
 		<div style="overflow: auto;border-top: 1px solid #CCC;">
 			<ul class="listmenu">
-				<li><a href="${syncclass}">Synchronize Class List</a></li>
-				<li><a href="${pushgroups}">Push Groups</a></li>
-				<li><a href="${pullgroups}">Pull Groups</a></li>
-				<li><a href="${syncgrades}">Synchronize Grades</a></li>
-				<li><a href="${gotoipeer}" target="_blank">Manage Course in iPeer</a></li>
-				<li><a href="${disconnect}">Disconnect Course</a></li>
+				<li><a href="${syncclass}"><spring:message code="label.sync_class"/></a></li>
+				<li><a href="${pushgroups}"><spring:message code="label.push_group"/></a></li>
+				<li><a href="${pullgroups}"><spring:message code="label.pull_group"/></a></li>
+				<li><a href="${syncgrades}"><spring:message code="label.pull_grade"/></a></li>
+				<li><a href="${gotoipeer}" target="_blank"><spring:message code="label.manage_course"/></a></li>
+				<li><a href="${disconnect}"><spring:message code="label.disconnect_course"/></a></li>
 				
 				<sec:authorize url="/instructor/course/delete">
 				<!-- only ISS admin or sys admin can delete course remotely -->
-				<li><a href="${delete}">Delete Course</a></li>
+				<li><a href="${delete}"><spring:message code="label.delete_course"/></a></li>
 				</sec:authorize>
 			</ul>
 		</div>
@@ -101,7 +101,7 @@ div#leftpanels div.panel-content li {
 	
 	<div id="leftpanels">
 		<div id="bbcourse"  class="portlet">
-			<h2>Current Course</h2>
+			<h2>Current (Blackboard) Course</h2>
 			<div class="panel-content">
 				<div id="div_1_1" class="eudModule">Please wait while the module loads...</div>
 				<script type="text/javascript">
@@ -116,7 +116,7 @@ div#leftpanels div.panel-content li {
 									content = '<div class="eudModule-inner"><div class="portletBlock">Class Size: '+ res.classSize + '</div>'
 									content += '<div class="portletBlock">Groups:<ul>';
 									for (var i=0; i<res.groups.length; i++) {
-										content += '<li>'+res.groups[i].group_name+' ('+res.groups[i].member_count+' members)</li>';
+										content += '<li>'+res.groups[i].group_name+' ('+res.groups[i].member_count+' active members)</li>';
 									}
 									content += '</ul></div>';
 								} catch ( e ) { 
@@ -150,7 +150,7 @@ div#leftpanels div.panel-content li {
 									content = '<div class="eudModule-inner"><div class="portletBlock">Class Size: '+ res.classSize + '</div>'
 									content += '<div class="portletBlock">Groups:<ul>';
 									for (var i=0; i<res.groups.length; i++) {
-										content += '<li>'+res.groups[i].group_name+' ('+res.groups[i].member_count+' members)</li>';
+										content += '<li>'+res.groups[i].group_name+' ('+res.groups[i].member_count+' active members)</li>';
 									}
 									content += '</ul></div>';
 									content += '<div class="portletBlock">Events:<ul>';
