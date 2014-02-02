@@ -3,6 +3,8 @@ package ca.ubc.ctlt.ipeerb2.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import blackboard.data.course.GroupMembership;
+import blackboard.persist.course.CourseMembershipDbLoader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -297,9 +299,21 @@ public class IPeerB2ServiceImpl implements IPeerB2Service, UserAdapter<User>, Gr
 
     @Override
     public int getBbClassSize(String bbCourseId) {
-        int size = 0;
+        int size;
         try {
             size = B2Util.getClassSize(bbCourseId, iPeerB2Util.getAllRolesMappedToStudent(configuration));
+        } catch (PersistenceException e) {
+            throw new RuntimeException("Failed to load class size!", e);
+        }
+
+        return size;
+    }
+
+    @Override
+    public int getBbActiveClassSize(String bbCourseId) {
+        int size;
+        try {
+            size = B2Util.getActiveClassSize(bbCourseId, iPeerB2Util.getAllRolesMappedToStudent(configuration));
         } catch (PersistenceException e) {
             throw new RuntimeException("Failed to load class size!", e);
         }
@@ -355,7 +369,23 @@ public class IPeerB2ServiceImpl implements IPeerB2Service, UserAdapter<User>, Gr
         Group group = new Group();
         group.setName(bbGroup.getTitle());
         group.setBbGroup(bbGroup);
-        group.setSize(bbGroup.getGroupMemberships().size());
+
+        // convert group membership to course membership to find out who is available in the course
+        try {
+            List<CourseMembership> courseMembers = B2Util.getCourseMembershipsInGroup(bbGroup);
+            int size = 0;
+            for (CourseMembership member : courseMembers) {
+                if (member.getIsAvailable()) {
+                    size++;
+                }
+            }
+            group.setSize(size);
+        } catch (PersistenceException e) {
+            throw new RuntimeException("Failed to load course memberships from group!", e);
+        } catch (ConnectionNotAvailableException e) {
+            throw new RuntimeException("No connection is available!", e);
+        }
+
         return group;
     }
 

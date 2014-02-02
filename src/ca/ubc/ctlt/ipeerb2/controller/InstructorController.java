@@ -316,7 +316,7 @@ public class InstructorController {
 	@RequestMapping(value="/course/bbcourseinfo", method = RequestMethod.GET)
 	public @ResponseBody CourseInfo getBbCourseInfo(HttpServletRequest webRequest, @RequestParam("course_id") String bbCourseId, Locale locale, ModelMap model) {
 	    CourseInfo info = new CourseInfo();
-	    info.setClassSize(service.getBbClassSize(bbCourseId));
+	    info.setClassSize(service.getBbActiveClassSize(bbCourseId));
 	    info.setGroups(service.getGroupsInBbCourse(bbCourseId));
 	    return info;
 	}

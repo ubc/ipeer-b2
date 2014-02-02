@@ -122,11 +122,11 @@ public class CourseCreationTest extends BaseTest {
         assertTrue("Should have correct class size",
                 bbInfo.getText().contains("Class Size: " + (UserFixture.NUM_STUDENTS - 1)));
         assertTrue("Should have correct groups",
-                bbInfo.getText().contains("Empty Group (0 members)"));
+                bbInfo.getText().contains("Empty Group (0 active members)"));
         assertTrue("Should have correct groups",
-                bbInfo.getText().contains("Group 1 (3 members)"));
+                bbInfo.getText().contains("Group 1 (3 active members)"));
         assertTrue("Should have correct groups",
-                bbInfo.getText().contains("Group 2 (1 members)"));
+                bbInfo.getText().contains("Group 2 (1 active members)"));
 
         // test ipeer course info
         (new WebDriverWait(driver, 10)).until(ExpectedConditions.textToBePresentInElementLocated(By.id("ipeercourse"), "Class Size"));
@@ -134,11 +134,11 @@ public class CourseCreationTest extends BaseTest {
         assertTrue("Should have correct class size",
                 ipeerInfo.getText().contains("Class Size: " + (UserFixture.NUM_STUDENTS - 1)));
         assertTrue("Should have correct groups",
-                ipeerInfo.getText().contains("Empty Group (0 members)"));
+                ipeerInfo.getText().contains("Empty Group (0 active members)"));
         assertTrue("Should have correct groups",
-                ipeerInfo.getText().contains("Group 1 (3 members)"));
+                ipeerInfo.getText().contains("Group 1 (3 active members)"));
         assertTrue("Should have correct groups",
-                ipeerInfo.getText().contains("Group 2 (1 members)"));
+                ipeerInfo.getText().contains("Group 2 (1 active members)"));
     }
 
     @Test(dependsOnMethods = "testCreateCourse")
@@ -189,13 +189,13 @@ public class CourseCreationTest extends BaseTest {
         (new WebDriverWait(driver, 10)).until(ExpectedConditions.textToBePresentInElementLocated(By.id("bbcourse"), "Class Size"));
         WebElement bbInfo = driver.findElement(By.id("bbcourse"));
         assertTrue("Should have correct groups",
-                bbInfo.getText().contains("Group 2 (2 members)"));
+                bbInfo.getText().contains("Group 2 (2 active members)"));
 
         // test ipeer course info
         (new WebDriverWait(driver, 10)).until(ExpectedConditions.textToBePresentInElementLocated(By.id("ipeercourse"), "Class Size"));
         WebElement ipeerInfo = driver.findElement(By.id("ipeercourse"));
         assertTrue("Should have correct groups",
-                ipeerInfo.getText().contains("Group 2 (1 members)"));
+                ipeerInfo.getText().contains("Group 2 (1 active members)"));
 
         page.pushGroups().get();
 
@@ -204,13 +204,13 @@ public class CourseCreationTest extends BaseTest {
         (new WebDriverWait(driver, 10)).until(ExpectedConditions.textToBePresentInElementLocated(By.id("bbcourse"), "Class Size"));
         bbInfo = driver.findElement(By.id("bbcourse"));
         assertTrue("Should have correct groups",
-                bbInfo.getText().contains("Group 2 (2 members)"));
+                bbInfo.getText().contains("Group 2 (2 active members)"));
 
         // test ipeer course info
         (new WebDriverWait(driver, 10)).until(ExpectedConditions.textToBePresentInElementLocated(By.id("ipeercourse"), "Class Size"));
         ipeerInfo = driver.findElement(By.id("ipeercourse"));
         assertTrue("Should have correct groups",
-                ipeerInfo.getText().contains("Group 2 (2 members)"));
+                ipeerInfo.getText().contains("Group 2 (2 active members)"));
     }
 
     @Test(dependsOnMethods = "testPushGroup")
@@ -263,7 +263,7 @@ public class CourseCreationTest extends BaseTest {
         (new WebDriverWait(driver, 10)).until(ExpectedConditions.textToBePresentInElementLocated(By.id("ipeercourse"), "Class Size"));
         WebElement ipeerInfo = driver.findElement(By.id("ipeercourse"));
         assertTrue("Should have correct groups",
-                ipeerInfo.getText().contains("iPeer Group (2 members)"));
+                ipeerInfo.getText().contains("iPeer Group (2 active members)"));
 
         page.pullGroups().get();
 
@@ -272,13 +272,13 @@ public class CourseCreationTest extends BaseTest {
         (new WebDriverWait(driver, 10)).until(ExpectedConditions.textToBePresentInElementLocated(By.id("bbcourse"), "Class Size"));
         bbInfo = driver.findElement(By.id("bbcourse"));
         assertTrue("Should have correct groups",
-                bbInfo.getText().contains("iPeer Group (2 members)"));
+                bbInfo.getText().contains("iPeer Group (2 active members)"));
 
         // test ipeer course info
         (new WebDriverWait(driver, 10)).until(ExpectedConditions.textToBePresentInElementLocated(By.id("ipeercourse"), "Class Size"));
         ipeerInfo = driver.findElement(By.id("ipeercourse"));
         assertTrue("Should have correct groups",
-                ipeerInfo.getText().contains("iPeer Group (2 members)"));
+                ipeerInfo.getText().contains("iPeer Group (2 active members)"));
     }
 
     @Test(dependsOnMethods = "testPullGroups")
