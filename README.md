@@ -26,3 +26,16 @@ To run the tests:
     ant test
 
 This will run unit test and integration tests. For integration test, you will need to have a Blackboard instance running on http://bblvm.dev (can be changed in functionalTestContext.xml) and iPeer instance running on http://ipeer.dev (can be changed in defaultSettings.properties)
+
+
+Change Log
+==========
+
+1.0.11
+------
+* Updated menu text for more clear expression
+* Removed pull group action from course creating page
+* Converted all numbers to count active members in course and groups
+* Skip the missing person when sync grade. This solves the issue when test student is manually added into iPeer.
+* Changed group updating strategy to push all members. iPeer will resolve the conflict. This resolves the issue that failing to push groups when there is any change in Blackboard groups.
+* Add timestamp on error page for debug reference
