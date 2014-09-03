@@ -31,6 +31,10 @@ This will run unit test and integration tests. For integration test, you will ne
 Change Log
 ==========
 
+1.0.12
+------
+* Fix a bug when student in group but dropped from course
+
 1.0.11
 ------
 * Updated menu text for more clear expression
