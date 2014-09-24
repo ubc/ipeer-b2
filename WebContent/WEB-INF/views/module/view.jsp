@@ -8,7 +8,7 @@
 <bbData:context>
 <c:choose>
 	<c:when test="${empty events}">
-	    No available events
+		<a href="${gotoipeer}">There are no pending events due, but you can still visit iPeer to edit or check the results of your previous evaluations.</a>
 	</c:when>
 	
 	<c:otherwise>
