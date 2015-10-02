@@ -3,6 +3,7 @@ package ca.ubc.ctlt.ipeerb2.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import blackboard.base.FormattedText;
 import blackboard.data.course.GroupMembership;
 import blackboard.persist.course.CourseMembershipDbLoader;
 import org.slf4j.Logger;
@@ -393,6 +394,7 @@ public class IPeerB2ServiceImpl implements IPeerB2Service, UserAdapter<User>, Gr
     public blackboard.data.course.Group groupToBbGroup(Group group) {
         blackboard.data.course.Group bbGroup = new blackboard.data.course.Group();
         bbGroup.setTitle(group.getName());
+        bbGroup.setDescription(new FormattedText());
 
         return bbGroup;
     }
