@@ -1,0 +1,162 @@
+apply plugin: "java"
+apply plugin: "war"
+apply plugin: "maven"
+apply plugin: "eclipse"
+apply plugin: "idea"
+
+// Uncomment if your project has an API JAR
+//apply from: "api.gradle"
+
+// define the version for the project when publishing to maven
+group "ca.ubc"
+version "1.0.14"
+
+webAppDirName = file("WebContent")
+sourceCompatibility = '1.7'
+targetCompatibility = '1.7'
+
+sourceSets {
+    main {
+        java {
+            srcDir 'src'
+        }
+        resources {
+            srcDir 'WebContent/WEB-INF/bundle'
+        }
+    }
+
+    test {
+        java {
+            srcDir 'test'
+        }
+        resources {
+            srcDir 'WebContent/WEB-INF/bundle'
+        }
+    }
+}
+
+ext {
+    learnVersion = "9.1.201410.160373"
+    deployServer = "127.0.0.1:9877"
+    deployInstance = "BBLEARN"
+}
+
+repositories {
+    mavenCentral()
+    maven {
+        url "https://maven.blackboard.com/content/repositories/releases/"
+    }
+    maven {
+        url "http://artifactory.ctlt.ubc.ca/artifactory/ctlt-release-local/"
+    }
+}
+
+configurations {
+    buildUtils
+}
+
+// define the project's dependencies
+dependencies {
+    providedCompile "javax.servlet:servlet-api:2.5",
+            "javax.servlet.jsp:jsp-api:2.1"
+
+    // Dependencies are libraries needed to build, but should not be included in the B2 WAR.
+    // You should NEVER include Learn JARs (other than webapis) in your B2.
+    providedCompile("blackboard.platform:bb-platform:$learnVersion") { transitive = false }
+    providedCompile("blackboard.platform:bb-taglibs:$learnVersion") { transitive = false }
+
+    // Building a Spring B2?  Use our Spring APIs!
+    // compile "blackboard.platform:bb-spring-webapi:10.1"
+
+    // Include the Blackboard security APIs for protecting your B2.
+    // providedCompile "blackboard.plugin:security:1.0:api"
+
+    // Dependencies that are only necessary at runtime so should be included in the WAR
+    // runtime "org.javassist:javassist:3.17.1-GA"
+
+    buildUtils "org.oscelot:b2deploy-task:0.1.0"
+
+    compile "com.spvsoftwareproducts:b2context:1.4.01",
+            'org.oscelot.blackboard:lti-assessment:1.0',
+            'commons-httpclient:commons-httpclient:3.1',
+            'org.jdom:jdom:1.1.3',
+            'net.sf.json-lib:json-lib:2.4:jdk15',
+            'net.oauth.core:oauth-provider:20100527',
+            'com.google.code.gson:gson:2.2.4'
+    compile 'javax.validation:validation-api:1.1.0.Beta2'
+    compile 'org.hibernate:hibernate-validator:4.3.0.Final'
+    compile 'org.jboss.logging:jboss-logging:3.1.2.GA'
+    compile 'org.apache.httpcomponents:httpcore:4.2.4'
+    compile 'org.apache.httpcomponents:httpclient:4.2.4'
+    compile 'org.codehaus.jackson:jackson-core-asl:1.9.10'
+    compile 'org.codehaus.jackson:jackson-mapper-asl:1.9.10'
+    compile 'jstl:jstl:1.2'
+    compile 'commons-logging:commons-logging:1.1.1'
+    compile 'log4j:log4j:1.2.17'
+    compile 'org.slf4j:slf4j-api:1.6.6'
+    compile 'org.slf4j:slf4j-log4j12:1.6.6'
+    compile 'org.springframework:spring-context:3.1.3.RELEASE'
+    compile 'org.springframework:spring-core:3.1.3.RELEASE'
+    compile 'org.springframework:spring-beans:3.1.3.RELEASE'
+    compile 'org.springframework:spring-webmvc:3.1.3.RELEASE'
+    compile 'org.springframework:spring-context-support:3.1.3.RELEASE'
+    compile 'org.springframework:spring-web:3.1.3.RELEASE'
+    compile 'org.springframework:spring-expression:3.1.3.RELEASE'
+    compile 'org.springframework:spring-asm:3.1.3.RELEASE'
+    compile 'org.springframework:spring-aop:3.1.3.RELEASE'
+    compile 'org.springframework.security:spring-security-core:3.1.3.RELEASE'
+    compile 'org.springframework.security:spring-security-web:3.1.3.RELEASE'
+    compile 'org.springframework.security:spring-security-config:3.1.3.RELEASE'
+    compile 'org.springframework.security:spring-security-taglibs:3.1.3.RELEASE'
+    compile 'org.springframework.security.oauth:spring-security-oauth:1.0.5.RELEASE'
+    compile 'aopalliance:aopalliance:1.0'
+    compile 'cglib:cglib-nodep:2.2.2'
+    compile 'com.spvsoftwareproducts:b2context:1.3.00'
+    compile 'ca.ubc.ctlt:blackboard-b2-util:1.0.10'
+    runtime "com.spvsoftwareproducts:b2context:1.3.00",
+            'commons-httpclient:commons-httpclient:3.1',
+            'org.jdom:jdom:1.1.3',
+            'net.sf.json-lib:json-lib:2.4:jdk15',
+            'net.oauth.core:oauth-provider:20100527'
+    testCompile 'org.testng:testng:6.8.7'
+    testCompile 'org.testng:testng:6.8'
+    testCompile 'org.mockito:mockito-all:1.9.5'
+    testCompile 'com.puppycrawl.tools:checkstyle:5.5'
+    testCompile 'org.eclipse.jetty.orbit:javax.servlet:2.5.0.v201103041518'
+    testCompile 'org.eclipse.jetty:jetty-server:7.6.8.v20121106'
+    testCompile 'org.eclipse.jetty:jetty-servlet:7.6.8.v20121106'
+    testCompile 'org.eclipse.jetty:jetty-util:7.6.8.v20121106'
+    testCompile 'org.eclipse.jetty:jetty-security:7.6.8.v20121106'
+    testCompile 'org.eclipse.jetty:jetty-http:7.6.8.v20121106'
+    testCompile 'org.eclipse.jetty:jetty-io:7.6.8.v20121106'
+    testCompile 'org.eclipse.jetty:jetty-continuation:7.6.8.v20121106'
+    testCompile 'org.eclipse.jetty:jetty-xml:7.6.8.v20121106'
+    testCompile 'org.eclipse.jetty:jetty-start:7.6.8.v20121106'
+    testCompile 'org.mortbay.jetty:jetty-spring:7.6.8.v20121106'
+    testCompile 'org.seleniumhq.selenium:selenium-java:2.39.0'
+    testCompile 'org.seleniumhq.selenium:selenium-firefox-driver:2.39.0'
+    testCompile 'org.seleniumhq.selenium:selenium-api:2.39.0'
+    testCompile 'org.seleniumhq.selenium:selenium-support:2.39.0'
+    testCompile 'org.seleniumhq.selenium:selenium-remote-driver:2.39.0'
+    testCompile 'com.google.guava:guava:14.0.1'
+    testCompile 'org.json:json:20090211'
+    testCompile 'org.apache.commons:commons-exec:1.1'
+    testCompile 'commons-io:commons-io:2.4'
+    testCompile 'commons-codec:commons-codec:1.9'
+    testCompile 'org.springframework:spring-test:3.1.3.RELEASE'
+//    testCompile 'javax.servlet:servlet-api:2.5'
+}
+
+test {
+    useTestNG()
+}
+
+// Add a task to deploy a B2 using starting block
+task deployB2(dependsOn: "war") << {
+    ant.taskdef(name: "b2deploy", classname: "org.oscelot.ant.B2DeployTask", classpath: project.configurations.buildUtils.asPath)
+    ant.b2deploy(localfilepath: project.war.archivePath, host: project.ext.deployServer, courseorgavailable: 'true', clean: 'true', webappName: 'bb-starting-block-' + project.ext.deployInstance)
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.7'
+}

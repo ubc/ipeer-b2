@@ -23,3 +23,7 @@ iPeerB2.iml
 out/
 screenshots/
 test-output/
+
+.gradle/
+gradle/
+.vagrant/
