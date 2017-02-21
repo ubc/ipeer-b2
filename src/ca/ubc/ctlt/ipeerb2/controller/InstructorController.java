@@ -261,6 +261,7 @@ public class InstructorController {
 	@RequestMapping(value="/course/pushgroups", method = RequestMethod.GET)
 	public String pushGroups(HttpServletRequest webRequest, @RequestParam("course_id") String bbCourseId, Locale locale, ModelMap model) {
 		ReceiptOptions ro = new ReceiptOptions();
+		syncClass(bbCourseId, ro, locale);
 		pushGroups(bbCourseId, ro, locale);
 		InlineReceiptUtil.addReceiptToRequest(webRequest, ro);
 		model.addAttribute("course_id", bbCourseId);
