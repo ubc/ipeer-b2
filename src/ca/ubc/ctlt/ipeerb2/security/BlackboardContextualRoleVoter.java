@@ -67,11 +67,7 @@ public class BlackboardContextualRoleVoter implements AccessDecisionVoter<Object
 
 	@Override
     public boolean supports(ConfigAttribute attribute) {
-        if (null != attribute.getAttribute() && attribute.getAttribute().startsWith(ATTRIBUTE_PREFIX)) {
-            return true;
-        } else {
-            return false;
-        }
+        return null != attribute.getAttribute() && attribute.getAttribute().startsWith(ATTRIBUTE_PREFIX);
     }
     
     @Override

@@ -82,8 +82,8 @@ public class BuildingBlockHelper {
 		if (!settingsFile.exists()) {
 			settingsFile.createNewFile();
 		}
-		settings.store(new FileOutputStream(settingsFile), "Building Block Properties File");;
-	}
+		settings.store(new FileOutputStream(settingsFile), "Building Block Properties File");
+    }
 	
 //	public static Properties getSettings() {
 //		Properties settings = null;

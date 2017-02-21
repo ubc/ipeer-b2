@@ -113,7 +113,7 @@ div#leftpanels div.panel-content li {
 								var content = '';
 								try { 
 									var res = transport.responseText.evalJSON();
-									content = '<div class="eudModule-inner"><div class="portletBlock">Class Size: '+ res.classSize + '</div>'
+									content = '<div class="eudModule-inner"><div class="portletBlock">Class Size: '+ res.classSize + '</div>';
 									content += '<div class="portletBlock">Groups:<ul>';
 									for (var i=0; i<res.groups.length; i++) {
 										content += '<li>'+res.groups[i].group_name+' ('+res.groups[i].member_count+' active members)</li>';
@@ -147,7 +147,7 @@ div#leftpanels div.panel-content li {
 								var content = '';
 								try { 
 									var res = transport.responseText.evalJSON();
-									content = '<div class="eudModule-inner"><div class="portletBlock">Class Size: '+ res.classSize + '</div>'
+									content = '<div class="eudModule-inner"><div class="portletBlock">Class Size: '+ res.classSize + '</div>';
 									content += '<div class="portletBlock">Groups:<ul>';
 									for (var i=0; i<res.groups.length; i++) {
 										content += '<li>'+res.groups[i].group_name+' ('+res.groups[i].member_count+' active members)</li>';

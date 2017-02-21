@@ -36,7 +36,7 @@ sourceSets {
 }
 
 ext {
-    learnVersion = "9.1.201410.160373"
+    learnVersion = "3100.0.0-rel.107"
     deployServer = "127.0.0.1:9877"
     deployInstance = "BBLEARN"
 }
@@ -88,8 +88,9 @@ dependencies {
     compile 'org.jboss.logging:jboss-logging:3.1.2.GA'
     compile 'org.apache.httpcomponents:httpcore:4.2.4'
     compile 'org.apache.httpcomponents:httpclient:4.2.4'
-    compile 'org.codehaus.jackson:jackson-core-asl:1.9.10'
-    compile 'org.codehaus.jackson:jackson-mapper-asl:1.9.10'
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: '2.6.0'
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: '2.6.0'
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.6.0'
     compile 'jstl:jstl:1.2'
     compile 'commons-logging:commons-logging:1.1.1'
     compile 'log4j:log4j:1.2.17'

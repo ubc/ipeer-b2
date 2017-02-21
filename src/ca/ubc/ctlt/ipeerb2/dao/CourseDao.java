@@ -6,12 +6,12 @@ import ca.ubc.ctlt.ipeerb2.domain.Course;
 import ca.ubc.ctlt.ipeerb2.domain.Department;
 
 public interface CourseDao {
-	public List<Course> getCourseList();
-	public Course getCourse(int id);
-	public Course createCourse(Course course);
-	public boolean deleteCourse(int id);
-	public boolean updateCourse(Course course);
-	public boolean assignCourseToDepartment(Course course, Department department);
-	public boolean assignCourseToDepartment(int courseId, int departmentId);
-	public int getClassSize(int ipeerCourseId);
+	List<Course> getCourseList();
+	Course getCourse(int id);
+	Course createCourse(Course course);
+	boolean deleteCourse(int id);
+	boolean updateCourse(Course course);
+	boolean assignCourseToDepartment(Course course, Department department);
+	boolean assignCourseToDepartment(int courseId, int departmentId);
+	int getClassSize(int ipeerCourseId);
 }

@@ -12,6 +12,7 @@ Vagrant.configure("2") do |config|
   config.vm.box_url = './bb-learn-9.1.201410.160373.box'
   config.vm.network :forwarded_port, guest: 8443, host: 9877
   config.vm.network :forwarded_port, guest: 2222, host: 9878
+#  config.vm.network "public_network"
 
   config.vm.provision "shell",
     # remove insecure ciphers to fix ERR_SSL_WEAK_SERVER_EPHEMERAL_DH_KEY issue

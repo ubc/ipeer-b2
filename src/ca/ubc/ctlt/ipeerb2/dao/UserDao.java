@@ -5,22 +5,22 @@ import java.util.List;
 import ca.ubc.ctlt.ipeerb2.domain.User;
 
 public interface UserDao {
-	public List<User> getUserList();
-	public User getUserById(int id);
-	public User createUser(User user);
-	public List<User> createUsers(List<User> user);
-	public boolean deleteUser(int id);
-	public boolean updateUser(User user);
+	List<User> getUserList();
+	User getUserById(int id);
+	User createUser(User user);
+	List<User> createUsers(List<User> user);
+	boolean deleteUser(int id);
+	boolean updateUser(User user);
 	
-	public List<User> getUsersInCourse(int courseId);
-	public List<User> enrolUsersInCourse(int courseId, List<User> users);
-	public List<User> enrolUserInCourse(int courseId, User user);
-	public boolean removeUsersFromCourse(int courseId, List<User> users);
-	public boolean removeUserFromCourse(int courseId, User user);
+	List<User> getUsersInCourse(int courseId);
+	List<User> enrolUsersInCourse(int courseId, List<User> users);
+	List<User> enrolUserInCourse(int courseId, User user);
+	boolean removeUsersFromCourse(int courseId, List<User> users);
+	boolean removeUserFromCourse(int courseId, User user);
 	
-	public List<User> getUsersInGroup(int groupId);
-	public List<User> enrolUsersInGroup(int groupId, List<User> users);
-	public List<User> enrolUserInGroup(int groupId, User user);
-	public boolean removeUsersFromGroup(int groupId, List<User> users);
-	public boolean removeUserFromGroup(int groupId, User user);
+	List<User> getUsersInGroup(int groupId);
+	List<User> enrolUsersInGroup(int groupId, List<User> users);
+	List<User> enrolUserInGroup(int groupId, User user);
+	boolean removeUsersFromGroup(int groupId, List<User> users);
+	boolean removeUserFromGroup(int groupId, User user);
 }

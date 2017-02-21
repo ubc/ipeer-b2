@@ -5,6 +5,6 @@ import java.util.List;
 import ca.ubc.ctlt.ipeerb2.domain.Grade;
 
 public interface GradeDao {
-	public List<Grade> getGradesInEvent(int eventId);
-	public Grade getGradeForUserInEvent(int userId, int eventId);
+	List<Grade> getGradesInEvent(int eventId);
+	Grade getGradeForUserInEvent(int userId, int eventId);
 }
