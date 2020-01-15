@@ -19,7 +19,7 @@ local.properties
 *.ear
 
 .idea/
-iPeerB2.iml
+*.iml
 out/
 screenshots/
 test-output/
