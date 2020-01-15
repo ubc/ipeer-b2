@@ -25,5 +25,4 @@ screenshots/
 test-output/
 
 .gradle/
-gradle/
 .vagrant/
