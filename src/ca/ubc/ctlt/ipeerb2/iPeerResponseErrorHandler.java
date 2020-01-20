@@ -34,19 +34,4 @@ public class iPeerResponseErrorHandler extends DefaultResponseErrorHandler {
 				response.getHeaders(), responseBody, getCharset(response), error);		
 	}
 	
-	private HttpStatus getHttpStatusCode(ClientHttpResponse response) throws IOException {
-		HttpStatus statusCode;
-		try {
-			statusCode = response.getStatusCode();
-		} catch (IllegalArgumentException ex) {
-			throw new RestClientException("Unknown status code [" + response.getRawStatusCode() + "]");
-		}
-		return statusCode;
-	}
-
-	private Charset getCharset(ClientHttpResponse response) {
-		HttpHeaders headers = response.getHeaders();
-		MediaType contentType = headers.getContentType();
-		return contentType != null ? contentType.getCharSet() : null;
-	}
 }
