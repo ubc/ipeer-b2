@@ -42,9 +42,13 @@ ext {
 }
 
 repositories {
+    mavenLocal()
     mavenCentral()
     maven {
         url "https://maven.blackboard.com/content/repositories/releases/"
+    }
+    maven {
+        url "https://raw.githubusercontent.com/ubc/lthub-maven-repo/master/"
     }
     maven {
         url "http://artifactory.ctlt.ubc.ca/artifactory/ctlt-release-local/"
